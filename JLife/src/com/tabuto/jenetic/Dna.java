@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 21 Ottobre 2010 18.14
+* Date: 11 Novembre 2010 18.14
 * Titolo: Dna.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.2 Rev.a:
 */
 
 
@@ -39,8 +39,10 @@
 package com.tabuto.jenetic;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
@@ -65,9 +67,9 @@ import org.jdom.output.*;
  *
  * @author tabuto83
  * 
- * @version 0.1.0
+ * @version 0.2.0
  * 
- * @see com.tabuto.jenetic.Gene
+ * @see Gene
  */
 
 public class Dna implements Serializable{
@@ -79,81 +81,194 @@ public class Dna implements Serializable{
 	/**
 	 * The Vector Gene is a dinamic array where {@link Gene} are stored
 	 */
-	public Vector<Gene> DNA;
+	protected Vector<Gene> DNA;
 	/**
-	 * This variable represent the percent of mutation introduced by merge method.
-	 * The param value should be between 0 and 1.
+	 * This variable represent the percent of mutation introduced by {@link Dna#merge(Dna)} method.
+	 * The {@code param} value should be between 0 and 1. Default value is 0;
+	 * 
+	 * @see Dna#merge(Dna)
+	 * @see Dna#merge(Dna, Dna)
 	 */
-	private double param;
+	protected double param;
 	
 	/**
-	 * CONSTRUCTOR
-	 * <p>
-	 * Dna()
-	 * <p>
+	 * The name of this DNA
+	 */
+	private String Name;
+	
+	/**
 	 * This method instance a new empty <code>Dna</code> Object.
 	 */
 	public Dna()
 	{
 		this.DNA = new Vector<Gene>();
 		this.param = 0;
+		this.Name ="";
 	}
 	
 	/**
-	 * CONSTRUCTOR
-	 * <p>
-	 * Dna( double parameter)
-	 * <p>
 	 * This method instance a new empty <code>Dna</code> Object with a parameter for Genetic Recombination.
 	 * 
-	 * @param p <code>double</code> Dna Parameter {@link Dna#param}
+	 * @param <code>double</code> Dna Parameter {@link Dna#param}
 	 */
 	public Dna(double p)
 	{
-		this.DNA = new Vector<Gene>();
-		this.param = p;
+		this();
+		this.setParam(p);
 	}
 	
 	/**
-	 * CONSTRUCTOR
-	 * <p>
-	 * Dna( double parameter)
-	 * <p>
-	 * This method instance a new  <code>Dna</code> Object using a previously saved XML file
-	 * with a parameter for Genetic Recombination.
-	 * 
-	 * @param fileName <code>String</code> 
+	 * This method instance a new  <code>Dna</code> Object using a specified name
+	 * @param <code>String</code> the Dna name
 	 */
-	public Dna(String fileName)
+	public Dna(String Name)
 	{
-		 DNA = new Vector<Gene>();
-		 param = 0;
-		 this.load(fileName);
+		 this();
+		 this.setName(Name);
 	}
 	
 	/**
-	 * CONSTRUCTOR
-	 * <p>
-	 * Dna( double parameter)
-	 * <p>
-	 * This method instance a new  <code>Dna</code> Object using a previously saved XML file.
+	 * This method instance a new  <code>Dna</code> Object using a specified name
+	 * and {@link Dna#param}
 	 * 
-	 * @param fileName <code>String</code> 
-	 * @param p <code>double</code> Dna Parameter {@link Dna#param}
+	 * @param <code>String</code> the Dna name
+	 * @param <code>double</code> Dna {@link Dna#param}
 	 */
-	public Dna(String fileName, double p)
+	public Dna(String Name, double p)
 	{
-		DNA = new Vector<Gene>();
-		param = p;
-		this.load(fileName);
+		this(p);
+		this.setName(Name);
 	}
+	
+	/*
+	 * *****************************************************
+	 * PUBLIC METHODS (INTERFACE)
+	 * *****************************************************
+	 */
 
+	
 	/**
-	 * Set the {@link Dna#param} variable of Dna.
-	 * @param p <code>double</code> set new {@link Dna#param}
+	 * Append a new {@link Gene} into <code>Dna</code> Vector
+	 * @param g <code>Gene</code> newGene
 	 */
-	public void setParam(double p)
-	{this.param=Math.abs(p);}
+	public void add(Gene g){this.DNA.add(g);}
+	
+	
+	/**
+	 * Add a new Double {@link Gene} into <code>Dna</code>  
+	 * @param d <code>double</code> Gene Double Value
+	 */
+	public void add(double d)
+	{this.DNA.add( new Gene(d) );}
+	
+	/**
+	 * Add a new Double {@link Gene} into <code>Dna</code> by setting his value and his name
+	 * @param d <code>double</code> Gene Value
+	 * @param Name <code>String</code> Gene's Name
+	 */
+	public void add(double d, String Name){this.DNA.add( new Gene(d,Name) );}
+	
+	/**
+	 * Add a new Double {@link Gene} into <code>Dna</code> by setting his value and his name
+	 * @param d <code>double</code> Gene Value
+	 * @param Name <code>String</code> Gene's Name
+	 * @param description <code>String</code> Gene's Description
+	 */
+	public void add(double d, String Name, String description)
+	{
+		this.DNA.add( new Gene(d,Name,description));
+	}
+	
+	/**
+	 * Add a new Integer {@link Gene} into <code>Dna</code>  
+	 * @param d <code>Integer</code> Gene int Value
+	 */
+	public void add(Integer d)
+	{this.DNA.add( new Gene(d) );}
+	
+	/**
+	 * Add a new Integer {@link Gene} into <code>Dna</code> by setting his value and his name
+	 * @param d <code>Integer</code> Gene Value
+	 * @param Name <code>String</code> Gene's Name
+	 */
+	public void add(Integer d, String Name){this.DNA.add( new Gene(d,Name) );}
+	
+	/**
+	 * Add a new Integer {@link Gene} into <code>Dna</code> by setting his value and his name
+	 * @param d <code>int</code> Gene Value
+	 * @param Name <code>String</code> Gene's Name
+	 * @param description <code>String</code> Gene's Description
+	 */
+	public void add(Integer d, String Name, String description)
+	{
+		this.DNA.add( new Gene(d,Name,description));
+	}
+	
+	/**
+	 * Add a new Byte {@link Gene} into <code>Dna</code>  
+	 * @param d <code>Byte</code> Gene Double Value
+	 */
+	public void add(Byte d)
+	{this.DNA.add( new Gene(d) );}
+	
+	/**
+	 * Add a new Byte {@link Gene} into <code>Dna</code> by setting his value and his name
+	 * @param d <code>Byte</code> Gene Value
+	 * @param Name <code>String</code> Gene's Name
+	 */
+	public void add(Byte d, String Name){this.DNA.add( new Gene(d,Name) );}
+	
+	/**
+	 * Add a new Byte {@link Gene} into <code>Dna</code> by setting his value and his name
+	 * @param d <code>Byte</code> Gene Value
+	 * @param Name <code>String</code> Gene's Name
+	 * @param description <code>String</code> Gene's Description
+	 */
+	public void add(Byte d, String Name, String description)
+	{
+		this.DNA.add( new Gene(d,Name,description));
+	}
+	
+	/**
+	 * Add a new Boolean {@link Gene} into <code>Dna</code> 
+	 * @param b <code>boolean</code> Gene Value
+	 */
+	public void add(boolean b){this.DNA.add( new Gene(b) );}
+	
+	/**
+	 * Add a new Boolean {@link Gene} into <code>Dna</code>  by setting his value and his name
+	 * @param b <code>boolean</code> Gene Value
+	 * @param Name <code>String</code> Gene's Name
+	 */
+	public void add(boolean b, String Name){this.DNA.add( new Gene(b,Name) );}
+	
+	/**
+	 * Add a new Boolean {@link Gene} into <code>Dna</code>  by setting his value and his name
+	 * @param b <code>boolean</code> Gene Value
+	 * @param Name <code>String</code> Gene's Name
+	 */
+	public void add(boolean b, String Name, String Description){this.DNA.add( new Gene(b,Name,Description) );}
+	
+	
+	
+	/**
+	 * Return the {@link Gene} at specified index
+	 * @param index <code>int</code> Dna's Vector Index
+	 * @return g <code> Gene </code>
+	 */
+	public Gene getGene(int index){return this.DNA.get(index);}
+	
+	/**
+	 * Return the {@link Gene} with specified {@code String} name
+	 * @param name the name of Gene
+	 * @return Gene with specified name
+	 */
+	public Gene getGene(String name){return this.findGeneByName(name);}
+	
+	/**
+	 * @return the name of this Dna
+	 */
+	public String getName(){return this.Name;}
 	
 	/**
 	 * Return the {@link Dna#param} variable of Dna.
@@ -162,175 +277,65 @@ public class Dna implements Serializable{
 	public double getParam() {return param;}
 	
 	/**
-	 * Append a new {@link Gene} into <code>Dna</code> Vector
-	 * @param g <code>Gene</code> newGene
-	 */
-	public void add(Gene g)
-	{
-		this.DNA.add(g);
-	}
-	
-	/**
-	 * Add a new {@link Gene} into <code>Dna</code> Vector with double value.
-	 * @param d <code>double</code> Gene Value
-	 */
-	public void add(double d)
-	{
-		this.DNA.add( new Gene(d) );
-	}
-	
-	/**
-	 * Add a new {@link Gene} into <code>Dna</code> Vector with double value.
-	 * @param d <code>double</code> Gene Value
-	 * @param s <code>String</code> Gene's Description
-	 */
-	public void add(double d, String s)
-	{
-		this.DNA.add( new Gene(d,s) );
-
-	}
-	
-	/**
-	 * Add a new {@link Gene} into <code>Dna</code> Vector with boolean value.
-	 * @param b <code>boolean</code> Gene Value
-	 */
-	public void add(boolean b)
-	{
-		this.DNA.add( new Gene(b) );
-	}
-	
-	/**
-	 * Add a new {@link Gene} into <code>Dna</code> Vector with boolean value.
-	 * @param b <code>boolean</code> Gene Value
-	 * @param s <code>String</code> Gene's Description
-	 */
-	public void add(boolean b, String s)
-	{
-		this.DNA.add( new Gene(b,s) );
-	}
-	
-	/**
-	 * Return the {@link Gene} at specific index
-	 * @param index <code>int</code> Dna's Vecotor Index
-	 * @return g <code> Gene </code>
-	 */
-	public Gene getGene(int index)
-	{
-		return this.DNA.get(index);
-	}
-	
-	/**
 	 * Return the {@link Gene} double's value at specific index.
 	 * @param index <code>int</code> Dna's Vecotor Index
 	 * @return d <code>double</code>
 	 */
-	public double getGeneDouble(int index)
-	{
-		return this.DNA.get(index).getMeD();
-	}
-	
-	public boolean getGeneBoolean(int index)
-	{
-		return this.DNA.get(index).getMeB();
-	}
-	
-	
 	public int getSize(){return this.DNA.size();}
-	
 	
 	/**
 	 * This method merge this Dna with other and return a new Dna Code.
-	 * This method add some random error in the merging process to simulate a 
-	 * genetic mutation;
+	 * This method add some random error, if {@link Dna#param} is not equals to zero,
+	 *  in the merging process in order to simulate a genetic mutation;
 	 * @param otherDna
 	 * @return new Dna
 	 */
 	public Dna merge(Dna otherDna)
 	{
 	     Dna result = new Dna();
-	     int size, i=0;
+	     result.setParam( this.param + otherDna.getParam() + ( (int)  Math.abs( Math.random() - 0.4) ) );
 	     
 	     if ( this.getSize() == otherDna.getSize() )
 	    	 { 
-	    	 	size = this.getSize();
-	    	 	for(i=0;i<size;i++)
+	    	 	for(int i=0;i<this.getSize();i++)
 	    	 	{
 	    	 		result.add(   combineGene( this.DNA.get(i) , otherDna.DNA.get(i) )  );
 	    	 	}
 	    	 }
-	     
 	     return result;
 	}
 	
-	private Gene combineGene(Gene g1, Gene g2)
+	/**
+	 * {@code Static }method returns a new Dna as a parametric merge between two 
+	 * same-size Dna. 
+	 * @param firstDna 
+	 * @param secondDna
+	 * @return new merged Dna
+	 * @see Dna#param
+	 */
+	public static Dna merge(Dna firstDna, Dna secondDna)
 	{
-		Gene G = new Gene();
-		
-		if (g1.isBool() && g2.isBool() )
-			G.setGene( g1.isBool() & g2.isBool() );
-		
-		if (g1.isDouble() && g2.isDouble() )
-			if (g2.getMeD() >= g1.getMeD() )
-				G.setGene( g1.getMeD() + Math.random() * g2.getMeD() +  (  g1.getMeD() + Math.random() * g2.getMeD()    )* param   ); 
-			else
-				G.setGene( g2.getMeD() + Math.random() * g1.getMeD() +  (  g2.getMeD() + Math.random() * g1.getMeD()    )* param   ); 
-		
-		return G;
+		   Dna result = new Dna();
+		     result.setParam( firstDna.param + secondDna.getParam() + ( (int)  Math.abs( Math.random() - 0.4) ) );
+		     
+		     if ( firstDna.getSize() == secondDna.getSize() )
+		    	 { 
+		    	 	for(int i=0;i<firstDna.getSize();i++)
+		    	 	{
+		    	 		result.add(   staticCombineGene( firstDna.getGene(i) , secondDna.getGene(i) ,result.getParam() ) );
+		    	 	}
+		    	 }
+		     return result;
 	}
 	
-
-	/**
-	 * Returns a XML file represent this DNA with description List of ist genes
-	 * @param fileName <code>String</code> File Name
-	 * @see Dna#load(String)
-	 */
-	public void toXML(String fileName)
-	{
-
-		try
-		{
-		 //Elemento radice
-	      Element DnaRoot = new Element("DNA");
-	      //Documento
-	      Document document = new Document(DnaRoot);
-	      
-	      for (int i=0; i< this.DNA.size();i++)
-	      {
-	    	  Element gene = new Element("gene");
-	    	  
-	    	  gene.setAttribute("index", String.valueOf(i));
-	    	  
-	    	  if ( this.DNA.get(i).isBool() )
-	    		  {
-	    		  gene.setAttribute("Type", "Bool" );
-	    	  	  gene.setAttribute("value", String.valueOf( this.DNA.get(i).getMeB() ) );
-	    		  }
-	    	  
-	    	  if ( this.DNA.get(i).isDouble() )
-	    	  {
-	    		  gene.setAttribute("Type", "Double" );
-	    	  	  gene.setAttribute("value", String.valueOf( this.DNA.get(i).getMeD() ) );
-	    	  }
-	    	 DnaRoot.addContent( gene );
-	     }  
-	    	  
-	      XMLOutputter outputter = new XMLOutputter();
-	      outputter.setFormat(Format.getPrettyFormat());
-	      outputter.output(document, new FileOutputStream(fileName+".xml"));
-	     
-		  }//endof Try	
-	      
-		  catch (IOException e) {
-		      System.err.println("Errore durante il parsing del documento");
-		      e.printStackTrace();
-		    } 
-	}
-
 	/**
 	 * Load a list of Genes from an XML file previously saved using {@link Dna#save(String)}
-	 * @param fileName <code>String</code> File Name
+	 * Can't load Gene containing not primitive objects!!
+	 * @param <code>String</code> fileName
+	 * @deprecated Use static method {@link Dna#load(String)}
+	 * 
 	 */
-	public void load(String fileName)
+	public void loadXML(String fileName)
 	{
 		try
 		{
@@ -341,15 +346,28 @@ public class Dna implements Serializable{
 		      List children = root.getChildren();
 		      Iterator iterator = children.iterator(); 
 		      
+		      this.setName( root.getAttributeValue("Name") );
+		      this.setParam(Double.parseDouble(root.getAttributeValue("Param") )  );
 		      while(iterator.hasNext())
 		      {
 		          Element gene = (Element)iterator.next(); 
-		          
+		          Gene g = new Gene();
 		          if ( gene.getAttributeValue("Type").equalsIgnoreCase("Bool") )
-		         	 this.DNA.add(new Gene( Boolean.parseBoolean(gene.getAttributeValue("value") )  ));
+		         	 g.setValue(( Boolean.parseBoolean(gene.getAttributeValue("Value") )  ));
 		        	
 		          if ( gene.getAttributeValue("Type").equalsIgnoreCase("Double") )
-		        	  this.DNA.add(new Gene( Double.parseDouble(gene.getAttributeValue("value") )  ));
+		        	  g.setValue(( Double.parseDouble(gene.getAttributeValue("Value") )  ));
+		          
+		          if ( gene.getAttributeValue("Type").equalsIgnoreCase("Integer") )
+		        	  g.setValue(( Integer.parseInt(gene.getAttributeValue("Value") )  ));
+		          
+		          if ( gene.getAttributeValue("Type").equalsIgnoreCase("Byte") )
+		        	  g.setValue(( Byte.parseByte(gene.getAttributeValue("Value") )  ));
+		          
+		          g.setName(gene.getAttributeValue("Name"));
+		          g.setDescription( gene.getAttributeValue("Description"));
+		          this.DNA.add(g);
+		          
 		      }	
 		}
 		
@@ -358,6 +376,36 @@ public class Dna implements Serializable{
 			 System.err.println("Errore durante la lettura dal file");
 		      e.printStackTrace(); 
 		}
+	}
+	
+	/**
+	 * {@code Static }method returns a previusly saved Dna. 
+	 * Dna file must be a previusly saved .dna file extension
+	 * @param filename file name
+	 * @return a file loaded {@link Dna}
+	 * @see {@link Dna#save(String)}
+	 */
+	public static Dna load(String filename)
+	{
+		Dna loaded = null;
+		FileInputStream fis = null;
+	    ObjectInputStream in = null;
+		try
+		 {
+		   fis = new FileInputStream(filename);
+	       in = new ObjectInputStream(fis);
+		   loaded = (Dna)in.readObject();
+	       in.close();
+	     }
+	     catch(IOException ex)
+	     {
+		     ex.printStackTrace();
+	     }
+	     catch(ClassNotFoundException ex)
+	     {
+	     ex.printStackTrace();
+	     }
+	     return loaded;
 	}
 	
 	/**
@@ -402,14 +450,201 @@ public class Dna implements Serializable{
 	 			}
 	}
 	
-	public String toString()
+	
+	/**
+	 * Set the name of this Dna
+	 * @param name of this Dna
+	 */
+	public void setName(String name){this.Name = name;}
+	
+	/**
+	 * Set the {@link Dna#param} variable of Dna. 
+	 * Should be a double between 0 and 1
+	 * @param p <code>double</code> Dna Parameter {@link Dna#param}
+	 */
+	public void setParam(double p)
 	{
-		String output="\nDNA Descriptor:";
-		for(int i=0;i<this.DNA.size();i++)
-			output+=this.DNA.get(i).toString();
-		
-		return output + "\nSize:" + this.getSize();
+		if(p<0)
+			this.param=Math.abs(p);
+		if(p>1)
+			this.param=1;
 	}
 	
-}
+	
+	/**
+	 * Set the {@link Dna#param} variable of Dna as a random double 
+	 */
+	public void setRandomParam(){this.param = Math.random();}
+	
+	public String toString()
+	{
+		String output="\n DNA " 
+			    +"\n Name: " + this.getName() 
+				+"\n Parameter: " + this.getParam()
+				+"\n Size: " + this.getSize()
+				+"\n---------------------------------"
+				+"\n Genes List"
+				+"\n---------------------------------";
+		for(int i=0;i<this.DNA.size();i++)
+			{ output+=this.getGene(i).toString()
+			    +"\n---------------------------------"; 
+			}
+		return output;
+	}
 
+	
+	/**
+	 * Write a XML file represent this DNA with description List of ist genes
+	 * @param <code>String</code> fileName
+	 * @see Dna#load(String)
+	 */
+	public void toXML(String fileName)
+	{
+		try
+		{
+		 //Elemento radice
+	      Element DnaRoot = new Element("DNA");
+	      //Documento
+	      Document document = new Document(DnaRoot);
+	      Element Dna = new Element("DNA");
+	      Dna.setAttribute("Name", this.Name);
+	      Dna.setAttribute("Param", String.valueOf(this.param));
+	      Dna.setAttribute("Size",String.valueOf(this.getSize()));
+	      DnaRoot.addContent(Dna);
+	      for (int i=0; i< this.DNA.size();i++)
+	      {
+	    	  Element gene = new Element("gene");
+	    	  
+	    	  gene.setAttribute("index", String.valueOf(i));
+	    	  
+	    	  gene.setAttribute("Name",this.getGene(i).getName());
+	    	  gene.setAttribute("Type", this.getGene(i).getType());
+	    	  gene.setAttribute("Value", this.getGene(i).stringValue());
+	    	  gene.setAttribute("Description",this.getGene(i).getDescription());
+	    	  
+	    	 DnaRoot.addContent( gene );
+	     }  
+	    	  
+	      XMLOutputter outputter = new XMLOutputter();
+	      outputter.setFormat(Format.getPrettyFormat());
+	      outputter.output(document, new FileOutputStream(fileName+".xml"));
+	     
+		  }//endof Try	
+	      
+		  catch (IOException e) {
+		      System.err.println("Errore durante il parsing del documento");
+		      e.printStackTrace();
+		    } 
+	}
+
+
+	/*
+	 * *****************************************************
+	 * PRIVATE and PROTECTED METHODS
+	 * *****************************************************
+	 */
+	
+	/**
+	 * Return a new Gene as a parametric {@link Dna#param} combination between they values
+	 */
+	protected Gene combineGene(Gene g1, Gene g2) throws NumberFormatException
+	{
+		Gene G= new Gene();
+		//Se sono entrambi "unibili"
+		if(g1.isMeargeable() && g2.isMeargeable() )
+		{	//se sono entrambi la stessa classe
+			if(  g1.getType().equalsIgnoreCase(g2.getType()) )
+				{
+					if(g1.getType().equalsIgnoreCase("Boolean"))
+						G.setValue( g1.booleanValue() & g2.booleanValue() );
+					
+					if(g1.getType().equalsIgnoreCase("Integer") || g1.getType().equalsIgnoreCase("int")  )
+						G.setValue((int) (((g1.intValue() + g2.intValue())/2)+ ((g1.intValue() + g2.intValue())/2)*this.param )  );
+						
+					if(g1.getType().equalsIgnoreCase("Byte"))
+						G.setValue( g1.byteValue() & g2.byteValue() );
+					
+					if(g1.getType().equalsIgnoreCase("Double") )
+						G.setValue((int) (((g1.doubleValue() + g2.doubleValue())/2)+ ((g1.doubleValue() + g2.doubleValue())/2)*this.param )  );
+				
+				G.setName( g1.getName());
+				G.setDescription(g1.getDescription());
+				G.setMergeable(true);	
+				}				
+		}
+		else //prendo uno dei due geni a caso
+		{
+			int random = (int) (Math.random() * 2);
+			switch (random)
+			{
+				case 0: G.setValue(( g1.getOb())); break;
+				case 1: G.setValue(( g2.getOb()));
+			}
+		}
+		return G;		
+	}
+	
+	
+
+	/**
+	 * Find a Dna's Gene by his Name
+	 * @param name Gene's Name
+	 * @return Gene
+	 */
+	protected Gene findGeneByName(String name)
+	{
+		boolean find=false;
+		int index = 0;
+		for(int i=0;i<this.getSize();i++)
+			if(this.getGene(i).getName().equalsIgnoreCase(name))
+				{find=true;index=i;}
+		
+		if(find)
+			return this.getGene(index);
+		else
+			return null;
+		
+			
+	}
+	
+	
+	/**
+	 * Return a new Gene as a parametric {@link Dna#param} combination between they values
+	 */
+    private static Gene staticCombineGene(Gene g1, Gene g2, double param) throws NumberFormatException
+	{
+		Gene G= new Gene();
+		//Se sono entrambi "unibili"
+		if(g1.isMeargeable() && g2.isMeargeable() )
+		{	//se sono entrambi la stessa classe
+			if(  g1.getType().equalsIgnoreCase(g2.getType()) )
+				{
+					if(g1.getType().equalsIgnoreCase("Boolean"))
+						G.setValue( g1.booleanValue() & g2.booleanValue() );
+					
+					if(g1.getType().equalsIgnoreCase("Integer") || g1.getType().equalsIgnoreCase("int")  )
+						G.setValue((int) (((g1.intValue() + g2.intValue())/2)+ ((g1.intValue() + g2.intValue())/2)*param )  );
+						
+					if(g1.getType().equalsIgnoreCase("Byte"))
+						G.setValue( g1.byteValue() & g2.byteValue() );
+					
+					if(g1.getType().equalsIgnoreCase("Double") )
+						G.setValue((int) (((g1.doubleValue() + g2.doubleValue())/2)+ ((g1.doubleValue() + g2.doubleValue())/2)*param )  );
+				
+				G.setName( g1.getName());
+				G.setDescription(g1.getDescription());
+				G.setMergeable(true);	
+				}				
+		}
+		else //prendo uno dei due geni a caso
+		{
+			int random = (int) (Math.random() * 2);
+			switch (random)
+			{
+				case 0: G.setValue(( g1.getOb())); break;
+				case 1: G.setValue(( g2.getOb()));
+			}
+		}
+		return G;		
+	}
+}
