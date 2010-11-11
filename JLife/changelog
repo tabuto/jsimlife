@@ -1,0 +1,17 @@
+
+JLife v. 0.1.1
+ALL: class now uses jenetic2.0
+ALL: Class use J2DGF v0.6
+
+
+Jenetic Package v. 0.2.0
+com.tabuto.jenetic.Gene: Gene is now a Generics Type, containing every kind of object;
+com.tabuto.jenetic.Gene: Autodetect type;
+com.tabuto.jenetic.Gene: can return every object
+com.tabuto.jenetic.Gene: improve jdoc comments
+com.tabuto.jenetic.Dna: Manages Gene2.0
+com.tabuto.jenetic.Dna: Add static method to import/load any kind of gene;
+com.tabuto.jenetic.Dna: Improve toXml method;
+
+JLife v. 0.1.0
+

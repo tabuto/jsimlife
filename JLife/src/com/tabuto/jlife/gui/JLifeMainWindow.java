@@ -1,0 +1,228 @@
+/**
+* @author Francesco di Dio
+* Date: 08/nov/2010 15.18.55
+* Titolo: JLifeMainWindow.java
+* Versione: 0.1.1 Rev.a:
+*/
+
+
+/*
+ * Copyright (c) 2010 Francesco di Dio.
+ * tabuto83@gmail.com 
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+ /*
+  * Inserisci qui breve descrizione in italiano della classe
+  */
+
+package com.tabuto.jlife.gui;
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.image.BufferStrategy;
+
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
+import javax.swing.WindowConstants;
+
+
+
+public class JLifeMainWindow extends JFrame {
+	
+	private static final long serialVersionUID = 1L;
+	BufferStrategy bs;      //BufferStrategy
+    int W=1024,H=668;       //Window Frame Size
+    Dimension d;            //Dimension of window size
+    private static final String version =" v.0.1.1 BETA";
+    private static final String title="JSimLife";
+    boolean PLAY = true;
+    boolean STOP = false;
+    
+    //GUI PANELS AND ELEMENTS
+    JLifeCanvas panel;
+    JMenuBar j2dmenubar;
+    JLifeLeftControlPanel cp_west;
+    JLifeRightControlPanel cp_east;
+    JLifeBottomPanel bottom;
+    JScrollPane scroller;
+    
+    public JLifeMainWindow()
+    {
+    	d = new Dimension(W,H);
+    	cp_west = new JLifeLeftControlPanel(d);
+    	cp_east = new JLifeRightControlPanel(d);
+    	panel = new JLifeCanvas(1024,1024); //Declare the DrawingPanel
+    	scroller = new JScrollPane(panel);
+    	bottom = new JLifeBottomPanel(d);
+    	j2dmenubar = new JMenuBar();
+    	
+        setTitle(title + version);
+        setSize(d.width,d.height);
+        setResizable(true);
+    	BufferStrategy bs;
+		createBufferStrategy(1);
+		bs = getBufferStrategy();
+        setLayout(new BorderLayout());
+        cp_west.setVisible(true);
+        //cp_west.setCanvasPanel(panel);
+        cp_east.setVisible(true);
+        bottom.setVisible(true);
+        addMenu();
+        panel.setFocusable(true);
+        this.getContentPane().add(scroller,BorderLayout.CENTER);
+        this.getContentPane().add( cp_west, BorderLayout.LINE_START);
+        this.getContentPane().add( cp_east, BorderLayout.LINE_END);
+        this.getContentPane().add( bottom, BorderLayout.PAGE_END);
+        this.setJMenuBar(j2dmenubar);
+        pack();        
+        this.setVisible(true);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);       
+    }
+    
+    //Start the game
+    public void startNow()
+    {
+    	if(!STOP)
+        panel.initStuff();
+		
+    	while(PLAY){ panel.run(); };   
+    }
+
+    //ADDMENU ROUTINES
+    
+    private void addMenu()
+    {
+    	 //MENU
+        //CREATE THE MENU BAR
+        
+        j2dmenubar.setIgnoreRepaint(true);
+     
+        
+        //FILE MENU
+        JMenu filemenu = new JMenu("JSimLife");
+        filemenu.setMnemonic('J');
+        		//ITEMS
+        				//EXIT
+        		JMenuItem exit = new JMenuItem("Exit");
+        		exit.setMnemonic('Q');
+        		exit.addActionListener(new ActionListener()
+				{
+        			public void actionPerformed( ActionEvent action )
+						{
+        					System.exit(0);
+						}
+				});
+        		filemenu.add( exit );
+        		
+         filemenu.getPopupMenu().setLightWeightPopupEnabled(false);
+
+        	
+        // ACTION MENU
+        JMenu actionmenu = new JMenu("Action");
+        actionmenu.setMnemonic('A');
+        		//ITEMS
+        				//START
+        	JMenuItem start = new JMenuItem("Start");
+        	start.setMnemonic('S');
+        	start.setAccelerator(KeyStroke.getKeyStroke(
+      		         KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+        	start.addActionListener(new ActionListener()
+			{
+    			public void actionPerformed( ActionEvent action )
+					{panel.Play();}
+			});
+        	actionmenu.add(start);
+        		
+        				//STEP
+        	JMenuItem step = new JMenuItem("Step");
+        	step.setMnemonic('E');
+        	step.setAccelerator(KeyStroke.getKeyStroke(
+      		         KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+        	step.addActionListener(new ActionListener()
+			{
+    			public void actionPerformed( ActionEvent action )
+					{panel.Step();}
+			});
+        	actionmenu.add(step);
+        	
+        				//STOP
+        	JMenuItem stop = new JMenuItem("Stop");
+        	stop.setMnemonic('T');
+        	stop.setAccelerator(KeyStroke.getKeyStroke(
+   		         KeyEvent.VK_T, ActionEvent.CTRL_MASK));
+        	stop.addActionListener(new ActionListener()
+			{
+    			public void actionPerformed( ActionEvent action )
+					{   panel.Stop(); }
+			});
+        	actionmenu.add(stop);
+        	
+        				//RESET
+        	JMenuItem reset = new JMenuItem("Reset");
+        	reset.setMnemonic(KeyEvent.VK_R);
+        	reset.setAccelerator(KeyStroke.getKeyStroke(
+        		         KeyEvent.VK_R, ActionEvent.CTRL_MASK));
+        	reset.addActionListener(new ActionListener()
+        									{
+        	      public void actionPerformed( ActionEvent action )
+        	      								{
+        										//panel.deleteStuff();
+        										panel.initStuff();
+        	      								}
+        									});
+        	actionmenu.add(reset);
+        	
+        actionmenu.getPopupMenu().setLightWeightPopupEnabled(false);
+        
+        // ABOUT MENU
+        JMenu aboutmenu = new JMenu("About");
+        	//ITEMS
+        				//INFO
+    		JMenuItem about = new JMenuItem("Info");
+    		about.addActionListener(new ActionListener()
+			{
+    			
+      	      public void actionPerformed( ActionEvent action )
+      	      								{
+      	    	  		JOptionPane.showMessageDialog(null, 
+      	    	  				"JUniverse "+ version+" is written by tabuto83", 
+      	    	  				"About", 
+      	    	  				JOptionPane.PLAIN_MESSAGE);
+      	      								}
+      									});
+    	aboutmenu.add(about);
+    	
+    	aboutmenu.getPopupMenu().setLightWeightPopupEnabled(false);
+    	
+    	//ADD THE MENU AT MENUBAR
+        j2dmenubar.add( filemenu);
+        j2dmenubar.add( actionmenu) ;
+        j2dmenubar.add( aboutmenu);
+        j2dmenubar.setVisible(true);
+        j2dmenubar.setIgnoreRepaint(true);
+        j2dmenubar.setFocusable(true);
+
+    }
+    
+}
