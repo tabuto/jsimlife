@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Tabuto"/>
+	<classpathentry kind="lib" path="/media/DATA/Home/project/Java/eclipse/workspace/lib/jdom.jar"/>
+	<classpathentry kind="lib" path="/media/DATA/Home/project/Java/eclipse/workspace/lib/J2DGF_v0.6.0_source_bin_doc.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
