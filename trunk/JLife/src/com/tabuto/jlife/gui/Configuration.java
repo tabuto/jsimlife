@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 08/nov/2010 15.26.42
-* Titolo: JLifeRightControlPanel.java
-* Versione: 0.1.1 Rev.a:
+* Date: 16/nov/2010 14.55.28
+* Titolo: Configuration.java
+* Versione: 0.1.2 Rev.a:
 */
 
 
@@ -25,40 +25,28 @@
  */
 
  /*
-  * Inserisci qui breve descrizione in italiano della classe
+  * Classe che incapsula i parametri di configurazione, salvandoli in un file XML
   */
 
 package com.tabuto.jlife.gui;
 
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 
-import javax.swing.JButton;
-
-import com.tabuto.j2dgf.gui.J2DControlPanel;
-
-
-public class JLifeRightControlPanel extends J2DControlPanel{
+public class Configuration {
 	
-
 	/**
-	 * 
+	 * Language Setting
 	 */
-	private static final long serialVersionUID = 8686747746289847490L;
-
-	public JLifeRightControlPanel(Dimension d)
-	{
-		super(d);
-		this.setLayout(new FlowLayout());
-		addContent();
-	}
-
-	protected void addContent()
-	{
-		 JButton Test = new JButton("Test");
-		 this.add(Test);
-		 
-		 JButton Right = new JButton("Right");
-		 this.add(Right);
-	}
+	private String LOCALE="";
+	
+	/**
+	 * Default Save/Load directory PATH
+	 */
+	private String PATH="";
+	
+	
+	public void setLocale(String locale){this.LOCALE=locale;}
+	public void setPath(String p){this.PATH = p;}
+	
+	public String getLocale(){return this.LOCALE;}
+	public String getPath(){return this.PATH;}
 }

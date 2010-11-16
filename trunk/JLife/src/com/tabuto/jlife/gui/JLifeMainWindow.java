@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 08/nov/2010 15.18.55
 * Titolo: JLifeMainWindow.java
-* Versione: 0.1.1 Rev.a:
+* Versione: 0.1.2 Rev.a:
 */
 
 
@@ -36,7 +36,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -45,6 +52,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
+
+import com.tabuto.jenetic.Dna;
+import com.tabuto.jlife.JLife;
 
 
 
@@ -59,8 +69,11 @@ public class JLifeMainWindow extends JFrame {
     boolean PLAY = true;
     boolean STOP = false;
     
+    boolean simLoad = false;
+    boolean saved = false;
+    
     //GUI PANELS AND ELEMENTS
-    JLifeCanvas panel;
+    Simulation panel;
     JMenuBar j2dmenubar;
     JLifeLeftControlPanel cp_west;
     JLifeRightControlPanel cp_east;
@@ -70,12 +83,11 @@ public class JLifeMainWindow extends JFrame {
     public JLifeMainWindow()
     {
     	d = new Dimension(W,H);
-    	cp_west = new JLifeLeftControlPanel(d);
-    	cp_east = new JLifeRightControlPanel(d);
-    	panel = new JLifeCanvas(1024,1024); //Declare the DrawingPanel
-    	scroller = new JScrollPane(panel);
+    
     	bottom = new JLifeBottomPanel(d);
     	j2dmenubar = new JMenuBar();
+    	
+    	
     	
         setTitle(title + version);
         setSize(d.width,d.height);
@@ -84,15 +96,11 @@ public class JLifeMainWindow extends JFrame {
 		createBufferStrategy(1);
 		bs = getBufferStrategy();
         setLayout(new BorderLayout());
-        cp_west.setVisible(true);
-        //cp_west.setCanvasPanel(panel);
-        cp_east.setVisible(true);
+       
+        this.newSimulation();
         bottom.setVisible(true);
         addMenu();
-        panel.setFocusable(true);
-        this.getContentPane().add(scroller,BorderLayout.CENTER);
-        this.getContentPane().add( cp_west, BorderLayout.LINE_START);
-        this.getContentPane().add( cp_east, BorderLayout.LINE_END);
+   
         this.getContentPane().add( bottom, BorderLayout.PAGE_END);
         this.setJMenuBar(j2dmenubar);
         pack();        
@@ -103,9 +111,7 @@ public class JLifeMainWindow extends JFrame {
     //Start the game
     public void startNow()
     {
-    	if(!STOP)
-        panel.initStuff();
-		
+    	if(panel!=null)
     	while(PLAY){ panel.run(); };   
     }
 
@@ -123,6 +129,43 @@ public class JLifeMainWindow extends JFrame {
         JMenu filemenu = new JMenu("JSimLife");
         filemenu.setMnemonic('J');
         		//ITEMS
+        				//New
+    	JMenuItem newSim = new JMenuItem("New");
+		newSim.setMnemonic('N');
+		newSim.addActionListener(new ActionListener()
+		{
+			public void actionPerformed( ActionEvent action )
+				{
+					resetSimulation();
+				}
+		});
+		filemenu.add( newSim );
+        				//Open
+		JMenuItem open = new JMenuItem("Open");
+		open.setMnemonic('O');
+		open.addActionListener(new OpenSimChooser());
+		filemenu.add( open);
+		
+        				//Save
+		JMenuItem save = new JMenuItem("Save");
+		save.setMnemonic('S');
+		save.addActionListener(new ActionListener()
+		{
+			public void actionPerformed( ActionEvent action )
+				{
+					if( panel.Game.isSaved() )
+						panel.saveGame();
+					else
+						new OpenSimChooser();
+				}
+		});
+		filemenu.add( save );
+		
+        				//Save as
+		JMenuItem saveAs = new JMenuItem("Save As");
+		saveAs.setMnemonic('N');
+		saveAs.addActionListener(new SaveSimChooser());
+		filemenu.add( saveAs );
         				//EXIT
         		JMenuItem exit = new JMenuItem("Exit");
         		exit.setMnemonic('Q');
@@ -150,7 +193,7 @@ public class JLifeMainWindow extends JFrame {
         	start.addActionListener(new ActionListener()
 			{
     			public void actionPerformed( ActionEvent action )
-					{panel.Play();}
+					{if(panel!=null)panel.Play();}
 			});
         	actionmenu.add(start);
         		
@@ -162,7 +205,7 @@ public class JLifeMainWindow extends JFrame {
         	step.addActionListener(new ActionListener()
 			{
     			public void actionPerformed( ActionEvent action )
-					{panel.Step();}
+					{if(panel!=null)panel.Step();}
 			});
         	actionmenu.add(step);
         	
@@ -174,7 +217,7 @@ public class JLifeMainWindow extends JFrame {
         	stop.addActionListener(new ActionListener()
 			{
     			public void actionPerformed( ActionEvent action )
-					{   panel.Stop(); }
+					{  if (panel!=null) panel.Stop(); }
 			});
         	actionmenu.add(stop);
         	
@@ -188,7 +231,7 @@ public class JLifeMainWindow extends JFrame {
         	      public void actionPerformed( ActionEvent action )
         	      								{
         										//panel.deleteStuff();
-        										panel.initStuff();
+        	    	  							resetSimulation();
         	      								}
         									});
         	actionmenu.add(reset);
@@ -222,7 +265,87 @@ public class JLifeMainWindow extends JFrame {
         j2dmenubar.setVisible(true);
         j2dmenubar.setIgnoreRepaint(true);
         j2dmenubar.setFocusable(true);
+        
+        
 
     }
     
-}
+    
+    //Menu Controls
+    
+    public void newSimulation()
+    {
+    	PLAY=true;
+    	panel = new Simulation(1024,1024); //Declare the DrawingPanel
+    	cp_west = new JLifeLeftControlPanel(d);
+    	cp_east = new JLifeRightControlPanel(d);
+    	scroller = new JScrollPane(panel);
+    	cp_west.setCanvasPanel(panel);
+    	
+    	 cp_west.setVisible(true);
+         //cp_west.setCanvasPanel(panel);
+         cp_east.setVisible(true);
+         
+         panel.setFocusable(true);
+         this.getContentPane().add(scroller,BorderLayout.CENTER);
+         this.getContentPane().add( cp_west, BorderLayout.LINE_START);
+         this.getContentPane().add( cp_east, BorderLayout.LINE_END);
+         panel.initStuff();
+    }
+    
+   
+        
+    public void resetSimulation()
+    {
+    	if (JOptionPane.showConfirmDialog(this,
+				"The actual Simulation is going to be lost, are you sure?",
+				"Confirm new Simulation",
+				 JOptionPane.YES_NO_CANCEL_OPTION,
+				 JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
+	{PLAY=false; this.panel.Game.reset();}
+
+    }
+    
+    	
+    //INNER PRIVATE CLASSES
+    private class OpenSimChooser implements ActionListener 
+    {
+
+        public void actionPerformed(ActionEvent e) 
+        {
+          try{
+  
+            JFileChooser fileChooser = new JFileChooser();
+   
+            int n = fileChooser.showOpenDialog(JLifeMainWindow.this);
+            if (n == JFileChooser.APPROVE_OPTION) 
+            	{	
+        		  JLifeMainWindow.this.panel.loadGame( fileChooser.getSelectedFile().getAbsolutePath());
+            	}
+          	 
+          	} catch (Exception ex) {}
+        }
+    }
+        
+    
+    //INNER PRIVATE CLASSES
+    private class SaveSimChooser implements ActionListener {
+
+        public void actionPerformed(ActionEvent e) {
+          try {
+  
+            JFileChooser fileChooser = new JFileChooser();
+   
+            int n = fileChooser.showSaveDialog(JLifeMainWindow.this);
+            if (n == JFileChooser.APPROVE_OPTION) 
+            {
+            	JLifeMainWindow.this.panel.Game.setName(fileChooser.getSelectedFile().getAbsolutePath());
+            	JLifeMainWindow.this.panel.saveGame();
+            }
+           
+            
+          } catch (Exception ex) {}
+        }
+      }
+    
+}//END CLASS

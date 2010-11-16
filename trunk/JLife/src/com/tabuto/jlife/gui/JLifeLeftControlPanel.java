@@ -45,7 +45,7 @@ public class JLifeLeftControlPanel extends J2DControlPanel {
 	/**
 	 * 
 	 */
-	private JLifeCanvas jlc;
+	private Simulation jlc;
 	
 	private static final long serialVersionUID = -8188812638425919153L;
 
@@ -59,22 +59,29 @@ public class JLifeLeftControlPanel extends J2DControlPanel {
 	protected void addContent()
 	{
 		 JButton AddCell = new JButton("New Cell");
-		
+		 this.add(AddCell);
 		 AddCell.addActionListener(new ActionListener()
 			{
  			public void actionPerformed( ActionEvent action )
 					{
- 					jlc.addNewCells(1);
+ 					jlc.addCell();
 					}
 			});
-		 this.add(AddCell);
+		 
 		 
 		 
 		 JButton AddEat = new JButton("New Eat");
+		 AddEat.addActionListener(new ActionListener()
+			{
+			public void actionPerformed( ActionEvent action )
+					{
+					jlc.addSeed();
+					}
+			});
 		 this.add(AddEat);
 	}
 	
-	public void setCanvasPanel(JLifeCanvas j)
+	public void setCanvasPanel(Simulation j)
 	{
 		this.jlc=j;
 	}

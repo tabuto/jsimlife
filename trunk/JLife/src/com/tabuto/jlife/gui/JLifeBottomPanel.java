@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 08/nov/2010 15.29.36
 * Titolo: JLifeBottomPanel.java
-* Versione: 0.1.1 Rev.a:
+* Versione: 0.1.2 Rev.a:
 */
 
 
