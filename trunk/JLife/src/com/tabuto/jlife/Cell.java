@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 11/nov/2010 16.03.41
 * Titolo: Cell.java
-* Versione: 0.1.1 Rev.a:
+* Versione: 0.1.2 Rev.a:
 */
 
 /*
@@ -24,7 +24,19 @@
  */
 
  /*
-  * Rappresenta una forma di vita elementare
+  * Rappresenta una forma di vita elementare.
+  * La classe Cell ha diversi stati interni di comportamento:
+  * HUNGRY -> va in cerca di cibo: se ha in memoria una posizione di cibo va li, altrimenti cerca
+  * HORNY -> va in cerca di partner
+  * BORED -> cazzeggia 
+  * SCARED -> cambia continuamente direzione
+  * 
+  * Tutti questi stati sono altamente parametrizzati con variabili contenute nel DNA
+  * di modo che è possibile osservare variazioni significative al variare delle generazioni
+  * 
+  * Ogni singolo movimento,e le diverse azioni consumano energie allo sprite, 
+  * ogni sprite ha un tot numero di energie totali da spendere, finite le quali muore.
+  * 
   */
 
 package com.tabuto.jlife;
@@ -32,6 +44,7 @@ package com.tabuto.jlife;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.Serializable;
 
 import com.tabuto.j2dgf.Sprite;
 import com.tabuto.jenetic.Dna;
@@ -50,17 +63,26 @@ import com.tabuto.util.Point;
  * 
  * @author tabuto83
  * 
- * @version 0.1.1
+ * @version 0.1.2
  * 
  * @see Gene
  * @see Dna
  */
-public class Cell extends Sprite
+public class Cell extends Sprite implements Serializable
 {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4799690079392608540L;
+
+	private enum CellState  {NULL, HUNGRY, HORNY, BORED, SCARY}
 
 	private Dna CellDna;
 	
 	//GENETIC PARAMETERS
+	
+    
 	
 	private int energy=50; 
 	
