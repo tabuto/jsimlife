@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 08/nov/2010 15.46.39
 * Titolo: Main.java
-* Versione: 0.1.1 Rev.a:
+* Versione: 0.1.2 Rev.a:
 */
 
 
