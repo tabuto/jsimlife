@@ -1,5 +1,10 @@
 
-JLife v. 0.1.1
+JLife v. 0.1.2 BETA
+ADD Class JLife as wrapper class of the MODEL layer (Cell,Seed,Collision,ecc..)
+ADD feature: Saving/Loading simulation is now avaible
+ALL Class use J2DGF v.0.6.2
+
+JLife v. 0.1.1 BETA
 ALL: class now uses jenetic2.0
 ALL: Class use J2DGF v0.6
 
