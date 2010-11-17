@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 15/nov/2010 12.05.43
+* Date: 17/nov/2010 12.05.43
 * Titolo: JLife.java
-* Versione: 0.1.2 Rev.a:
+* Versione: 0.1.4 Rev.a:
 */
 
 
@@ -179,5 +179,9 @@ public class JLife implements Serializable {
 	
 	public String getPath(){return this.PATH;}
 	
+	public int getActualCellCount()
+	{
+		return cellsGroup.size();
+	}
 	
 }//END CLASS

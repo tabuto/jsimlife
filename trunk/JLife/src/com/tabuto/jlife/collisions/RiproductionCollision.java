@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 15/nov/2010 17.32.16
+* Date: 17/nov/2010 17.32.16
 * Titolo: RiproductionCollision.java
-* Versione: 0.1.2 Rev.a:
+* Versione: 0.1.4 Rev.a:
 */
 
 
@@ -60,14 +60,26 @@ public class RiproductionCollision extends CollisionDetector{
 		Dna newBornDna;
 		//TO-DO
 		
-		if (cell1.isRiproduction() && cell1.isRiproduction())
+		if (cell1.isHorny() && cell2.isHorny())
 				{
-				newBornDna= cell1.getDna().merge( cell2.getDna());
-				cell1.setRiproduction(false);
-				cell2.setRiproduction(false);
-				cell1.age(); cell2.age();
-				newCell = new Cell(cell1.getX(),cell2.getY(),newBornDna);
+				newBornDna= Dna.merge(cell1.getDna(), cell2.getDna());
+				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());
+				cell2.setEnergy(cell2.getEnergy() - cell2.getRiproductionEnergy());
+				//cell1.age();
+				//cell2.age();
+				cell1.setBored();
+				cell2.setBored();
+				double tempAngle = cell2.getAngle();
+				cell2.setAngleRadians(cell1.getAngle());
+				cell1.setAngleRadians(tempAngle);
+				
+				newCell = new Cell(cell1.getDimension(), cell1.getX(),cell1.getY(),newBornDna);
+				// TODO: parametrizza
+				newCell.setBored();
+				newCell.setAngleRadians( Math.random() * 2 * Math.PI);
 				jlc.addCell(newCell);
+				cell1.move();
+				cell2.move();
 				
 				}
 		
