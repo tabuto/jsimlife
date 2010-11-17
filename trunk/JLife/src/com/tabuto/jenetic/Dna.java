@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 11 Novembre 2010 18.14
+* Date: 17 Novembre 2010 18.14
 * Titolo: Dna.java
-* Versione: 0.2 Rev.a:
+* Versione: 0.2.1 Rev.a:
 */
 
 
@@ -67,7 +67,7 @@ import org.jdom.output.*;
  *
  * @author tabuto83
  * 
- * @version 0.2.0
+ * @version 0.2.1
  * 
  * @see Gene
  */
@@ -81,6 +81,7 @@ public class Dna implements Serializable{
 	/**
 	 * The Vector Gene is a dinamic array where {@link Gene} are stored
 	 */
+	@SuppressWarnings("unchecked")
 	protected Vector<Gene> DNA;
 	/**
 	 * This variable represent the percent of mutation introduced by {@link Dna#merge(Dna)} method.
@@ -99,6 +100,7 @@ public class Dna implements Serializable{
 	/**
 	 * This method instance a new empty <code>Dna</code> Object.
 	 */
+	@SuppressWarnings("unchecked")
 	public Dna()
 	{
 		this.DNA = new Vector<Gene>();
@@ -151,6 +153,7 @@ public class Dna implements Serializable{
 	 * Append a new {@link Gene} into <code>Dna</code> Vector
 	 * @param g <code>Gene</code> newGene
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(Gene g){this.DNA.add(g);}
 	
 	
@@ -158,6 +161,7 @@ public class Dna implements Serializable{
 	 * Add a new Double {@link Gene} into <code>Dna</code>  
 	 * @param d <code>double</code> Gene Double Value
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(double d)
 	{this.DNA.add( new Gene(d) );}
 	
@@ -166,6 +170,7 @@ public class Dna implements Serializable{
 	 * @param d <code>double</code> Gene Value
 	 * @param Name <code>String</code> Gene's Name
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(double d, String Name){this.DNA.add( new Gene(d,Name) );}
 	
 	/**
@@ -174,6 +179,7 @@ public class Dna implements Serializable{
 	 * @param Name <code>String</code> Gene's Name
 	 * @param description <code>String</code> Gene's Description
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(double d, String Name, String description)
 	{
 		this.DNA.add( new Gene(d,Name,description));
@@ -183,6 +189,7 @@ public class Dna implements Serializable{
 	 * Add a new Integer {@link Gene} into <code>Dna</code>  
 	 * @param d <code>Integer</code> Gene int Value
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(Integer d)
 	{this.DNA.add( new Gene(d) );}
 	
@@ -191,6 +198,7 @@ public class Dna implements Serializable{
 	 * @param d <code>Integer</code> Gene Value
 	 * @param Name <code>String</code> Gene's Name
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(Integer d, String Name){this.DNA.add( new Gene(d,Name) );}
 	
 	/**
@@ -199,15 +207,47 @@ public class Dna implements Serializable{
 	 * @param Name <code>String</code> Gene's Name
 	 * @param description <code>String</code> Gene's Description
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(Integer d, String Name, String description)
 	{
 		this.DNA.add( new Gene(d,Name,description));
 	}
 	
 	/**
+	 * Add a new Integer {@link Gene} into <code>Dna</code>  
+	 * @param d <code>Integer</code> Gene int Value
+	 */
+	@SuppressWarnings("unchecked")
+	public void add(int d)
+	{this.DNA.add( new Gene(d) );}
+	
+	/**
+	 * Add a new Integer {@link Gene} into <code>Dna</code> by setting his value and his name
+	 * @param d <code>Integer</code> Gene Value
+	 * @param Name <code>String</code> Gene's Name
+	 */
+	@SuppressWarnings("unchecked")
+	public void add(int d, String Name){this.DNA.add( new Gene(d,Name) );}
+	
+	/**
+	 * Add a new Integer {@link Gene} into <code>Dna</code> by setting his value and his name
+	 * @param d <code>int</code> Gene Value
+	 * @param Name <code>String</code> Gene's Name
+	 * @param description <code>String</code> Gene's Description
+	 */
+	@SuppressWarnings("unchecked")
+	public void add(int d, String Name, String description)
+	{
+		this.DNA.add( new Gene(d,Name,description));
+	}
+	
+	
+	
+	/**
 	 * Add a new Byte {@link Gene} into <code>Dna</code>  
 	 * @param d <code>Byte</code> Gene Double Value
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(Byte d)
 	{this.DNA.add( new Gene(d) );}
 	
@@ -216,6 +256,7 @@ public class Dna implements Serializable{
 	 * @param d <code>Byte</code> Gene Value
 	 * @param Name <code>String</code> Gene's Name
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(Byte d, String Name){this.DNA.add( new Gene(d,Name) );}
 	
 	/**
@@ -224,6 +265,7 @@ public class Dna implements Serializable{
 	 * @param Name <code>String</code> Gene's Name
 	 * @param description <code>String</code> Gene's Description
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(Byte d, String Name, String description)
 	{
 		this.DNA.add( new Gene(d,Name,description));
@@ -233,6 +275,7 @@ public class Dna implements Serializable{
 	 * Add a new Boolean {@link Gene} into <code>Dna</code> 
 	 * @param b <code>boolean</code> Gene Value
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(boolean b){this.DNA.add( new Gene(b) );}
 	
 	/**
@@ -240,6 +283,7 @@ public class Dna implements Serializable{
 	 * @param b <code>boolean</code> Gene Value
 	 * @param Name <code>String</code> Gene's Name
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(boolean b, String Name){this.DNA.add( new Gene(b,Name) );}
 	
 	/**
@@ -247,6 +291,7 @@ public class Dna implements Serializable{
 	 * @param b <code>boolean</code> Gene Value
 	 * @param Name <code>String</code> Gene's Name
 	 */
+	@SuppressWarnings("unchecked")
 	public void add(boolean b, String Name, String Description){this.DNA.add( new Gene(b,Name,Description) );}
 	
 	
@@ -256,6 +301,7 @@ public class Dna implements Serializable{
 	 * @param index <code>int</code> Dna's Vector Index
 	 * @return g <code> Gene </code>
 	 */
+	@SuppressWarnings("unchecked")
 	public Gene getGene(int index){return this.DNA.get(index);}
 	
 	/**
@@ -263,6 +309,7 @@ public class Dna implements Serializable{
 	 * @param name the name of Gene
 	 * @return Gene with specified name
 	 */
+	@SuppressWarnings("unchecked")
 	public Gene getGene(String name){return this.findGeneByName(name);}
 	
 	/**
@@ -274,7 +321,7 @@ public class Dna implements Serializable{
 	 * Return the {@link Dna#param} variable of Dna.
 	 * @return <code>double</code> Dna Parameter {@link Dna#param}
 	 */
-	public double getParam() {return param;}
+	public double getParam() {return this.param;}
 	
 	/**
 	 * Return the {@link Gene} double's value at specific index.
@@ -335,6 +382,7 @@ public class Dna implements Serializable{
 	 * @deprecated Use static method {@link Dna#load(String)}
 	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	public void loadXML(String fileName)
 	{
 		try
@@ -468,6 +516,8 @@ public class Dna implements Serializable{
 			this.param=Math.abs(p);
 		if(p>1)
 			this.param=1;
+		else
+			this.param=p;
 	}
 	
 	
@@ -547,6 +597,7 @@ public class Dna implements Serializable{
 	/**
 	 * Return a new Gene as a parametric {@link Dna#param} combination between they values
 	 */
+	@SuppressWarnings("unchecked")
 	protected Gene combineGene(Gene g1, Gene g2) throws NumberFormatException
 	{
 		Gene G= new Gene();
@@ -559,13 +610,13 @@ public class Dna implements Serializable{
 						G.setValue( g1.booleanValue() & g2.booleanValue() );
 					
 					if(g1.getType().equalsIgnoreCase("Integer") || g1.getType().equalsIgnoreCase("int")  )
-						G.setValue((int) (((g1.intValue() + g2.intValue())/2)+ ((g1.intValue() + g2.intValue())/2)*this.param )  );
+						G.setValue((int) (((g1.intValue() + g2.intValue())/2)+ (int)((g1.intValue() + g2.intValue())/2)*this.param )  );
 						
 					if(g1.getType().equalsIgnoreCase("Byte"))
 						G.setValue( g1.byteValue() & g2.byteValue() );
 					
 					if(g1.getType().equalsIgnoreCase("Double") )
-						G.setValue((int) (((g1.doubleValue() + g2.doubleValue())/2)+ ((g1.doubleValue() + g2.doubleValue())/2)*this.param )  );
+						G.setValue( (((g1.doubleValue() + g2.doubleValue())/2)+ ((g1.doubleValue() + g2.doubleValue())/2)*this.param )  );
 				
 				G.setName( g1.getName());
 				G.setDescription(g1.getDescription());
@@ -591,6 +642,7 @@ public class Dna implements Serializable{
 	 * @param name Gene's Name
 	 * @return Gene
 	 */
+	@SuppressWarnings("unchecked")
 	protected Gene findGeneByName(String name)
 	{
 		boolean find=false;
@@ -611,6 +663,7 @@ public class Dna implements Serializable{
 	/**
 	 * Return a new Gene as a parametric {@link Dna#param} combination between they values
 	 */
+	@SuppressWarnings("unchecked")
     private static Gene staticCombineGene(Gene g1, Gene g2, double param) throws NumberFormatException
 	{
 		Gene G= new Gene();
@@ -623,13 +676,13 @@ public class Dna implements Serializable{
 						G.setValue( g1.booleanValue() & g2.booleanValue() );
 					
 					if(g1.getType().equalsIgnoreCase("Integer") || g1.getType().equalsIgnoreCase("int")  )
-						G.setValue((int) (((g1.intValue() + g2.intValue())/2)+ ((g1.intValue() + g2.intValue())/2)*param )  );
+						G.setValue((int) (((g1.intValue() + g2.intValue())/2)+ (int)((g1.intValue() + g2.intValue())/2)*param )  );
 						
 					if(g1.getType().equalsIgnoreCase("Byte"))
 						G.setValue( g1.byteValue() & g2.byteValue() );
 					
 					if(g1.getType().equalsIgnoreCase("Double") )
-						G.setValue((int) (((g1.doubleValue() + g2.doubleValue())/2)+ ((g1.doubleValue() + g2.doubleValue())/2)*param )  );
+						G.setValue( (((g1.doubleValue() + g2.doubleValue())/2)+ ((g1.doubleValue() + g2.doubleValue())/2)*param )  );
 				
 				G.setName( g1.getName());
 				G.setDescription(g1.getDescription());
