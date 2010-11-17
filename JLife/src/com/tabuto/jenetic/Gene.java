@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 10 Novembre 2010 18.14
+* Date: 17 Novembre 2010 18.14
 * Titolo: Gene.java
-* Versione: 0.2 Rev.a:
+* Versione: 0.2.1 Rev.a:
 */
 
 /*
@@ -44,7 +44,7 @@ import java.util.Vector;
  * 
  * @author tabuto83
  * 
- * @version 0.2.0
+ * @version 0.2.1
  * 
  * @see com.tabuto.jenetic.dna
  */
@@ -365,6 +365,7 @@ public class Gene<E> extends Vector<E> {
 	private void autoDetectMergeable()
 	{
 		if(this.Type.equalsIgnoreCase("Double")  ||
+		   this.Type.equalsIgnoreCase("double ") ||
 		   this.Type.equalsIgnoreCase("Integer") ||
 		   this.Type.equalsIgnoreCase("int")	 ||
 		   this.Type.equalsIgnoreCase("Boolean") ||
