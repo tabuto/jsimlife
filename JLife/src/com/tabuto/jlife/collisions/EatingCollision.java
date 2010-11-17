@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 15/nov/2010 17.31.59
+* Date: 17/nov/2010 17.31.59
 * Titolo: EatingCollision.java
-* Versione: 0.1.2 Rev.a:
+* Versione: 0.1.4 Rev.a:
 */
 
 
@@ -46,6 +46,8 @@ public class EatingCollision extends CollisionDetector{
 	public EatingCollision(Group<Cell> sp1, Group<Seed> sp2)
 	 {
 		 super(sp1,sp2);
+		 //"Cell "see" Seeds upon 100px of distance"
+		 this.setDistance(100);
 	 }
 	 //Override CollisionAction
 	 public void CollisionAction(int s1, int s2)
@@ -60,11 +62,23 @@ public class EatingCollision extends CollisionDetector{
 		
 		//if (cell1.isAlive() && cell1.isHungry())
 		//if (cell1.isAlive() )
-				{
-				cell1.setEnergy(100);
-				cell1.setHangry(false);
-				seed2.eatMe();
-				}
+				
+					if (cell1.isBored())
+					{
+						cell1.setSeedPosition( seed2.getPosition() ) ;
+					}
+				
+					if (cell1.isHungry())
+					{
+						seed2.eatMe();
+						cell1.age();
+						cell1.setEnergy(cell1.getMaxEnergy());
+						cell1.setAngleRadians(cell1.getAngle() + Math.random()*2*Math.PI);
+						cell1.setHorny();
+						cell1.move();
+					}
+				
+				
 		
 	  }
 

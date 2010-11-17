@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 08/nov/2010 15.26.42
+* Date: 17/nov/2010 15.26.42
 * Titolo: JLifeRightControlPanel.java
-* Versione: 0.1.1 Rev.a:
+* Versione: 0.1.4 Rev.a:
 */
 
 
@@ -32,33 +32,70 @@ package com.tabuto.jlife.gui;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import com.tabuto.j2dgf.gui.J2DControlPanel;
+import com.tabuto.jlife.JLife;
 
 
 public class JLifeRightControlPanel extends J2DControlPanel{
 	
-
+public JLife game;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 8686747746289847490L;
 
-	public JLifeRightControlPanel(Dimension d)
+	 JButton Count = new JButton("Count");
+	 JLabel CellCount = new JLabel("CellCount");
+	 JTextField CellCountField = new JTextField(4);
+	
+	
+	public JLifeRightControlPanel(Dimension d, JLife game)
 	{
 		super(d);
 		this.setLayout(new FlowLayout());
 		addContent();
+		this.game=game;
 	}
 
 	protected void addContent()
 	{
-		 JButton Test = new JButton("Test");
-		 this.add(Test);
+		
+		 this.add(Count);
+		 Count.addActionListener(new ActionListener()
+			{
+	 			public void actionPerformed( ActionEvent action )
+						{
+	 					   setCellCount();
+						}
+				});
+		 
 		 
 		 JButton Right = new JButton("Right");
 		 this.add(Right);
+		 
+		 
+		 this.add(CellCount);
+		 
+		
+		 this.add(CellCountField);
+		 CellCountField.setEditable(false);
+		 
+	}
+	
+	private void setCellCount()
+	{
+		CellCountField.setText(  Integer.toString(game.getActualCellCount() ) );
+	}
+	
+	public void setGame(JLife game)
+	{
+		this.game = game;
 	}
 }

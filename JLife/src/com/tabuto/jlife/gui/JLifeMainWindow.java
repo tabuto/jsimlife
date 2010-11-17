@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 08/nov/2010 15.18.55
+* Date: 17/nov/2010 15.18.55
 * Titolo: JLifeMainWindow.java
-* Versione: 0.1.2 Rev.a:
+* Versione: 0.1.4 Rev.a:
 */
 
 
@@ -36,12 +36,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -53,8 +48,7 @@ import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
-import com.tabuto.jenetic.Dna;
-import com.tabuto.jlife.JLife;
+
 
 
 
@@ -64,7 +58,7 @@ public class JLifeMainWindow extends JFrame {
 	BufferStrategy bs;      //BufferStrategy
     int W=1024,H=668;       //Window Frame Size
     Dimension d;            //Dimension of window size
-    private static final String version =" v.0.1.1 BETA";
+    private static final String version =" v.0.1.4 BETA";
     private static final String title="JSimLife";
     boolean PLAY = true;
     boolean STOP = false;
@@ -91,8 +85,9 @@ public class JLifeMainWindow extends JFrame {
     	
         setTitle(title + version);
         setSize(d.width,d.height);
-        setResizable(true);
-    	BufferStrategy bs;
+        setResizable(true);  
+    	@SuppressWarnings("unused")
+		BufferStrategy bs;
 		createBufferStrategy(1);
 		bs = getBufferStrategy();
         setLayout(new BorderLayout());
@@ -278,7 +273,7 @@ public class JLifeMainWindow extends JFrame {
     	PLAY=true;
     	panel = new Simulation(1024,1024); //Declare the DrawingPanel
     	cp_west = new JLifeLeftControlPanel(d);
-    	cp_east = new JLifeRightControlPanel(d);
+    	cp_east = new JLifeRightControlPanel(d, panel.Game);
     	scroller = new JScrollPane(panel);
     	cp_west.setCanvasPanel(panel);
     	
@@ -321,6 +316,7 @@ public class JLifeMainWindow extends JFrame {
             if (n == JFileChooser.APPROVE_OPTION) 
             	{	
         		  JLifeMainWindow.this.panel.loadGame( fileChooser.getSelectedFile().getAbsolutePath());
+        		  JLifeMainWindow.this.cp_east.setGame(panel.Game);
             	}
           	 
           	} catch (Exception ex) {}
