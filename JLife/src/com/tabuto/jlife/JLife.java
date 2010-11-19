@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 17/nov/2010 12.05.43
 * Titolo: JLife.java
-* Versione: 0.1.4 Rev.a:
+* Versione: 0.1.5 Rev.a:
 */
 
 
@@ -58,7 +58,7 @@ import com.tabuto.jlife.collisions.RiproductionCollision;
  * 
  * @author tabuto83
  * 
- * @version 0.1.2
+ * @version 0.1.5
  * 
  * @see Gene
  * @see Dna
@@ -99,7 +99,7 @@ public class JLife implements Serializable {
 	 */
 	private String PATH="";
 	
-	public Group<Cell> cellsGroup = new Group<Cell>("CellsSprite");
+	public Group<Zlife> cellsGroup = new Group<Zlife>("CellsSprite");
 	public Group<Seed> seedsGroup = new Group<Seed>("SeedsSprite");
 	
 	//COLLISIONS
@@ -128,7 +128,7 @@ public class JLife implements Serializable {
 	public void setName(String name){this.Name=name;}
 	public String getName(){return this.Name;}
 	
-	public void addCell(Cell c)
+	public void addCell(Zlife c)
 	{
 		cellsGroup.add(c);
 	}

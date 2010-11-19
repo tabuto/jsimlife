@@ -49,7 +49,7 @@ public class JLifeBottomPanel extends J2DBottomPanel {
 	protected void addContent()
 	{
 			JLabel StateBar = new JLabel();
-			StateBar.setText("  JSimLife v.0.1.4_BETA by Tabuto83");
+			StateBar.setText("  JSimLife v.0.1.5_BETA by Tabuto83");
 			this.add(StateBar);
 	}
 }

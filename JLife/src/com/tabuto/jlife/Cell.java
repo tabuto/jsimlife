@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 17/nov/2010 16.03.41
 * Titolo: Cell.java
-* Versione: 0.1.4 Rev.a:
+* Versione: 0.1.5 Rev.a:
 */
 
 /*
@@ -63,7 +63,7 @@ import com.tabuto.util.Point;
  * 
  * @author tabuto83
  * 
- * @version 0.1.4
+ * @version 0.1.5
  * 
  * @see Gene
  * @see Dna
@@ -99,6 +99,8 @@ public class Cell extends Sprite implements Serializable
 	private int activityRatio=30; 
 	
 	//TODO: Add to this DNA
+	
+	
 	//Energy spend for every move
 	private double metabolism = 0.002;
 	//parametro di mutazione genetica

@@ -1,3 +1,6 @@
+JLife v. 0.1.5 BETA
+ADD and using Class Zlife as a sprite simulate an elementary life form
+JLifeRightControlPanel: Sprite counter in the RightControlPanel
 
 JLife v. 0.1.2 BETA
 ADD Class JLife as wrapper class of the MODEL layer (Cell,Seed,Collision,ecc..)
