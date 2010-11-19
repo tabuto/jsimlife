@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 17/nov/2010 17.32.16
 * Titolo: RiproductionCollision.java
-* Versione: 0.1.4 Rev.a:
+* Versione: 0.1.5 Rev.a:
 */
 
 
@@ -35,6 +35,7 @@ import com.tabuto.j2dgf.collision.CollisionDetector;
 import com.tabuto.jenetic.Dna;
 import com.tabuto.jlife.Cell;
 import com.tabuto.jlife.JLife;
+import com.tabuto.jlife.Zlife;
 
 
 public class RiproductionCollision extends CollisionDetector{
@@ -45,7 +46,7 @@ public class RiproductionCollision extends CollisionDetector{
 	private static final long serialVersionUID = -1171546078549060228L;
 	public JLife jlc;
 	//Constructor
-	 public RiproductionCollision(Group<Cell> sp1, JLife j)
+	 public RiproductionCollision(Group<Zlife> sp1, JLife j)
 	 {
 		 super(sp1);
 		 jlc=j;
@@ -54,15 +55,15 @@ public class RiproductionCollision extends CollisionDetector{
 	 public void CollisionAction(int s1, int s2)
 	  {
 		//Cast to class extends Sprite 
-		Cell cell1, cell2, newCell;
-		cell1 = (Cell) group1.get(s1);
-		cell2 = (Cell) group1.get(s2);
+		Zlife cell1, cell2, newCell;
+		cell1 = (Zlife) group1.get(s1);
+		cell2 = (Zlife) group1.get(s2);
 		Dna newBornDna;
 		//TO-DO
 		
 		if (cell1.isHorny() && cell2.isHorny())
 				{
-				newBornDna= Dna.merge(cell1.getDna(), cell2.getDna());
+				newBornDna= Dna.merge(cell1.getZlifeDna(), cell2.getZlifeDna());
 				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());
 				cell2.setEnergy(cell2.getEnergy() - cell2.getRiproductionEnergy());
 				//cell1.age();
@@ -73,10 +74,10 @@ public class RiproductionCollision extends CollisionDetector{
 				cell2.setAngleRadians(cell1.getAngle());
 				cell1.setAngleRadians(tempAngle);
 				
-				newCell = new Cell(cell1.getDimension(), cell1.getX(),cell1.getY(),newBornDna);
-				// TODO: parametrizza
-				newCell.setBored();
-				newCell.setAngleRadians( Math.random() * 2 * Math.PI);
+				newCell = new Zlife(cell1.getDimension(), cell1.getX(),cell1.getY(),newBornDna);
+				//newCell.setBored();
+				newCell.setAngleRadians( Math.random() * 2 * Math.PI );
+				newCell.setSpeed( (int) newCell.getBoredSpeed());
 				jlc.addCell(newCell);
 				cell1.move();
 				cell2.move();

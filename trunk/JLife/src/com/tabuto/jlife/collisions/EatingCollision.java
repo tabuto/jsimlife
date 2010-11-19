@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 17/nov/2010 17.31.59
 * Titolo: EatingCollision.java
-* Versione: 0.1.4 Rev.a:
+* Versione: 0.1.5 Rev.a:
 */
 
 
@@ -34,6 +34,7 @@ import com.tabuto.j2dgf.Group;
 import com.tabuto.j2dgf.collision.CollisionDetector;
 import com.tabuto.jlife.Cell;
 import com.tabuto.jlife.Seed;
+import com.tabuto.jlife.Zlife;
 
 
 public class EatingCollision extends CollisionDetector{
@@ -43,7 +44,7 @@ public class EatingCollision extends CollisionDetector{
 	 */
 	private static final long serialVersionUID = -6009905497615581521L;
 	
-	public EatingCollision(Group<Cell> sp1, Group<Seed> sp2)
+	public EatingCollision(Group<Zlife> sp1, Group<Seed> sp2)
 	 {
 		 super(sp1,sp2);
 		 //"Cell "see" Seeds upon 100px of distance"
@@ -53,9 +54,9 @@ public class EatingCollision extends CollisionDetector{
 	 public void CollisionAction(int s1, int s2)
 	  {
 		//Cast to class extends Sprite 
-		Cell cell1;
+		Zlife cell1;
 		Seed seed2;
-		cell1 = (Cell) group1.get(s1);
+		cell1 = (Zlife) group1.get(s1);
 		seed2 = (Seed) group2.get(s2);
 		
 		//TO-DO

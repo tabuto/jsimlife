@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 07/nov/2010 18.38.01
 * Titolo: JLifeCanvas.java
-* Versione: 0.1.1 Rev.a:
+* Versione: 0.1.5 Rev.a:
 */
 
 
@@ -56,6 +56,7 @@ import com.tabuto.j2dgf.gui.J2DCanvasPanel;
 import com.tabuto.jlife.Cell;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Seed;
+import com.tabuto.jlife.Zlife;
 
 
 
@@ -116,7 +117,7 @@ public void addCell()
 				   {
 					public void actionPerformed(ActionEvent actionEvent) 
 						{
-						Cell newCell = new Cell( DIM, 
+						Zlife newCell = new Zlife( DIM, 
 													Integer.valueOf(fieldX.getText() ) ,
 													Integer.valueOf(fieldY.getText()),
 													Integer.valueOf(fieldRadius.getText()));

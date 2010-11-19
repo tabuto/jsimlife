@@ -3,7 +3,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="/media/DATA/Home/project/Java/eclipse/workspace/lib/jdom.jar"/>
-	<classpathentry kind="lib" path="/media/DATA/Home/project/Java/eclipse/workspace/lib/J2DGF_v0.6.0_source_bin_doc.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/J2DGF"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
