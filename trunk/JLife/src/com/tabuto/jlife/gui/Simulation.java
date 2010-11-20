@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 07/nov/2010 18.38.01
+* Date: 20/nov/2010 18.38.01
 * Titolo: JLifeCanvas.java
-* Versione: 0.1.5 Rev.a:
+* Versione: 0.1.7 Rev.a:
 */
 
 
@@ -32,10 +32,14 @@
 package com.tabuto.jlife.gui;
 
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,6 +49,8 @@ import java.io.Serializable;
 
 import javax.swing.JButton;
 
+import javax.swing.JColorChooser;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -57,10 +63,11 @@ import com.tabuto.jlife.Cell;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Seed;
 import com.tabuto.jlife.Zlife;
+import com.tabuto.util.Point;
 
 
 
-public class Simulation extends J2DCanvasPanel implements Serializable{
+public class Simulation extends J2DCanvasPanel implements Serializable,MouseListener{
 	
 	/**
 	 * 
@@ -76,6 +83,15 @@ public Simulation(int width, int height)
 	super(width, height);
 	Game = new JLife(this.DIM);
 	Game.setName("NewSimulation");
+	
+	this.addMouseListener(new MouseAdapter() { 
+	    public void mousePressed(MouseEvent me) { 
+	      Game.selectCell(me.getX(),me.getY(),20);
+	      //System.out.println("X: "+me.getX()+" Y: "+me.getY());
+	      //System.out.println(Game.getSelectedCell().toString() );
+	    } 
+	  }); 
+	
 	}
 
 public void initStuff()
@@ -86,31 +102,44 @@ public void initStuff()
 
 public void addCell()
 	{
+		Color CellColor = new Color(125,125,125);
+		final Color startColor = new Color(125,125,125);
 		final JFrame addCellDialog = new JFrame("Create Cell");
+		addCellDialog.setSize(300, 300);
 		addCellDialog.setLayout( new FlowLayout());
-		JLabel labelX, labelY,labelName,labelRadius;
+		
+		JLabel labelX, labelY,labelName,labelRadius,labelColor;
 		final JTextField fieldX;
 		final JTextField fieldY, fieldName,fieldRadius;
 		JButton buttonOk, buttonCancel;
+		final JButton buttonColor;
 		
 		labelX = new JLabel("X Coordinate");
 		labelY= new JLabel("Y Coordinate");
 		labelName = new JLabel("Name");
 		labelRadius = new JLabel("Radius");
+		labelColor = new JLabel("Color");
 		fieldX = new JTextField(4);
 		fieldY = new JTextField(4);
 		fieldRadius = new JTextField(4);
 		fieldName = new JTextField(15);
+		
 		buttonOk = new JButton("OK");
 		buttonCancel = new JButton("Cancel");
+		buttonColor = new JButton("");
+		buttonColor.setBackground(CellColor);
+		
 		addCellDialog.add(labelName);
 		addCellDialog.add(fieldName);
 		addCellDialog.add(labelRadius);
 		addCellDialog.add(fieldRadius);
+		addCellDialog.add(labelColor);
+		addCellDialog.add(buttonColor);
 		addCellDialog.add(labelX);
 		addCellDialog.add(fieldX);
 		addCellDialog.add(labelY);
 		addCellDialog.add(fieldY);
+		buttonColor.setBackground(CellColor);
 		addCellDialog.add(buttonOk);
 		addCellDialog.add(buttonCancel);
 		buttonOk.addActionListener(new ActionListener()
@@ -120,9 +149,12 @@ public void addCell()
 						Zlife newCell = new Zlife( DIM, 
 													Integer.valueOf(fieldX.getText() ) ,
 													Integer.valueOf(fieldY.getText()),
-													Integer.valueOf(fieldRadius.getText()));
+													Integer.valueOf(fieldRadius.getText()),
+													buttonColor.getBackground() );
+						
 						newCell.setAngleRadians(Math.random()*2*Math.PI);
 						newCell.setSpeed(100);
+						newCell.setName( fieldName.getText());
 						Game.addCell(newCell);
 						addCellDialog.dispose();
 						} 
@@ -136,6 +168,20 @@ public void addCell()
 				} 
 			});
 		
+		buttonColor.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent actionEvent)
+			{
+				 Color color = JColorChooser.showDialog(
+				 addCellDialog, "Select Color",startColor
+				  );
+				 if (color!= null)
+					 buttonColor.setBackground(color);
+			}
+		
+		});
+		
+		
 		addCellDialog.pack();
 		addCellDialog.setVisible(true);
 	
@@ -143,7 +189,7 @@ public void addCell()
 
 
 
-
+     											
 public void addSeed()
 {
 	final JFrame addSeedDialog = new JFrame("Create Seed");
@@ -252,7 +298,35 @@ public void loadGame(String path)
      }
 }
 
+@Override
+public void mouseClicked(MouseEvent me) {
+	// TODO Auto-generated method stub
+	
+}
 
+@Override
+public void mouseEntered(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
 
+@Override
+public void mouseExited(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+@Override
+public void mousePressed(MouseEvent me) {
+	// TODO Auto-generated method stub
 
 }
+
+@Override
+public void mouseReleased(MouseEvent arg0) {
+	// TODO Auto-generated method stub
+	
+}
+
+
+}//END CLASS

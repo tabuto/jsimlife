@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 17/nov/2010 15.26.42
+* Date: 20/nov/2010 15.26.42
 * Titolo: JLifeRightControlPanel.java
-* Versione: 0.1.4 Rev.a:
+* Versione: 0.1.7 Rev.a:
 */
 
 
@@ -34,16 +34,21 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 import com.tabuto.j2dgf.gui.J2DControlPanel;
 import com.tabuto.jlife.JLife;
 
 
-public class JLifeRightControlPanel extends J2DControlPanel{
+public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 	
 public JLife game;
 	/**
@@ -51,8 +56,12 @@ public JLife game;
 	 */
 	private static final long serialVersionUID = 8686747746289847490L;
 
-	 JButton Count = new JButton("Count");
-	 JLabel CellCount = new JLabel("CellCount");
+	 //JLabel CountLabel = new JLabel("Count")
+	 JButton Count = new JButton("Refresh");
+	 JLabel SelectZlife = new JLabel("Display Info on selected Zlife");
+	 JButton displayInfo = new JButton("Refresh");
+	 JTextArea ZlifeInfo = new JTextArea();
+	 JScrollPane ZlifeInfoScroll = new JScrollPane(ZlifeInfo);
 	 JTextField CellCountField = new JTextField(4);
 	
 	
@@ -77,15 +86,33 @@ public JLife game;
 				});
 		 
 		 
-		 JButton Right = new JButton("Right");
-		 this.add(Right);
 		 
 		 
-		 this.add(CellCount);
 		 
 		
 		 this.add(CellCountField);
 		 CellCountField.setEditable(false);
+		 
+		 this.add(SelectZlife);
+		 
+		ZlifeInfoScroll.setPreferredSize(new Dimension(this.getWidth(), 300));
+		//ZlifeInfo.setLineWrap(true);
+		 
+		 displayInfo.addActionListener(new ActionListener()
+			{
+	 			public void actionPerformed( ActionEvent action )
+						{
+	 					   	if(game.getSelectedCell()!=null)
+	 					   		ZlifeInfo.setText( 
+	 					   				game.getSelectedCell().toString());
+	 					   	ZlifeInfo.setCaretPosition(0);
+						}
+				});
+		 
+		
+		 this.add(ZlifeInfoScroll);
+		 this.add(displayInfo);
+		 
 		 
 	}
 	
@@ -97,5 +124,23 @@ public JLife game;
 	public void setGame(JLife game)
 	{
 		this.game = game;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Add update methods
+		String message = (String) arg;
+		if(message.equalsIgnoreCase("CountChange"))
+			setCellCount();
+		
+		if(message.equalsIgnoreCase("SelectionChange"))
+		{
+			if(game.getSelectedCell()!=null)
+			   		ZlifeInfo.setText( 
+			   				game.getSelectedCell().toString());
+			   	ZlifeInfo.setCaretPosition(0);
+		}
+			
+			
 	}
 }

@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 08/nov/2010 15.24.07
+* Date: 20/nov/2010 15.24.07
 * Titolo: JLifeLeftControlPanel.java
-* Versione: 0.1.1 Rev.a:
+* Versione: 0.1.7 Rev.a:
 */
 
 
@@ -34,13 +34,15 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 
 import com.tabuto.j2dgf.gui.J2DControlPanel;
 
 
-public class JLifeLeftControlPanel extends J2DControlPanel {
+public class JLifeLeftControlPanel extends J2DControlPanel implements Observer {
 
 	/**
 	 * 
@@ -84,6 +86,12 @@ public class JLifeLeftControlPanel extends J2DControlPanel {
 	public void setCanvasPanel(Simulation j)
 	{
 		this.jlc=j;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Add update method
+		
 	}
 	
 	

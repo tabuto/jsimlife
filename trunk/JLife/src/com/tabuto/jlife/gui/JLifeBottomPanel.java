@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 17/nov/2010 15.29.36
+* Date: 20/nov/2010 15.29.36
 * Titolo: JLifeBottomPanel.java
-* Versione: 0.1.4 Rev.a:
+* Versione: 0.1.7 Rev.a:
 */
 
 
@@ -31,14 +31,17 @@
 package com.tabuto.jlife.gui;
 
 import java.awt.Dimension;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JLabel;
 
 import com.tabuto.j2dgf.gui.J2DBottomPanel;
+import com.tabuto.jlife.JLife;
 
 
 @SuppressWarnings("serial")
-public class JLifeBottomPanel extends J2DBottomPanel {
+public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 	
 	public JLifeBottomPanel(Dimension d)
 	{
@@ -49,7 +52,14 @@ public class JLifeBottomPanel extends J2DBottomPanel {
 	protected void addContent()
 	{
 			JLabel StateBar = new JLabel();
-			StateBar.setText("  JSimLife v.0.1.5_BETA by Tabuto83");
+			StateBar.setText("  JSimLife v.0.1.7_BETA by Tabuto83");
 			this.add(StateBar);
+	}
+	
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		// TODO Add update method
+		
 	}
 }

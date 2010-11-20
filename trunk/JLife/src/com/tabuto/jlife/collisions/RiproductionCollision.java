@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 17/nov/2010 17.32.16
+* Date: 20/nov/2010 17.32.16
 * Titolo: RiproductionCollision.java
-* Versione: 0.1.5 Rev.a:
+* Versione: 0.1.7 Rev.a:
 */
 
 
@@ -33,7 +33,6 @@ package com.tabuto.jlife.collisions;
 import com.tabuto.j2dgf.Group;
 import com.tabuto.j2dgf.collision.CollisionDetector;
 import com.tabuto.jenetic.Dna;
-import com.tabuto.jlife.Cell;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Zlife;
 
@@ -78,6 +77,7 @@ public class RiproductionCollision extends CollisionDetector{
 				//newCell.setBored();
 				newCell.setAngleRadians( Math.random() * 2 * Math.PI );
 				newCell.setSpeed( (int) newCell.getBoredSpeed());
+				newCell.setName( combineName(cell1.getName(),cell2.getName()));
 				jlc.addCell(newCell);
 				cell1.move();
 				cell2.move();
@@ -86,5 +86,30 @@ public class RiproductionCollision extends CollisionDetector{
 		
 	  }
 		
+	 /**
+	  * Combine two name and return a String composed through the two name
+	  * @param name1 String name of the first Sprite
+	  * @param name2 String name of the second Sprite
+	  * @return
+	  */
+	 private String combineName(String name1, String name2)
+	 {
+		 String name ="";
+		 int l = (int)((name1.length() + name2.length())/2);
+		 for (int i=0;i<l;i++)
+			 
+			 if((i%2)==0)
+				 if(i<name1.length())
+					 name+= name1.charAt(i);
+				 else
+					 name+= name2.charAt(i);
+			 else
+				 if(i<name2.length())
+					 name+= name2.charAt(i);
+				 else
+					 name+= name1.charAt(i);
+		 
+		 return name;
+	 }
 
 }
