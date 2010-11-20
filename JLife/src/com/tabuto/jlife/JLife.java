@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 17/nov/2010 12.05.43
+* Date: 20/nov/2010 12.05.43
 * Titolo: JLife.java
-* Versione: 0.1.5 Rev.a:
+* Versione: 0.1.7 Rev.a:
 */
 
 
@@ -39,6 +39,7 @@ package com.tabuto.jlife;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.Serializable;
+import java.util.Observable;
 
 import com.tabuto.j2dgf.Group;
 import com.tabuto.j2dgf.collision.CollisionBoundDetector;
@@ -54,16 +55,16 @@ import com.tabuto.jlife.collisions.RiproductionCollision;
  * Class {@code JLife} represent simple wrapper-class incapsulate object like {@link Cell}
  *  {@link Seed} and Collision.
  * <p>
- * Use J2DGF v.0.6.2
+ * Use J2DGF v.0.6.3
  * 
  * @author tabuto83
  * 
- * @version 0.1.5
+ * @version 0.1.7
  * 
  * @see Gene
  * @see Dna
  */
-public class JLife implements Serializable {
+public class JLife extends Observable implements Serializable {
 
 	/**
 	 * 
@@ -82,7 +83,7 @@ public class JLife implements Serializable {
 	/**
 	 * The actual selected Cell (Not yet used)
 	 */
-	private Cell selectedCell;
+	private Zlife selectedCell;
 	
 	/**
 	 * Max number of seed element game can show
@@ -99,6 +100,9 @@ public class JLife implements Serializable {
 	 */
 	private String PATH="";
 	
+	/**
+	 * Group contanis Zlifes and Seeds
+	 */
 	public Group<Zlife> cellsGroup = new Group<Zlife>("CellsSprite");
 	public Group<Seed> seedsGroup = new Group<Seed>("SeedsSprite");
 	
@@ -108,11 +112,99 @@ public class JLife implements Serializable {
 	RiproductionCollision riproduction;
 	CollisionBoundDetector cbd;
 
+	/**
+	 * Jlife Constructor 
+	 * @param dim Dimension of the playfield canvas
+	 */
 	public JLife(Dimension dim)
 	{
 		DIM=dim;
 	}
 	
+	/**
+	 * Add a Zlife in ZlifeGroup
+	 * @param c Zlife
+	 */
+	public void addCell(Zlife z)
+	{
+		cellsGroup.add(z);
+		setChanged();
+		notifyObservers("CountChange");
+	}
+
+	/**
+	 * Add seed into current Game
+	 * @param s Seed
+	 */
+	public void addSeed(Seed s)
+	{
+		seedsGroup.add(s);
+		setChanged();
+	}
+	
+	/**
+	 * Add seed into the game
+	 * @param x coordinate
+	 * @param y coordinate
+	 * @param r radius of the seed
+	 * @param d density of the seed
+	 */
+	public void addSeed(int x,int y,int r, double d)
+	{
+		if( seedsGroup.size()< this.MAX_SEEDS)
+			      seedsGroup.add( new Seed(this.DIM,x,y,r,d) );
+
+		setChanged();
+	}
+	
+	/**
+	 * Drow all the sprite in the groups
+	 * @param g Graphics Context
+	 */
+	public void drawSprite(Graphics g)
+	{
+		cellsGroup.move();
+		cm.RunCollisionManager();
+		cellsGroup.draw(g);
+		seedsGroup.draw(g);
+	}
+	
+	/**
+	 * @return the number of the sprite actually active
+	 */
+	public int getActualCellCount()
+	{
+		return cellsGroup.size();
+	}
+	
+	/**
+	 * Return a Dna from a Zlife
+	 * @param z Xlife
+	 * @return Dna Zlife's Dna
+	 */
+	public Dna getDnaFromZlife(Zlife z)
+	{
+		return z.getZlifeDna();
+	}
+	
+	/**
+	 * @return The Game's name
+	 */
+	public String getName(){return this.Name;}
+	
+	/**
+	 * @return the actual selected zlife
+	 */
+	public Zlife getSelectedCell(){return selectedCell;}
+	
+	/**
+	 * @return the actual save directory path
+	 */
+	public String getPath(){return this.PATH;}
+	
+	/**
+	 * Init the collisions classes
+	 */
 	public void initGame() 
 	{
 		cm = new CollisionManager();
@@ -125,63 +217,78 @@ public class JLife implements Serializable {
 		cm.addCollision(eating);
 	}
 	
-	public void setName(String name){this.Name=name;}
-	public String getName(){return this.Name;}
-	
-	public void addCell(Zlife c)
-	{
-		cellsGroup.add(c);
-	}
+	/**
+	 * @return true if this game is previously saved
+	 */
+	public boolean isSaved(){return this.saved;}
 
-	public void addSeed(Seed s)
-	{
-		seedsGroup.add(s);
-	}
-
+	/**
+	 * Delete all the sprites in all groups
+	 */
 	public void reset()
 	{
 		cellsGroup.clear();
 		seedsGroup.clear();
+		setChanged();
+		notifyObservers("CountChange");
 	}
-
-
-	public boolean isSaved(){return this.saved;}
-	public void setSaved(boolean s){this.saved=true;}
 	
-	public void setSelectedCell(Cell c){this.selectedCell=c;}
-	public Cell getSelectedCell(){return selectedCell;}
-
-	public void addSeed(int x,int y,int r, double d)
-{
-	if( seedsGroup.size()< this.MAX_SEEDS)
-			      seedsGroup.add( new Seed(this.DIM,x,y,r,d) );
-				
-		
-}
-
-
-	public void drawSprite(Graphics g)
-{
-
-				cellsGroup.move();
-				cm.RunCollisionManager();
-				cellsGroup.draw(g);
-			    seedsGroup.draw(g);
-
-}
-
-	public Dna getDnaFromCell(Cell c)
+	/**
+	 * Select a cell nearby a certain coordinates, using a distance tolerance
+	 * @param x
+	 * @param y
+	 * @param tolerance
+	 */
+	public void selectCell(int x,int y,int tolerance )
 	{
-		return c.getDna();
+		if(selectedCell==null)
+		{
+			selectedCell = (Zlife)cellsGroup.getSpriteByPos(x,y,tolerance);	
+			if(selectedCell!=null)
+				{
+				selectedCell.select();
+				setChanged();
+				notifyObservers("SelectionChange");
+				}
+		}
+		else
+		{
+			selectedCell.deselect();
+			selectedCell = (Zlife)cellsGroup.getSpriteByPos(x,y,tolerance);	
+			selectedCell.select();
+			setChanged();
+			notifyObservers("SelectionChange");
+		}
+			
 	}
-
+	
+	/**
+	 * set the Name of the JLife game, it is used for save game
+	 * @param name String name of Game for save
+	 */
+	public void setName(String name){this.Name=name;}
+	
+	
+	/**
+	 * Set the game state as saved
+	 * @param s boolean
+	 */
+	public void setSaved(boolean s){this.saved=true;setChanged();}
+	
+	/**
+	 * Set the param zlife z as the actual selected cell
+	 * @param z Zlife
+	 */
+	public void setSelectedCell(Zlife z){
+		this.selectedCell=z;
+		setChanged();
+		notifyObservers("SelectionChange");
+		}
+	
+	/**
+	 * Set the save Path for this Game
+	 * @param p String represent the absolut Path to the save directory
+	 */
 	public void setPath(String p){this.PATH = p;}
-	
-	public String getPath(){return this.PATH;}
-	
-	public int getActualCellCount()
-	{
-		return cellsGroup.size();
-	}
 	
 }//END CLASS

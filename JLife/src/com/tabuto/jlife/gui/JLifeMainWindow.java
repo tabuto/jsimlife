@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 17/nov/2010 15.18.55
+* Date: 20/nov/2010 15.18.55
 * Titolo: JLifeMainWindow.java
-* Versione: 0.1.5 Rev.a:
+* Versione: 0.1.7 Rev.a:
 */
 
 
@@ -58,7 +58,7 @@ public class JLifeMainWindow extends JFrame {
 	BufferStrategy bs;      //BufferStrategy
     int W=1024,H=668;       //Window Frame Size
     Dimension d;            //Dimension of window size
-    private static final String version =" v.0.1.5 BETA";
+    private static final String version =" v.0.1.7 BETA";
     private static final String title="JSimLife";
     boolean PLAY = true;
     boolean STOP = false;
@@ -286,6 +286,7 @@ public class JLifeMainWindow extends JFrame {
          this.getContentPane().add( cp_west, BorderLayout.LINE_START);
          this.getContentPane().add( cp_east, BorderLayout.LINE_END);
          panel.initStuff();
+         panel.Game.addObserver(cp_east);
     }
     
    

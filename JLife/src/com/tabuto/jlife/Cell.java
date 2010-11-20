@@ -67,6 +67,8 @@ import com.tabuto.util.Point;
  * 
  * @see Gene
  * @see Dna
+ * 
+ * @deprecated
  */
 public class Cell extends Sprite implements Serializable
 {
@@ -98,7 +100,6 @@ public class Cell extends Sprite implements Serializable
 	
 	private int activityRatio=30; 
 	
-	//TODO: Add to this DNA
 	
 	
 	//Energy spend for every move

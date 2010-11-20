@@ -1,3 +1,10 @@
+JLife v. 0.1.7 BETA (MILESTONE)
+JLife and Control panel now using Observer Design Pattern
+RiproductionCollision: Add the CombineName Method
+Simulation,JLifeMainWIndow, JLife now let the user select the Sprite on canvas
+JLifeLeftControlPanel now show information about the actual selected Sprite
+Simulation addCell dialog let the user select the color of new Cell using a JColorChooser 
+
 JLife v. 0.1.5 BETA
 ADD and using Class Zlife as a sprite simulate an elementary life form
 JLifeRightControlPanel: Sprite counter in the RightControlPanel
