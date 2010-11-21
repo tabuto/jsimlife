@@ -1,0 +1,23 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= ToDo =
+Here the work in progress features for JSimLife:
+
+*TODO on version 1.0*
+ * Add Values Input Control in the GUI for newCell and newSeed
+ * Add DNA editor (edit, save, load)
+ * Add a DNA loader for Cell
+ * Add a small JCavansPanel to isolate cells using drag&dorp
+ * Add a internatialization routines;
+ * Add a Game Statistical model and GUI; 
+ * Add a Panel to load, save, create and edit Zlife DNA;
+ * Add a control to Create Zlife using a DNA Control Panel;
+ * Add a TestTube panel to isolate Zlifes and controlling they riproduction;
+
+
+*TODO on version 0.9*
+ * ADD a routine on Zlife cell to keep track of the current number generation.
+ * When cell die it change in seed!
+ * ADD parameter input control in the GUI dialog;
+
