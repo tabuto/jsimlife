@@ -1,0 +1,28 @@
+#summary One-sentence summary of this page.
+
+= ZLifeDna =
+
+Dna object contains the Zlife Genes:
+
+ # _dnaParam_: the Dna random parameter simulate Genetics mutation		
+ # _energy_: actual energy of the cell 
+ # _maxEnergy_: max energy for the cell
+ # _hornyEnergy_: the minimum energy needs to riproduce	
+ # _hungryEnergy_: the energy below one the Cell is hungry		
+ # _lifeCycle_: the number of lifeCycle before the cell Die.
+ # _metabolism_: the energy needs for every moving of the cell. this value is subtract to energy
+ # _boredSpeed_: the speed when the cell is in BORED state
+ # _riproductionEnergy_: the energy cell spend to riproduce itself	
+ # _hungrySpeed_: the speed when cell is hungry		
+ # _hornySpeed_: the speed when cell is horny		
+ # _scarySpeed_: the speed when cell is scary (NOT YET USED!)
+ # _radius_: the radius of the cell		  
+ # _R_: the red color's component of this cell 
+ # _G_: the green color's component of this cell
+ # _B_: the blue color's component of this cell
+ # _ageFactor_: energy percent subtract to max energy for each life cycle cell spends
+
+
+= Details =
+
+see the Dna.java, Gene.java and Zlife.java classes
