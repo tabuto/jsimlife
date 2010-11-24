@@ -102,7 +102,7 @@ public class Zlife extends Sprite implements Serializable{
 	private int B;
 	
 	//ACTUAL-PARAMETER: NO-DNA
-	private enum CellState  {NULL, HUNGRY, HORNY, BORED, SCARY}
+	public enum CellState  {NULL, HUNGRY, HORNY, BORED, SCARY}
 	public CellState state = CellState.BORED;
 	private boolean alive=true;
 	private boolean SELECTED = false;
@@ -175,6 +175,15 @@ public class Zlife extends Sprite implements Serializable{
 	}
 	
 //PUBLIC METHODS
+	
+	/**
+	 * @return the Actual Life Cycle
+	 */
+	public int getActualLifeCycle()
+	{
+		return this.actualLifeCycle;
+	}
+	
 	/**
 	 * This method simulate the Zlife Age's process 
 	 */
@@ -429,6 +438,7 @@ public class Zlife extends Sprite implements Serializable{
 			case SCARY:
 				{
 					//TODO: write a scary state
+					break;
 				}
 			
 			default:
@@ -892,15 +902,15 @@ public class Zlife extends Sprite implements Serializable{
 	
 	public String toString()
 	{
-		return "\nZlife name: " + getName() +
-		"\nPosition: [" + (int)this.vector.origin.getX()+","+(int)this.vector.origin.getY()+"]" +
-		"\nDirection: " + (int)this.vector.getDirectionDegrees()+"°"+
-		"\nActual State: " + this.state.toString() +
-		"\nActual Speed: " + this.getSpeed() +
-		"\nActual LifeCycle: " + actualLifeCycle + "/" + lifeCycle +
-		"\nEnergy/MaxEnergy: " + energy +"/" + maxEnergy +
-		"\nRadius: " + this.radius +
-		"\nColor: ["+this.R+" " + this.G +" "+this.B+"]" +
+		return "\nZlife name: \t" + getName() +
+		"\nPosition: \t[" + (int)this.vector.origin.getX()+","+(int)this.vector.origin.getY()+"]" +
+		"\nDirection: \t" + (int)this.vector.getDirectionDegrees()+"°"+
+		"\nState: \t" + this.state.toString() +
+		"\nSpeed: \t" + this.getSpeed() +
+		"\nLifeCycle: \t" + actualLifeCycle + "/" + lifeCycle +
+		"\nEnergy: \t" + Math.rint(energy*100)/100 +"/" + Math.rint(maxEnergy*100)/100 +
+		"\nRadius: \t" + radius +
+		"\nColor: \t["+this.R+" " + this.G +" "+this.B+"]" +
 		"\n " + this.ZlifeDna.toString();
 		
 	}

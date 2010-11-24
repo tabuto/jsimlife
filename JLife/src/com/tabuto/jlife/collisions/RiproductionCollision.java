@@ -76,7 +76,7 @@ public class RiproductionCollision extends CollisionDetector{
 				//newCell.setBored();
 				newCell.setAngleRadians( Math.random() * 2 * Math.PI );
 				newCell.setName( combineName(cell1.getName(),cell2.getName()));
-				newCell.setEnergy(cell1.getHungryEnergy() + cell2.getHungryEnergy());
+				newCell.setEnergy(20); 
 				jlc.addCell(newCell);
 				newCell.live();
 				cell1.live();
