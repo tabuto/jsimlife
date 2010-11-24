@@ -73,6 +73,7 @@ public class JLifeMainWindow extends JFrame {
     JLifeRightControlPanel cp_east;
     JLifeBottomPanel bottom;
     JScrollPane scroller;
+    JLifeShowZlife ZlifeView;
     
     public JLifeMainWindow()
     {
@@ -280,6 +281,7 @@ public class JLifeMainWindow extends JFrame {
     	panel = new Simulation(1024,1024); //Declare the DrawingPanel
     	cp_west = new JLifeLeftControlPanel(d);
     	cp_east = new JLifeRightControlPanel(d, panel.Game);
+    	ZlifeView= new JLifeShowZlife(panel.Game);
     	scroller = new JScrollPane(panel);
     	cp_west.setCanvasPanel(panel);
     	
@@ -293,6 +295,7 @@ public class JLifeMainWindow extends JFrame {
          this.getContentPane().add( cp_east, BorderLayout.LINE_END);
          panel.initStuff();
          panel.Game.addObserver(cp_east);
+         panel.Game.addObserver(ZlifeView);
     }
     
    
@@ -341,6 +344,7 @@ public class JLifeMainWindow extends JFrame {
             	{	
         		  JLifeMainWindow.this.panel.loadGame( fileChooser.getSelectedFile().getAbsolutePath());
         		  JLifeMainWindow.this.cp_east.setGame(panel.Game);
+        		  JLifeMainWindow.this.ZlifeView.setGame(panel.Game);
         		  JLifeMainWindow.this.panel.Game.addObserver(cp_east);
             	}
           	 

@@ -38,6 +38,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -45,6 +46,7 @@ import javax.swing.JTextField;
 
 import com.tabuto.j2dgf.gui.J2DControlPanel;
 import com.tabuto.jlife.JLife;
+import com.tabuto.jlife.Seed;
 
 
 public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
@@ -54,22 +56,26 @@ public JLife game;
 	 * 
 	 */
 	private static final long serialVersionUID = 8686747746289847490L;
-
+	
 	 //JLabel CountLabel = new JLabel("Count")
 	 JButton Count = new JButton("Refresh");
+	 JButton Statistic = new JButton("Statistics");
 	 JLabel SelectZlife = new JLabel("Display Info on selected Zlife");
 	 JButton displayInfo = new JButton("Refresh");
 	 JTextArea ZlifeInfo = new JTextArea();
 	 JScrollPane ZlifeInfoScroll = new JScrollPane(ZlifeInfo);
 	 JTextField CellCountField = new JTextField(4);
 	
-	
+	JLifeStatistic jls;
 	public JLifeRightControlPanel(Dimension d, JLife game)
 	{
 		super(d);
 		this.setLayout(new FlowLayout());
 		addContent();
 		this.game=game;
+		jls= new JLifeStatistic(game);
+		
+		
 	}
 
 	protected void addContent()
@@ -84,11 +90,6 @@ public JLife game;
 						}
 				});
 		 
-		 
-		 
-		 
-		 
-		
 		 this.add(CellCountField);
 		 CellCountField.setEditable(false);
 		 
@@ -112,6 +113,17 @@ public JLife game;
 		 this.add(ZlifeInfoScroll);
 		 this.add(displayInfo);
 		 
+		 this.add(Statistic);
+		 Statistic.addActionListener(new ActionListener()
+			{
+	 			public void actionPerformed( ActionEvent action )
+						{
+	 				jls.calculateStatistics();
+	 				ZlifeInfo.setText( 
+			   				jls.toString());
+			   	ZlifeInfo.setCaretPosition(0);
+						}
+				});
 		 
 	}
 	
@@ -125,12 +137,15 @@ public JLife game;
 		this.game = game;
 	}
 
+
+	
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Add update methods
 		String message = (String) arg;
 		if(message.equalsIgnoreCase("CountChange"))
+			{ 
 			setCellCount();
+			}
 		
 		if(message.equalsIgnoreCase("SelectionChange"))
 		{

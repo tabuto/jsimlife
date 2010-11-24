@@ -1,3 +1,7 @@
+JLife v. 0.1.8.1
+ADD Statistical Data View
+ADD a Floating ShowZlifePanel Information
+
 JLife v. 0.1.8
 Fix cellCount in JLife to notify observers when a cell die too!
 Fix a bug that doesn't show the Game update on the leftPanel when a Game loaded;
