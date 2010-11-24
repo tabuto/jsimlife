@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 17 Novembre 2010 18.14
+* Date: 24 Novembre 2010 18.14
 * Titolo: Dna.java
-* Versione: 0.2.1 Rev.a:
+* Versione: 0.2.2 Rev.a:
 */
 
 
@@ -67,7 +67,7 @@ import org.jdom.output.*;
  *
  * @author tabuto83
  * 
- * @version 0.2.1
+ * @version 0.2.2
  * 
  * @see Gene
  */
@@ -672,17 +672,21 @@ public class Dna implements Serializable{
 		{	//se sono entrambi la stessa classe
 			if(  g1.getType().equalsIgnoreCase(g2.getType()) )
 				{
+				
 					if(g1.getType().equalsIgnoreCase("Boolean"))
 						G.setValue( g1.booleanValue() & g2.booleanValue() );
 					
+					double mergeResultD = ((g1.doubleValue() + g2.doubleValue())/2)*param ;
+						int mergeResultI = (int) ((int)((g1.doubleValue() + g2.doubleValue())/2)*param) ;
+					
 					if(g1.getType().equalsIgnoreCase("Integer") || g1.getType().equalsIgnoreCase("int")  )
-						G.setValue((int) (((g1.intValue() + g2.intValue())/2)+ (int)((g1.intValue() + g2.intValue())/2)*param )  );
+						G.setValue((int) (((g1.intValue() + g2.intValue())/2) - mergeResultI + (int) (Math.random()* 2 * mergeResultI)  ) );
 						
 					if(g1.getType().equalsIgnoreCase("Byte"))
 						G.setValue( g1.byteValue() & g2.byteValue() );
 					
 					if(g1.getType().equalsIgnoreCase("Double") )
-						G.setValue( (((g1.doubleValue() + g2.doubleValue())/2)+ ((g1.doubleValue() + g2.doubleValue())/2)*param )  );
+						G.setValue( (((g1.doubleValue() + g2.doubleValue())/2) - mergeResultD +  (Math.random()* 2 * mergeResultD)  ) );;
 				
 				G.setName( g1.getName());
 				G.setDescription(g1.getDescription());

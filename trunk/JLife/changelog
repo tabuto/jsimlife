@@ -1,3 +1,16 @@
+JLife v. 0.1.8
+Fix cellCount in JLife to notify observers when a cell die too!
+Fix a bug that doesn't show the Game update on the leftPanel when a Game loaded;
+ADD a ZlifeDialog to create new Zlife with fine tuning DNA parameter
+ADD Frame icon;
+Add limit of cellsGroup in JLife class to MAX_CELLS_NUMBER (125)
+Zlife color go to white while aging
+ADD multiple ZLife
+ADD tooltip in the Add-ZLife-panel
+FIX improve the seeds density and radius limit
+ADD to JLifeLeftPAnel a random coordinates when add a new seed
+FIX JLifeMainWindow exit window message
+
 JLife v. 0.1.7 BETA (MILESTONE)
 JLife and Control panel now using Observer Design Pattern
 RiproductionCollision: Add the CombineName Method

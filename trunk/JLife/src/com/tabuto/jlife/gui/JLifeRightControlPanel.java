@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 20/nov/2010 15.26.42
 * Titolo: JLifeRightControlPanel.java
-* Versione: 0.1.7 Rev.a:
+* Versione: 0.1.8 Rev.a:
 */
 
 
@@ -42,7 +42,6 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 
 import com.tabuto.j2dgf.gui.J2DControlPanel;
 import com.tabuto.jlife.JLife;

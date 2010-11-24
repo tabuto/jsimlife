@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 20/nov/2010 17.32.16
+* Date: 24/nov/2010 17.32.16
 * Titolo: RiproductionCollision.java
-* Versione: 0.1.7 Rev.a:
+* Versione: 0.1.8 Rev.a:
 */
 
 
@@ -60,27 +60,27 @@ public class RiproductionCollision extends CollisionDetector{
 		Dna newBornDna;
 		//TO-DO
 		
-		if (cell1.isHorny() && cell2.isHorny())
+		if (cell1.isHorny() && cell2.isHorny() && (jlc.getActualCellCount()<jlc.getMaxCellsNumber()))
 				{
 				newBornDna= Dna.merge(cell1.getZlifeDna(), cell2.getZlifeDna());
 				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());
 				cell2.setEnergy(cell2.getEnergy() - cell2.getRiproductionEnergy());
-				//cell1.age();
-				//cell2.age();
-				cell1.setBored();
-				cell2.setBored();
+				cell1.age();
+				cell2.age();
+				//cell1.setBored();
+				//cell2.setBored();
 				double tempAngle = cell2.getAngle();
 				cell2.setAngleRadians(cell1.getAngle());
 				cell1.setAngleRadians(tempAngle);
-				
 				newCell = new Zlife(cell1.getDimension(), cell1.getX(),cell1.getY(),newBornDna);
 				//newCell.setBored();
 				newCell.setAngleRadians( Math.random() * 2 * Math.PI );
-				newCell.setSpeed( (int) newCell.getBoredSpeed());
 				newCell.setName( combineName(cell1.getName(),cell2.getName()));
+				newCell.setEnergy(cell1.getHungryEnergy() + cell2.getHungryEnergy());
 				jlc.addCell(newCell);
-				cell1.move();
-				cell2.move();
+				newCell.live();
+				cell1.live();
+				cell2.live();
 				
 				}
 		

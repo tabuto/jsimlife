@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 20/nov/2010 15.24.07
+* Date: 24/nov/2010 15.24.07
 * Titolo: JLifeLeftControlPanel.java
-* Versione: 0.1.7 Rev.a:
+* Versione: 0.1.8 Rev.a:
 */
 
 
@@ -60,7 +60,7 @@ public class JLifeLeftControlPanel extends J2DControlPanel implements Observer {
 	
 	protected void addContent()
 	{
-		 JButton AddCell = new JButton("New Cell");
+		 JButton AddCell = new JButton("New Zlife");
 		 this.add(AddCell);
 		 AddCell.addActionListener(new ActionListener()
 			{

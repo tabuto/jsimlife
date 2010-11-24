@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 17/nov/2010 17.31.59
+* Date: 24/nov/2010 17.31.59
 * Titolo: EatingCollision.java
-* Versione: 0.1.5 Rev.a:
+* Versione: 0.1.8 Rev.a:
 */
 
 
@@ -32,7 +32,6 @@ package com.tabuto.jlife.collisions;
 
 import com.tabuto.j2dgf.Group;
 import com.tabuto.j2dgf.collision.CollisionDetector;
-import com.tabuto.jlife.Cell;
 import com.tabuto.jlife.Seed;
 import com.tabuto.jlife.Zlife;
 
@@ -74,9 +73,9 @@ public class EatingCollision extends CollisionDetector{
 						seed2.eatMe();
 						cell1.age();
 						cell1.setEnergy(cell1.getMaxEnergy());
-						cell1.setAngleRadians(cell1.getAngle() + Math.random()*2*Math.PI);
-						cell1.setHorny();
-						cell1.move();
+						cell1.setAngleRadians(Math.random()*2*Math.PI);
+						//cell1.setHorny();
+						cell1.live();
 					}
 				
 				

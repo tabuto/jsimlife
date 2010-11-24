@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 20/nov/2010 23.39.33
+* Date: 23/nov/2010 23.39.33
 * Titolo: Zlife.java
-* Versione: 0.1.7 Rev.a:
+* Versione: 0.1.8 Rev.a:
 */
 
 
@@ -54,7 +54,7 @@ import com.tabuto.util.Point;
  * 
  * @author tabuto83
  * 
- * @version 0.1.7
+ * @version 0.1.8
  * 
  * @see Gene
  * @see Dna
@@ -72,6 +72,7 @@ public class Zlife extends Sprite implements Serializable{
 	
 	private double energy;
 	
+	//TODO: why not delete maxEnergy?
 	private double maxEnergy;
 	
 	private double hornyEnergy;
@@ -181,10 +182,11 @@ public class Zlife extends Sprite implements Serializable{
 	{
 		if(actualLifeCycle<=lifeCycle)
 		{
+			int colorFactor = (int)(255/(lifeCycle*2))-1;
 			setMaxEnergy( getMaxEnergy() - getMaxEnergy()*getAgeFactor());
-			this.setZlifeColor(this.R - (int)(this.R / (lifeCycle -1) ), 
-				      	  	   this.G - (int)(this.G / (lifeCycle -1) ),
-				               this.B - (int)(this.B / (lifeCycle -1) ));
+			this.setZlifeColor(this.R + colorFactor, 
+				      	  	   this.G + colorFactor,
+				               this.B + colorFactor);
 			actualLifeCycle++;
 		}
 		else
@@ -222,8 +224,10 @@ public class Zlife extends Sprite implements Serializable{
 	public void setB(int b) {
 		if(b>=0 && b<=255)
 			B = b;
-		else
-			B = Math.abs(b) % 255;
+		if(b<0)
+			B=0;
+		if(b>255)
+			B = 255;
 	}
 	
 	/**
@@ -354,12 +358,13 @@ public class Zlife extends Sprite implements Serializable{
 				{
 					if(energy>hungryEnergy && energy<hornyEnergy)
 					{
-						setSpeed((int) BoredSpeed);
+						setSpeed((int) getBoredSpeed());
 						break; //this.move();
 					}
 					
 					if(energy<hungryEnergy)
 					{   age();
+						setSpeed((int) getHungrySpeed());
 						state =  CellState.HUNGRY;
 						break;
 					}
@@ -367,10 +372,10 @@ public class Zlife extends Sprite implements Serializable{
 					if(energy>hornyEnergy)
 					{
 						age();
+						setSpeed((int) getHornySpeed());
 						state =  CellState.HORNY;
 						break;
 					}
-					
 					
 				}
 			case HUNGRY:
@@ -379,32 +384,43 @@ public class Zlife extends Sprite implements Serializable{
 					  {
 						if(seedPosition.getX()==0 && seedPosition.getY()==0)
 							{
-								this.setSpeed(  (int)(BoredSpeed + hungrySpeed)/2 );
+								this.setSpeed(  (int) ((BoredSpeed + hungrySpeed)/2 ));
+								break;
 							}
 						else
 							{
-								this.setSpeed((int)hungrySpeed);
+								this.setSpeed((int)getHungrySpeed());
 								this.moveTo(getSeedPosition());
 								break;
 							}
 					  }
-					  else
+					if (energy > hungryEnergy)
 					  {
-						  this.age();
+						  //this.age();
+						  this.setSpeed((int)getBoredSpeed());
 						  state = CellState.BORED;
 						  break;
 					  }  
+					
 				}
 			case HORNY:
 				{
-					if(energy>hungryEnergy)
+					if(energy>hornyEnergy)
 						{
-						this.setSpeed((int)hornySpeed);
+						this.setSpeed((int)getHornySpeed());
 						break;
 						}
-					else
+					if(energy<hornyEnergy && energy>hungryEnergy)
+					{
+						//age();
+						 this.setSpeed((int)getBoredSpeed());
+						state = CellState.BORED;
+						break;
+					}
+					if(energy<hungryEnergy)
 					{
 						age();
+						 this.setSpeed((int)getHungrySpeed());
 						state = CellState.HUNGRY;
 						break;
 					}
@@ -414,6 +430,13 @@ public class Zlife extends Sprite implements Serializable{
 				{
 					//TODO: write a scary state
 				}
+			
+			default:
+				{
+					setSpeed((int) getBoredSpeed());
+					break; //this.move();
+				}
+				
 			}
 		}
 		else
@@ -506,8 +529,14 @@ public class Zlife extends Sprite implements Serializable{
 	 * @param hornySpeed the hornySpeed to set
 	 */
 	public void setHornySpeed(double hornySpeed) {
-		if(hornySpeed>0 && hornySpeed<=100)
-		this.hornySpeed = hornySpeed;
+		if(hornySpeed<0)
+			this.hornySpeed=0;
+		
+		if(hornySpeed>100)
+			this.hornySpeed = 100;
+		else
+			this.hornySpeed = hornySpeed;
+		
 	}
 
 	/**
@@ -523,8 +552,10 @@ public class Zlife extends Sprite implements Serializable{
 	public void setR(int r) {
 		if(r>=0 && r<=255)
 			R = r;
-		else
-			R = Math.abs(r) % 255;
+		if(r<0)
+			R=0;
+		if(r>255)
+			R = 255;
 	}
 
 	/**
@@ -592,8 +623,10 @@ public class Zlife extends Sprite implements Serializable{
 	public void setG(int g) {
 		if(g>=0 && g<=255)
 			G = g;
-		else
-			G = Math.abs(g) % 255;
+		if(g<0)
+			G=0;
+		if(g>255)
+			G = 255;
 	}
 
 	/**
