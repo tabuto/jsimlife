@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 20/nov/2010 15.18.55
+* Date: 24/nov/2010 15.18.55
 * Titolo: JLifeMainWindow.java
-* Versione: 0.1.7 Rev.a:
+* Versione: 0.1.8 Rev.a:
 */
 
 
@@ -58,7 +58,7 @@ public class JLifeMainWindow extends JFrame {
 	BufferStrategy bs;      //BufferStrategy
     int W=1024,H=668;       //Window Frame Size
     Dimension d;            //Dimension of window size
-    private static final String version =" v.0.1.7 BETA";
+    private static final String version =" v.0.1.8 BETA";
     private static final String title="JSimLife";
     boolean PLAY = true;
     boolean STOP = false;
@@ -95,6 +95,11 @@ public class JLifeMainWindow extends JFrame {
         this.newSimulation();
         bottom.setVisible(true);
         addMenu();
+        
+        //ADD ICON TITLE
+        this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
+        		(this.getClass().getResource("icon_alpha_48x48.gif")));
+
    
         this.getContentPane().add( bottom, BorderLayout.PAGE_END);
         this.setJMenuBar(j2dmenubar);
@@ -106,8 +111,8 @@ public class JLifeMainWindow extends JFrame {
     //Start the game
     public void startNow()
     {
-    	if(panel!=null)
-    	while(PLAY){ panel.run(); };   
+    	if(panel instanceof Simulation)
+    		while(PLAY){ panel.run(); };   
     }
 
     //ADDMENU ROUTINES
@@ -168,7 +173,8 @@ public class JLifeMainWindow extends JFrame {
 				{
         			public void actionPerformed( ActionEvent action )
 						{
-        					System.exit(0);
+        					exitSimulation();
+        					
 						}
 				});
         		filemenu.add( exit );
@@ -298,10 +304,27 @@ public class JLifeMainWindow extends JFrame {
 				"Confirm new Simulation",
 				 JOptionPane.YES_NO_CANCEL_OPTION,
 				 JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
-	{PLAY=false; this.panel.Game.reset();}
+	{PLAY=false; this.panel.Game.reset();  }
+    	else
+    	{};
 
     }
     
+    public void exitSimulation()
+    {
+    	if (JOptionPane.showConfirmDialog(this,
+				"The actual Simulation is going to be closed, are you sure?",
+				"Confirm Close Simulation",
+				 JOptionPane.YES_NO_CANCEL_OPTION,
+				 JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
+    			{
+    				panel = null;
+    				System.exit(0);  
+    			}
+    	else
+    	{};
+
+    }
     	
     //INNER PRIVATE CLASSES
     private class OpenSimChooser implements ActionListener 
@@ -318,6 +341,7 @@ public class JLifeMainWindow extends JFrame {
             	{	
         		  JLifeMainWindow.this.panel.loadGame( fileChooser.getSelectedFile().getAbsolutePath());
         		  JLifeMainWindow.this.cp_east.setGame(panel.Game);
+        		  JLifeMainWindow.this.panel.Game.addObserver(cp_east);
             	}
           	 
           	} catch (Exception ex) {}

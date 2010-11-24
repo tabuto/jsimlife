@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 07/nov/2010 16.03.41
+* Date: 24/nov/2010 16.03.41
 * Titolo: Seed.java
-* Versione: 0.1.5 Rev.a:
+* Versione: 0.1.8 Rev.a:
 */
 
 
@@ -38,13 +38,14 @@ import java.util.Vector;
 import com.tabuto.j2dgf.Sprite;
 import com.tabuto.util.Point;
 
-
 public class Seed extends Sprite{
 	
 	Vector<Point> seeds = new Vector<Point>();
 	private int R;
 	private int D;
 	private Color seedColor;
+	private final int MAX_RADIUS=100;
+	private final int MAX_DENSITY=100;
 	
 	public Seed(Dimension d,int x, int y,int radius, double density)
 	{
@@ -66,7 +67,7 @@ public class Seed extends Sprite{
 	
 	public void setRadius(int r)
 	{
-		if(r>0 && r < 50)
+		if(r>0 && r < MAX_RADIUS)
 			this.R = r;
 		else
 			this.R = 25;
@@ -74,7 +75,7 @@ public class Seed extends Sprite{
 	
 	public void setDensity(double d)
 	{
-		if(d>0 && d < 100)
+		if(d>0 && d < MAX_DENSITY)
 			this.D=(int) (d/2);
 		else
 			this.D=50;

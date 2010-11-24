@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 20/nov/2010 15.29.36
+* Date: 24/nov/2010 15.29.36
 * Titolo: JLifeBottomPanel.java
-* Versione: 0.1.7 Rev.a:
+* Versione: 0.1.8 Rev.a:
 */
 
 
@@ -52,14 +52,14 @@ public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 	protected void addContent()
 	{
 			JLabel StateBar = new JLabel();
-			StateBar.setText("  JSimLife v.0.1.7_BETA by Tabuto83");
+			StateBar.setText("  JSimLife v.0.1.8_BETA by Tabuto83");
 			this.add(StateBar);
 	}
 	
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
-		// TODO Add update method
+	
 		
 	}
 }
