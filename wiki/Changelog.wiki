@@ -1,0 +1,61 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= Changelog =
+
+== JLife v.0.1.8.2 ==
+
+ * Auto Update position in JLifeShowZlife
+
+== JLife v. 0.1.8.1 ==
+
+ * ADD Statistical Data View
+ * ADD a Floating ShowZlifePanel Information
+
+== JLife v. 0.1.8 ==
+
+ * Fix cellCount in JLife to notify observers when a cell die too!
+ * Fix a bug that doesn't show the Game update on the leftPanel when a Game loaded;
+ * ADD a ZlifeDialog to create new Zlife with fine tuning DNA parameter
+ * ADD Frame icon;
+ * Add limit of cellsGroup in JLife class to MAX_CELLS_NUMBER (125)
+ * Zlife color go to white while aging
+ * ADD multiple ZLife
+ * ADD tooltip in the Add-ZLife-panel
+ * FIX improve the seeds density and radius limit
+ * ADD to JLifeLeftPAnel a random coordinates when add a new seed
+ * FIX JLifeMainWindow exit window message
+
+== JLife v. 0.1.7 BETA (MILESTONE) ==
+
+ * JLife and Control panel now using Observer Design Pattern
+ * RiproductionCollision: Add the CombineName Method
+ * Simulation,JLifeMainWIndow, JLife now let the user select the Sprite on canvas
+ * JLifeLeftControlPanel now show information about the actual selected Sprite
+ * Simulation addCell dialog let the user select the color of new Cell using a JColorChooser 
+
+== JLife v. 0.1.5 BETA ==
+
+ * ADD and using Class Zlife as a sprite simulate an elementary life form
+ * JLifeRightControlPanel: Sprite counter in the RightControlPanel
+
+== JLife v. 0.1.2 BETA ==
+
+ * ADD Class JLife as wrapper class of the MODEL layer (Cell,Seed,Collision,ecc..)
+ * ADD feature: Saving/Loading simulation is now avaible
+ * ALL Class use J2DGF v.0.6.2
+
+== JLife v. 0.1.1 BETA ==
+
+ * ALL: class now uses jenetic2.0
+ * ALL: Class use J2DGF v0.6
+
+
+ === Jenetic Package v. 0.2.0 ==
+ * com.tabuto.jenetic.Gene: Gene is now a Generics Type, containing every kind of object;
+ * com.tabuto.jenetic.Gene: Autodetect type;
+ * com.tabuto.jenetic.Gene: can return every object
+ * com.tabuto.jenetic.Gene: improve jdoc comments
+ * com.tabuto.jenetic.Dna: Manages Gene2.0
+ * com.tabuto.jenetic.Dna: Add static method to import/load any kind of gene;
+ * com.tabuto.jenetic.Dna: Improve toXml method;
