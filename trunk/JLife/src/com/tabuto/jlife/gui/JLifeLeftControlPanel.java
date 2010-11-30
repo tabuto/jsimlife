@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/nov/2010 15.24.07
+* Date: 29/nov/2010 15.24.07
 * Titolo: JLifeLeftControlPanel.java
-* Versione: 0.1.8 Rev.a:
+* Versione: 0.1.9 Rev.a:
 */
 
 
@@ -72,7 +72,7 @@ public class JLifeLeftControlPanel extends J2DControlPanel implements Observer {
 		 
 		 
 		 
-		 JButton AddEat = new JButton("New Eat");
+		 JButton AddEat = new JButton("New Seed");
 		 AddEat.addActionListener(new ActionListener()
 			{
 			public void actionPerformed( ActionEvent action )

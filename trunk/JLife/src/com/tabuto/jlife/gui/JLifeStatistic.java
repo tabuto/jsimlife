@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/nov/2010 20.49.46
+* Date: 29/nov/2010 20.49.46
 * Titolo: JLifeStatistic.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.1.9 Rev.a:
 */
 
 
@@ -38,7 +38,7 @@ import com.tabuto.jlife.JLife;
 
 public class JLifeStatistic implements Observer {
 
-	JLife Game;
+	public JLife Game;
 	
 	//STATISTICAL DATA
 	int hornyZlifes=0;
@@ -147,5 +147,9 @@ public class JLifeStatistic implements Observer {
 				"\n Zlifes with Min Energy: \t" + Math.rint(minEnergy*100)/100;
 	}
 
+	public void setGame(JLife game)
+	{
+		this.Game = game;
+	}
 
 }

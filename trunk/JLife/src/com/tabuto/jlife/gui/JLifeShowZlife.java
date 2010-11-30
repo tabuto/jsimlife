@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/nov/2010 22.40.29
+* Date: 29/nov/2010 22.40.29
 * Titolo: JLifeShowZlife.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.1.9 Rev.a:
 */
 
 
@@ -34,8 +34,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -47,6 +45,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.tabuto.j2dgf.Game2D;
 import com.tabuto.jlife.JLife;
 
 
@@ -62,17 +61,17 @@ public class JLifeShowZlife extends JFrame implements Observer {
 	private JTextField stateField, speedField, lifeCycleField;
 	private JTextField energyField, radiusField;
 
-	private JButton colorButton, refreshButton;
+	private JButton colorButton;
 	
 	JTextArea ZlifeDna = new JTextArea();
 	JScrollPane ZlifeDnaScroll = new JScrollPane(ZlifeDna);
 	
 	private JPanel north,dnaPanel,south;
 	
-	public JLifeShowZlife(JLife game)
+	public JLifeShowZlife(Game2D game)
 	{
 		super("Zlife's View");
-		Game = game;
+		Game = (JLife)game;
 		
 		north = new JPanel();
 		dnaPanel = new JPanel();
@@ -83,7 +82,6 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		setResizable(false);
 		initComponent();
 		setAlwaysOnTop(true);
-		
 	}
 	
 	private void initComponent()
@@ -122,7 +120,7 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		
 		colorButton = new JButton("");
 		
-		refreshButton = new JButton("Refresh");
+
 		
 		//ADD NORTH
 		north.add(nameLabel);
@@ -156,16 +154,6 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		ZlifeDnaScroll.setPreferredSize(new Dimension(250, 250));
 		dnaPanel.add(ZlifeDnaScroll);
 		
-		//ADD SOUTH
-		refreshButton.addActionListener(new ActionListener()
-		{
- 			public void actionPerformed( ActionEvent action )
-					{
- 					   	refresh();
-					}
-			});
-		south.add(refreshButton);
-		
 		
 		
 		this.add(north,BorderLayout.NORTH);
@@ -188,35 +176,65 @@ public void refresh()
 	colorButton.setBackground(new Color(Game.getSelectedCell().getR(),
 										Game.getSelectedCell().getG(),
 										Game.getSelectedCell().getB()));
-	ZlifeDna.setText( 
-				Game.getSelectedCell().getZlifeDna().toString());
-	ZlifeDna.setCaretPosition(0);
 	
+
+	
+}
+
+private void checkVisibility()
+{
 	if(!this.isVisible())
 	{
 		this.pack();
 		this.setVisible(true);
 	}
-	
+}
+
+private void  setDnaText()
+{
+	ZlifeDna.setText( 
+			Game.getSelectedCell().getZlifeDna().toString());
+ZlifeDna.setCaretPosition(0);
 }
 
 public void setGame(JLife game)
 {
 	Game = game;
+	
 }
 
 	@Override
 	public void update(Observable arg0, Object arg1) {
 
-		String message = (String) arg1;
-		if(message.equalsIgnoreCase("SelectionChange"))
+		if(arg1 instanceof String)
 		{
-			if(Game.getSelectedCell()!=null)
+			String message = (String) arg1;
+			if(message.equalsIgnoreCase("SelectionChange"))
 			{
-				refresh();
+				if(Game.getSelectedCell()!=null)
+				{
+					refresh();
+					setDnaText();
+					checkVisibility();
+				}
+				else
+				{
+					if(this.isVisible())
+					{
+						this.setVisible(false);
+					}
+				}
+			}
+			if(message.equalsIgnoreCase("Zlife:Move"))
+			{
+				if(Game.getSelectedCell()!=null && this.isVisible())
+				{
+					refresh();
+					
+				}
 			}
 		}
-		
+			
 	}
 	
 	

@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/nov/2010 12.05.43
+* Date: 29/nov/2010 12.05.43
 * Titolo: JLife.java
-* Versione: 0.1.8 Rev.a:
+* Versione: 0.1.9 Rev.a:
 */
 
 
@@ -40,7 +40,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.Observable;
+import java.util.Observer;
 
+import com.tabuto.j2dgf.Game2D;
 import com.tabuto.j2dgf.Group;
 import com.tabuto.j2dgf.collision.CollisionBoundDetector;
 import com.tabuto.j2dgf.collision.CollisionManager;
@@ -55,7 +57,7 @@ import com.tabuto.jlife.collisions.RiproductionCollision;
  * Class {@code JLife} represent simple wrapper-class incapsulate object like {@link Cell}
  *  {@link Seed} and Collision.
  * <p>
- * Use J2DGF v.0.6.4
+ * Use J2DGF v.0.7.0
  * 
  * @author tabuto83
  * 
@@ -64,7 +66,7 @@ import com.tabuto.jlife.collisions.RiproductionCollision;
  * @see Gene
  * @see Dna
  */
-public class JLife extends Observable implements Serializable {
+public class JLife extends Game2D implements Serializable,Observer {
 
 	/**
 	 * 
@@ -72,14 +74,9 @@ public class JLife extends Observable implements Serializable {
 	private static final long serialVersionUID = -1995427995443955111L;
 	
 	/**
-	 * Game Playfield Dimension
-	 */
-	private Dimension DIM;
-	
-	/**
 	 * Game name, use it for save the Game
 	 */
-	private String Name=""; 
+	//private String Name=""; 
 	/**
 	 * The actual selected Cell (Not yet used)
 	 */
@@ -92,7 +89,7 @@ public class JLife extends Observable implements Serializable {
 	/**
 	 * Actual game state, if saved (save action allows) else only saveAs permitted;
 	 */
-	private boolean saved=false;
+	//private boolean saved=false;
 	/**
 	 * The Directory path where Game file is saved/loaded.
 	 * Not yet used
@@ -113,10 +110,10 @@ public class JLife extends Observable implements Serializable {
 	/**
 	 * Max number of seed element game can show
 	 */
-	private final int MAX_SEEDS=3;
+	private final int MAX_SEEDS=30;
 	
 	//COLLISIONS
-	CollisionManager cm;
+	//public CollisionManager cm;
 	EatingCollision eating;
 	RiproductionCollision riproduction;
 	CollisionBoundDetector cbd;
@@ -127,7 +124,7 @@ public class JLife extends Observable implements Serializable {
 	 */
 	public JLife(Dimension dim)
 	{
-		DIM=dim;
+		super(dim);
 	}
 	
 	/**
@@ -138,6 +135,8 @@ public class JLife extends Observable implements Serializable {
 	{
 		if(cellsGroup.size()<MAX_CELL_NUMBER)
 		{
+			
+		z.addObserver(this);	
 		cellsGroup.add(z);
 		setChanged();
 		notifyObservers("CountChange");
@@ -152,6 +151,7 @@ public class JLife extends Observable implements Serializable {
 	{
 		if (seedsGroup.size()<MAX_SEEDS)
 		{
+			
 			seedsGroup.add(s);
 			setChanged();
 		}
@@ -167,27 +167,12 @@ public class JLife extends Observable implements Serializable {
 	public void addSeed(int x,int y,int r, double d)
 	{
 		if( seedsGroup.size()< this.MAX_SEEDS)
+			
 			      seedsGroup.add( new Seed(this.DIM,x,y,r,d) );
 
 		setChanged();
 	}
 	
-	/**
-	 * Drow all the sprite in the groups
-	 * @param g Graphics Context
-	 */
-	public void drawSprite(Graphics g)
-	{
-		cellsGroup.move();
-		cm.RunCollisionManager();
-		cellsGroup.draw(g);
-		seedsGroup.draw(g);
-		if(cellsGroup.size()!= cellCount)
-		{
-			setChanged();
-			notifyObservers("CountChange");
-		}
-	}
 	
 	/**
 	 * @return the number of the sprite actually active
@@ -249,6 +234,7 @@ public class JLife extends Observable implements Serializable {
 		cm.addCollision(cbd);
 		cm.addCollision(riproduction);
 		cm.addCollision(eating);
+		//cm.start();
 	}
 	
 	/**
@@ -284,14 +270,21 @@ public class JLife extends Observable implements Serializable {
 				setChanged();
 				notifyObservers("SelectionChange");
 				}
+			else
+			{
+				setChanged();
+				notifyObservers("SelectionChange");
+			}
 		}
 		else
 		{
 			selectedCell.deselect();
 			selectedCell = (Zlife)cellsGroup.getSpriteByPos(x,y,tolerance);	
-			selectedCell.select();
-			setChanged();
-			notifyObservers("SelectionChange");
+			if(selectedCell!=null)
+				selectedCell.select();
+
+				setChanged();
+				notifyObservers("SelectionChange");
 		}
 			
 	}
@@ -326,5 +319,52 @@ public class JLife extends Observable implements Serializable {
 	public void setPath(String p){this.PATH = p;}
 	
 	public int getMaxCellsNumber(){return MAX_CELL_NUMBER;}
+
+	@Override
+	public void drawStuff(Graphics g) {
+		
+	
+		cellsGroup.move();
+		//cm.run();
+		cellsGroup.draw(g);
+		seedsGroup.draw(g);
+		if(cellsGroup.size()!= cellCount)
+		{
+			setChanged();
+			notifyObservers("CountChange");
+		}
+		
+	}
+
+	@Override
+	public void update(Observable arg0, Object arg1) {
+		
+		this.setChanged();
+		this.notifyObservers(arg1);
+		
+		
+		
+		if( arg1 instanceof Zlife)
+				{
+					Zlife z = (Zlife) arg1;
+					if (!(z.isAlive()))
+					{//z is die
+						Seed s = new Seed(
+								z.getDimension(),
+								(int)z.getX(),(int)z.getY(),
+								z.getRadius()*4,
+								z.getRadius()
+								);
+						this.addSeed(s);
+					}
+				}
+		else
+		{
+			String message = (String) arg1;
+			
+				
+		}
+		
+	}
 	
 }//END CLASS
