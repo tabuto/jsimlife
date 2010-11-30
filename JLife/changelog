@@ -1,3 +1,10 @@
+JLife v.0.1.9
+Fix Bug set zero the Zlife's speed 
+Zlife transform to seed after die
+
+JLife v.0.1.8.2
+Auto Update position in JLifeShowZlife
+
 JLife v. 0.1.8.1
 ADD Statistical Data View
 ADD a Floating ShowZlifePanel Information

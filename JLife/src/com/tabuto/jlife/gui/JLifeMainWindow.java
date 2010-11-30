@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/nov/2010 15.18.55
+* Date: 29/nov/2010 15.18.55
 * Titolo: JLifeMainWindow.java
-* Versione: 0.1.8 Rev.a:
+* Versione: 0.1.9 Rev.a:
 */
 
 
@@ -48,6 +48,8 @@ import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
+import com.tabuto.jlife.JLife;
+
 
 
 
@@ -58,22 +60,24 @@ public class JLifeMainWindow extends JFrame {
 	BufferStrategy bs;      //BufferStrategy
     int W=1024,H=668;       //Window Frame Size
     Dimension d;            //Dimension of window size
-    private static final String version =" v.0.1.8 BETA";
+    private static final String version =" v.0.1.9 BETA";
     private static final String title="JSimLife";
+    
+    //GAME STATUS VARIABLES
     boolean PLAY = true;
     boolean STOP = false;
-    
     boolean simLoad = false;
     boolean saved = false;
     
-    //GUI PANELS AND ELEMENTS
-    Simulation panel;
-    JMenuBar j2dmenubar;
+    //DECLARE GUI PANELS AND ELEMENTS
+    JLife Game; //GAME MODEL
+    Simulation panel; //THE PANEL
+    JMenuBar j2dmenubar; 
     JLifeLeftControlPanel cp_west;
     JLifeRightControlPanel cp_east;
     JLifeBottomPanel bottom;
     JScrollPane scroller;
-    JLifeShowZlife ZlifeView;
+    JLifeShowZlife ZlifeView; //Frame that let you to view the selected Zlife
     
     public JLifeMainWindow()
     {
@@ -81,9 +85,6 @@ public class JLifeMainWindow extends JFrame {
     
     	bottom = new JLifeBottomPanel(d);
     	j2dmenubar = new JMenuBar();
-    	
-    	
-    	
         setTitle(title + version);
         setSize(d.width,d.height);
         setResizable(true);  
@@ -93,7 +94,7 @@ public class JLifeMainWindow extends JFrame {
 		bs = getBufferStrategy();
         setLayout(new BorderLayout());
        
-        this.newSimulation();
+        newSimulation();
         bottom.setVisible(true);
         addMenu();
         
@@ -113,7 +114,7 @@ public class JLifeMainWindow extends JFrame {
     public void startNow()
     {
     	if(panel instanceof Simulation)
-    		while(PLAY){ panel.run(); };   
+    		while(PLAY){ panel.run(Game); };   
     }
 
     //ADDMENU ROUTINES
@@ -155,7 +156,7 @@ public class JLifeMainWindow extends JFrame {
 			public void actionPerformed( ActionEvent action )
 				{
 					if( panel.Game.isSaved() )
-						panel.saveGame();
+						panel.saveGame(Game, panel.getFileName(Game));
 					else
 						new OpenSimChooser();
 				}
@@ -195,7 +196,7 @@ public class JLifeMainWindow extends JFrame {
         	start.addActionListener(new ActionListener()
 			{
     			public void actionPerformed( ActionEvent action )
-					{if(panel!=null)panel.Play();}
+					{if(panel!=null)Game.activate();}
 			});
         	actionmenu.add(start);
         		
@@ -207,8 +208,11 @@ public class JLifeMainWindow extends JFrame {
         	step.addActionListener(new ActionListener()
 			{
     			public void actionPerformed( ActionEvent action )
-					{if(panel!=null)panel.Step();}
-			});
+					{
+    				if(panel!=null){} //panel.Step();
+						}
+					}
+			);
         	actionmenu.add(step);
         	
         				//STOP
@@ -219,8 +223,10 @@ public class JLifeMainWindow extends JFrame {
         	stop.addActionListener(new ActionListener()
 			{
     			public void actionPerformed( ActionEvent action )
-					{  if (panel!=null) panel.Stop(); }
-			});
+					{  if (panel!=null)
+							Game.deactivate(); 
+					}
+    			});
         	actionmenu.add(stop);
         	
         				//RESET
@@ -251,7 +257,7 @@ public class JLifeMainWindow extends JFrame {
       	      public void actionPerformed( ActionEvent action )
       	      								{
       	    	  		JOptionPane.showMessageDialog(null, 
-      	    	  				"JUniverse "+ version+" is written by tabuto83", 
+      	    	  				"JLife "+ version+" is written by tabuto83", 
       	    	  				"About", 
       	    	  				JOptionPane.PLAIN_MESSAGE);
       	      								}
@@ -273,16 +279,18 @@ public class JLifeMainWindow extends JFrame {
     }
     
     
-    //Menu Controls
+    //Create new Simulation
     
     public void newSimulation()
     {
     	PLAY=true;
-    	panel = new Simulation(1024,1024); //Declare the DrawingPanel
+    	Game = new JLife(this.d);
+    	panel = new Simulation(d,Game); //Declare the DrawingPanel
     	cp_west = new JLifeLeftControlPanel(d);
     	cp_east = new JLifeRightControlPanel(d, panel.Game);
     	ZlifeView= new JLifeShowZlife(panel.Game);
     	scroller = new JScrollPane(panel);
+    	scroller.setPreferredSize(new Dimension(600,600));
     	cp_west.setCanvasPanel(panel);
     	
     	 cp_west.setVisible(true);
@@ -293,9 +301,9 @@ public class JLifeMainWindow extends JFrame {
          this.getContentPane().add(scroller,BorderLayout.CENTER);
          this.getContentPane().add( cp_west, BorderLayout.LINE_START);
          this.getContentPane().add( cp_east, BorderLayout.LINE_END);
-         panel.initStuff();
-         panel.Game.addObserver(cp_east);
-         panel.Game.addObserver(ZlifeView);
+         Game.initGame();
+         Game.addObserver(cp_east);
+         Game.addObserver(ZlifeView);
     }
     
    
@@ -307,8 +315,10 @@ public class JLifeMainWindow extends JFrame {
 				"Confirm new Simulation",
 				 JOptionPane.YES_NO_CANCEL_OPTION,
 				 JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
-	{PLAY=false; this.panel.Game.reset();  }
-    	else
+	{
+    		PLAY=false;this.panel.Game.reset();  
+	}
+    		else
     	{};
 
     }
@@ -321,7 +331,7 @@ public class JLifeMainWindow extends JFrame {
 				 JOptionPane.YES_NO_CANCEL_OPTION,
 				 JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
     			{
-    				panel = null;
+    				Game = null;
     				System.exit(0);  
     			}
     	else
@@ -342,10 +352,20 @@ public class JLifeMainWindow extends JFrame {
             int n = fileChooser.showOpenDialog(JLifeMainWindow.this);
             if (n == JFileChooser.APPROVE_OPTION) 
             	{	
-        		  JLifeMainWindow.this.panel.loadGame( fileChooser.getSelectedFile().getAbsolutePath());
-        		  JLifeMainWindow.this.cp_east.setGame(panel.Game);
-        		  JLifeMainWindow.this.ZlifeView.setGame(panel.Game);
-        		  JLifeMainWindow.this.panel.Game.addObserver(cp_east);
+            	JLifeMainWindow.this.Game.deactivate();
+            	JLifeMainWindow.this.Game = 
+      			  (JLife) panel.loadGame( 
+      					  fileChooser.getSelectedFile().getAbsolutePath()
+      					  );
+            
+            	
+            	
+            	panel.Game = JLifeMainWindow.this.Game;
+            	ZlifeView.Game = JLifeMainWindow.this.Game;
+            	cp_east.setGame( JLifeMainWindow.this.Game);
+            	
+            	JLifeMainWindow.this.Game.addObserver(cp_east);
+            	JLifeMainWindow.this.Game.addObserver(ZlifeView);
             	}
           	 
           	} catch (Exception ex) {}
@@ -363,9 +383,11 @@ public class JLifeMainWindow extends JFrame {
    
             int n = fileChooser.showSaveDialog(JLifeMainWindow.this);
             if (n == JFileChooser.APPROVE_OPTION) 
-            {
-            	JLifeMainWindow.this.panel.Game.setName(fileChooser.getSelectedFile().getAbsolutePath());
-            	JLifeMainWindow.this.panel.saveGame();
+            { 
+            	
+            	JLifeMainWindow.this.Game.setName(fileChooser.getSelectedFile().getAbsolutePath());
+            	JLifeMainWindow.this.panel.saveGame
+            	 (JLifeMainWindow.this.Game,JLifeMainWindow.this.panel.getFileName(JLifeMainWindow.this.Game ) );
             }
            
             

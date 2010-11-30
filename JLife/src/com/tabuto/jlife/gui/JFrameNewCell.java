@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/nov/2010 18.15.45
+* Date: 29/nov/2010 18.15.45
 * Titolo: JFrameNewCell.java
-* Versione: 0.8 Rev.a:
+* Versione: 0.1.9 Rev.a:
 */
 
 
@@ -44,16 +44,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
-
-
 import com.tabuto.jenetic.Dna;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Zlife;
 
 
+
 public class JFrameNewCell extends JFrame {
 	
 	//private Game references
+
 	private final JLife Game;
 	//COMPONENT
 	JPanel north,dnaPanel,south;
@@ -334,8 +334,8 @@ public class JFrameNewCell extends JFrame {
 		 hornyEnergySlider.setMinorTickSpacing(1);
 		 hornyEnergySlider.setPaintTicks(true);
 		 hornyEnergySlider.setPaintLabels(true);
-		 hornyEnergySlider.setToolTipText("Energy below which ZLife is Horny");
-		 hornyEnergyLabel.setToolTipText("Energy below which ZLife is Horny");
+		 hornyEnergySlider.setToolTipText("Energy higher than which ZLife is Horny");
+		 hornyEnergyLabel.setToolTipText("Energy higher than ZLife is Horny");
 		 
 		 dnaPanel.add(hornyEnergyLabel);
 		 dnaPanel.add(hornyEnergySlider);

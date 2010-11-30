@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 23/nov/2010 23.39.33
+* Date: 29/nov/2010 23.39.33
 * Titolo: Zlife.java
-* Versione: 0.1.8 Rev.a:
+* Versione: 0.1.9 Rev.a:
 */
 
 
@@ -51,6 +51,7 @@ import com.tabuto.util.Point;
  * itself if it collides by another Cell.
  * <p>
  * Use Jenetic2.1
+ * Use J2DGF v.0.7.0
  * 
  * @author tabuto83
  * 
@@ -400,6 +401,8 @@ public class Zlife extends Sprite implements Serializable{
 							{
 								this.setSpeed((int)getHungrySpeed());
 								this.moveTo(getSeedPosition());
+								seedPosition.setX(0);
+							    seedPosition.setY(0);
 								break;
 							}
 					  }
@@ -436,9 +439,17 @@ public class Zlife extends Sprite implements Serializable{
 				}
 				
 			case SCARY:
-				{
-					//TODO: write a scary state
-					break;
+				{   
+					age();
+					this.setSpeed((int)scarySpeed);
+					
+					if(energy< (hungryEnergy)/2)
+					{
+						age();
+						 this.setSpeed((int)getHungrySpeed());
+						state = CellState.HUNGRY;
+						break;
+					}
 				}
 			
 			default:
@@ -450,7 +461,10 @@ public class Zlife extends Sprite implements Serializable{
 			}
 		}
 		else
+			{
 			setAlive(false);
+			//setAlive(false);
+			}
 	}
 	
 	/**
@@ -722,6 +736,11 @@ public class Zlife extends Sprite implements Serializable{
 	 */
 	public void setAlive(boolean alive) {
 		this.alive = alive;
+		if (!alive)
+		{
+			setChanged();
+			notifyObservers(this);
+		}
 	}
 
 	/**
@@ -878,6 +897,10 @@ public class Zlife extends Sprite implements Serializable{
   		  double nx = (this.vector.origin.x + this.getMySpeed() * Math.cos(this.vector.getDirectionRadians() ) );
   		  double ny = (this.vector.origin.y + this.getMySpeed() * Math.sin(this.vector.getDirectionRadians()));
   		  this.vector.setNewOrigin(nx,ny);
+  		  
+  		setChanged();
+		notifyObservers("ZLife:Move");
+  		  
   		  energy = (energy - metabolism);
   		  if(energy<0)
   			 {setAlive(false);Deactivate();}

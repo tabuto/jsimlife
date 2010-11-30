@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/nov/2010 18.38.01
+* Date: 29/nov/2010 18.38.01
 * Titolo: JLifeCanvas.java
-* Versione: 0.1.8 Rev.a:
+* Versione: 0.1.9 Rev.a:
 */
 
 
@@ -32,39 +32,23 @@
 package com.tabuto.jlife.gui;
 
 
-import java.awt.Color;
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
 import javax.swing.JButton;
-
-import javax.swing.JColorChooser;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 import javax.swing.JTextField;
-
-
 import com.tabuto.j2dgf.gui.J2DCanvasPanel;
-
-import com.tabuto.jlife.Cell;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Seed;
-import com.tabuto.jlife.Zlife;
-import com.tabuto.util.Point;
+
 
 
 
@@ -76,29 +60,22 @@ public class Simulation extends J2DCanvasPanel implements Serializable,MouseList
 	private static final long serialVersionUID = -3243620944955104850L;
 
 	
-	public JLife Game;
+    public JLife Game;
 	
-public Simulation(int width, int height)
+public Simulation(Dimension d,JLife g)
 	{
 	
-	super(width, height);
-	Game = new JLife(this.DIM);
-	Game.setName("NewSimulation");
+	super(d);
+    Game = g;
 	
 	this.addMouseListener(new MouseAdapter() { 
 	    public void mousePressed(MouseEvent me) { 
-	      Game.selectCell(me.getX(),me.getY(),20);
-	      //System.out.println("X: "+me.getX()+" Y: "+me.getY());
-	      //System.out.println(Game.getSelectedCell().toString() );
+	       ((JLife)Game).selectCell(me.getX(),me.getY(),20);
 	    } 
 	  }); 
 	
 	}
 
-public void initStuff()
-{
-	Game.initGame();
-}
 
 public void addCell()
 {
@@ -153,7 +130,7 @@ public void addSeed()
 												Integer.valueOf(fieldRadius.getText()),
 												(double)Integer.valueOf(fieldName.getText())
 												);
-					Game.addSeed(newSeed);
+					((JLife)Game).addSeed(newSeed);
 					addSeedDialog.dispose();
 					} 
 				});
@@ -172,83 +149,52 @@ public void addSeed()
 
 
 
-
+/*
 protected void drawSprite(Graphics g)
 {
 
-				this.Game.drawSprite(g);
+				this.Game.drawStuff(g);
 
 }
+*/
 
-public void saveGame()
-{
-	 FileOutputStream fos = null;
-    ObjectOutputStream out = null;
-	 try
-	 {
-		 fos = new FileOutputStream(Game.getName()+".jsl");
-		 out = new ObjectOutputStream(fos);
-		 out.writeObject(this.Game);
-		 out.close();
-		 Game.setSaved(true);
-	 }
-	  catch(IOException ex)
-	  		{
-		  		ex.printStackTrace();
-			}
-}
 
-public void loadGame(String path)
+//Return the File Name to save the GAme
+public String getFileName(JLife game)
 {
-	JLife loaded = null;
-	FileInputStream fis = null;
-    ObjectInputStream in = null;
-	try
-	 {
-	   fis = new FileInputStream(path);
-       in = new ObjectInputStream(fis);
-	   loaded = (JLife)in.readObject();
-       in.close();
-       if(loaded instanceof JLife)
-    	   this.Game = loaded;
-     }
-     catch(IOException ex)
-     {
-	     ex.printStackTrace();
-     }
-     catch(ClassNotFoundException ex)
-     {
-     ex.printStackTrace();
-     }
+	String Name= game.getName();
+	if (Name.contains("."))
+		return game.getName();
+	else
+		return Name + ".jsl";
 }
 
 @Override
 public void mouseClicked(MouseEvent me) {
-	// TODO Auto-generated method stub
 	
 }
 
 @Override
 public void mouseEntered(MouseEvent arg0) {
-	// TODO Auto-generated method stub
+
 	
 }
 
 @Override
 public void mouseExited(MouseEvent arg0) {
-	// TODO Auto-generated method stub
+
 	
 }
 
 @Override
 public void mousePressed(MouseEvent me) {
-	// TODO Auto-generated method stub
+
 
 }
 
 @Override
 public void mouseReleased(MouseEvent arg0) {
-	// TODO Auto-generated method stub
+	
 	
 }
 
