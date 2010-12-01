@@ -1,11 +1,14 @@
-JLife v.0.1.9
-Fix Bug set zero the Zlife's speed 
+JLife v.0.1.9.1
+Add Zredator type of ZLife
+Update AddCell Panel
+Fix Bug that set zero the Zlife's speed 
 Zlife transform to seed after die
+Fix a lot of small bug
 
-JLife v.0.1.8.2
+
+
+JLife v.0.1.9			
 Auto Update position in JLifeShowZlife
-
-JLife v. 0.1.8.1
 ADD Statistical Data View
 ADD a Floating ShowZlifePanel Information
 

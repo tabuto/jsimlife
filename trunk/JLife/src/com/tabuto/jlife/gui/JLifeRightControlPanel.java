@@ -43,12 +43,14 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import com.tabuto.j2dgf.gui.J2DControlPanel;
 import com.tabuto.jlife.JLife;
+import com.tabuto.jlife.Zlife;
+import com.tabuto.jlife.Zretador;
 
 
 
 public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 	
-public JLife game;
+ static JLife game;
 	/**
 	 * 
 	 */
@@ -94,7 +96,11 @@ public JLife game;
 						{
 	 					   	if(game.getSelectedCell()!=null)
 	 					   	{
-	 					   	jls.calculateStatistics();
+	 					   		if(game.getSelectedCell() instanceof Zlife)
+	 					   	jls.calculateStatistics(game.cellsGroup);
+	 					   	if(game.getSelectedCell() instanceof Zretador)
+		 					   	jls.calculateStatistics(game.zretadorGroup);
+	 					   		
 	 					   		ZlifeInfo.setText( 
 	 					   			jls.toString());
 	 					   	ZlifeInfo.setCaretPosition(0);
@@ -111,7 +117,10 @@ public JLife game;
 			{
 	 			public void actionPerformed( ActionEvent action )
 						{
-	 				jls.calculateStatistics();
+	 				if(game.getSelectedCell() instanceof Zlife)
+ 					   	jls.calculateStatistics(game.cellsGroup);
+ 					   	if(game.getSelectedCell() instanceof Zretador)
+	 					   	jls.calculateStatistics(game.zretadorGroup);
 	 				ZlifeInfo.setText( 
 			   				jls.toString());
 			   	ZlifeInfo.setCaretPosition(0);

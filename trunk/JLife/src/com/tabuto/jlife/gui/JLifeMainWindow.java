@@ -70,7 +70,7 @@ public class JLifeMainWindow extends JFrame {
     boolean saved = false;
     
     //DECLARE GUI PANELS AND ELEMENTS
-    JLife Game; //GAME MODEL
+    static JLife Game; //GAME MODEL
     Simulation panel; //THE PANEL
     JMenuBar j2dmenubar; 
     JLifeLeftControlPanel cp_west;

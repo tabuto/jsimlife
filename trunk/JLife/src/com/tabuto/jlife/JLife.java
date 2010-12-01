@@ -51,6 +51,8 @@ import com.tabuto.jenetic.Dna;
 import com.tabuto.jenetic.Gene;
 import com.tabuto.jlife.collisions.EatingCollision;
 import com.tabuto.jlife.collisions.RiproductionCollision;
+import com.tabuto.jlife.collisions.ZlifeVsZretadorCollision;
+import com.tabuto.jlife.collisions.ZretadorRiproduction;
 
 
 /**
@@ -62,6 +64,7 @@ import com.tabuto.jlife.collisions.RiproductionCollision;
  * @author tabuto83
  * 
  * @version 0.1.7
+ * @param <synchronyzed>
  * 
  * @see Gene
  * @see Dna
@@ -99,13 +102,16 @@ public class JLife extends Game2D implements Serializable,Observer {
 	/**
 	 * Group contanis Zlifes and Seeds
 	 */
-	public Group<Zlife> cellsGroup = new Group<Zlife>("CellsSprite");
+	public  Group<Zlife> cellsGroup = new Group<Zlife>("CellsSprite");
 	public Group<Seed> seedsGroup = new Group<Seed>("SeedsSprite");
+	public Group<Zretador> zretadorGroup = new Group<Zretador>("ZretadorsSprite");
 	
 	/**
 	 * 
 	 */
-	private final int MAX_CELL_NUMBER = 125;
+	private final int MAX_CELL_NUMBER = 250;
+	
+	private final int MAX_ZRETADOR_NUMBER = 250;
 
 	/**
 	 * Max number of seed element game can show
@@ -115,8 +121,10 @@ public class JLife extends Game2D implements Serializable,Observer {
 	//COLLISIONS
 	//public CollisionManager cm;
 	EatingCollision eating;
-	RiproductionCollision riproduction;
-	CollisionBoundDetector cbd;
+	ZlifeVsZretadorCollision zretadorEating;
+	RiproductionCollision riproductionZlife;
+	ZretadorRiproduction riproductionZretador;
+	CollisionBoundDetector cbdZretador,cbdZlife;
 
 	/**
 	 * Jlife Constructor 
@@ -138,6 +146,22 @@ public class JLife extends Game2D implements Serializable,Observer {
 			
 		z.addObserver(this);	
 		cellsGroup.add(z);
+		setChanged();
+		notifyObservers("CountChange");
+		}
+	}
+	
+	/**
+	 * Add a Zlife in ZlifeGroup
+	 * @param c Zlife
+	 */
+	public void addZretador(Zretador z)
+	{
+		if(zretadorGroup.size()<MAX_ZRETADOR_NUMBER)
+		{
+			
+		z.addObserver(this);	
+		zretadorGroup.add(z);
 		setChanged();
 		notifyObservers("CountChange");
 		}
@@ -226,14 +250,27 @@ public class JLife extends Game2D implements Serializable,Observer {
 	public void initGame() 
 	{
 		cm = new CollisionManager();
-		cbd = new CollisionBoundDetector(cellsGroup,DIM);
-		cbd.useReflection();
-		riproduction = new RiproductionCollision(cellsGroup,this);
-		riproduction.setDistance(20);
+		
+		cbdZlife = new CollisionBoundDetector(cellsGroup,DIM);
+		cbdZretador = new CollisionBoundDetector(zretadorGroup,DIM);
+		cbdZlife.useReflection();
+		cbdZretador.useReflection();
+		
+		riproductionZlife = new RiproductionCollision(cellsGroup,this);
+		riproductionZlife.setDistance(20);
+		
+		riproductionZretador = new ZretadorRiproduction(zretadorGroup,this);
+		riproductionZretador.setDistance(20);
+		
 		eating = new EatingCollision(cellsGroup, seedsGroup);
-		cm.addCollision(cbd);
-		cm.addCollision(riproduction);
+		zretadorEating = new ZlifeVsZretadorCollision(cellsGroup,zretadorGroup);
+		
+		cm.addCollision(cbdZlife);
+		cm.addCollision(cbdZretador);
+		cm.addCollision(riproductionZlife);
+		cm.addCollision(riproductionZretador);
 		cm.addCollision(eating);
+		cm.addCollision(zretadorEating);
 		//cm.start();
 	}
 	
@@ -264,6 +301,8 @@ public class JLife extends Game2D implements Serializable,Observer {
 		if(selectedCell==null)
 		{
 			selectedCell = (Zlife)cellsGroup.getSpriteByPos(x,y,tolerance);	
+			if(selectedCell==null)
+				selectedCell = (Zlife)zretadorGroup.getSpriteByPos(x,y,tolerance);	
 			if(selectedCell!=null)
 				{
 				selectedCell.select();
@@ -279,7 +318,9 @@ public class JLife extends Game2D implements Serializable,Observer {
 		else
 		{
 			selectedCell.deselect();
-			selectedCell = (Zlife)cellsGroup.getSpriteByPos(x,y,tolerance);	
+			selectedCell = (Zlife)cellsGroup.getSpriteByPos(x,y,tolerance);
+				if(selectedCell==null)
+					selectedCell = (Zlife)zretadorGroup.getSpriteByPos(x,y,tolerance);	
 			if(selectedCell!=null)
 				selectedCell.select();
 
@@ -325,10 +366,12 @@ public class JLife extends Game2D implements Serializable,Observer {
 		
 	
 		cellsGroup.move();
+		zretadorGroup.move();
 		//cm.run();
 		cellsGroup.draw(g);
 		seedsGroup.draw(g);
-		if(cellsGroup.size()!= cellCount)
+		zretadorGroup.draw(g);
+		if((cellsGroup.size() + zretadorGroup.size()) != cellCount)
 		{
 			setChanged();
 			notifyObservers("CountChange");
@@ -349,6 +392,8 @@ public class JLife extends Game2D implements Serializable,Observer {
 					Zlife z = (Zlife) arg1;
 					if (!(z.isAlive()))
 					{//z is die
+						cellsGroup.remove(z);
+						cellsGroup.trimToSize();
 						Seed s = new Seed(
 								z.getDimension(),
 								(int)z.getX(),(int)z.getY(),
@@ -358,7 +403,25 @@ public class JLife extends Game2D implements Serializable,Observer {
 						this.addSeed(s);
 					}
 				}
-		else
+		if( arg1 instanceof Zretador)
+		{
+			Zretador z = (Zretador) arg1;
+			if (!(z.isAlive()))
+			{//z is die
+				zretadorGroup.remove(z);
+				zretadorGroup.trimToSize();
+				Seed s = new Seed(
+						z.getDimension(),
+						(int)z.getX(),(int)z.getY(),
+						z.getRadius()*4,
+						z.getRadius()
+						);
+				this.addSeed(s);
+			}
+		}
+		
+		
+		if (arg1 instanceof String)
 		{
 			String message = (String) arg1;
 			
