@@ -58,10 +58,10 @@ import org.jdom.output.*;
  * Class <code> Dna</code>
  * <p>
  * <code>Dna</code> is a class that represent a simple model of DNA as a {@link Gene} Vector.
- * Add a {@link Gene} into <code>Dna</code> is simple by using the {@link Dna#add(Gene)} ,{@link Dna#add(Double)}
- * {@link Dna#add(Boolean)} methods.
+ * Add a {@link Gene} into <code>Dna</code> is simple by using the {@link Dna#add(Gene)} ,{@link Dna#add(double) }
+ * {@link Dna#add(boolean)} methods.
  * So the <code>Dna</code> is just a information's object container, able to save or load itself using an XML file
- * thanks to methods {@link Dna#saveDna(String)} and {@link Dna#loadDna(String)}
+ * thanks to methods {@link Dna#save(String)} and {@link Dna#load(String)}
  * <code>Dna</code> class also provides a {@link Dna#merge(Dna)} method simulating the Dna Genetic Recombination.
  * During this process it's possible introduce some "noise" using the {@link Dna#param} variable.
  *

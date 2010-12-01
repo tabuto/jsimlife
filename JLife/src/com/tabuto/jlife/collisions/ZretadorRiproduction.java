@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 17.32.16
-* Titolo: RiproductionCollision.java
-* Versione: 0.1.9 Rev.a:
+* Date: 01/dic/2010 10.58.29
+* Titolo: ZretadorRiproduction.java
+* Versione: 0.1 Rev.a:
 */
 
 
@@ -34,11 +34,10 @@ import com.tabuto.j2dgf.Group;
 import com.tabuto.j2dgf.collision.CollisionDetector;
 import com.tabuto.jenetic.Dna;
 import com.tabuto.jlife.JLife;
-import com.tabuto.jlife.Zlife;
 import com.tabuto.jlife.Zretador;
 
 
-public class RiproductionCollision extends CollisionDetector{
+public class ZretadorRiproduction extends CollisionDetector{
 	
 	/**
 	 * 
@@ -46,20 +45,19 @@ public class RiproductionCollision extends CollisionDetector{
 	private static final long serialVersionUID = -1171546078549060228L;
 	public JLife jlc;
 	//Constructor
-	 public RiproductionCollision(Group<Zlife> sp1, JLife j)
+	 public ZretadorRiproduction(Group<Zretador> sp1, JLife j)
 	 {
 		 super(sp1);
 		 jlc=j;
 	 }
-	 
-	 
+	
 	 //Override CollisionAction
 	 public void CollisionAction(int s1, int s2)
 	  {
 		//Cast to class extends Sprite 
-		Zlife cell1, cell2, newCell;
-		cell1 = (Zlife) group1.get(s1);
-		cell2 = (Zlife) group1.get(s2);
+		Zretador cell1, cell2, newCell;
+		cell1 = (Zretador) group1.get(s1);
+		cell2 = (Zretador) group1.get(s2);
 		Dna newBornDna;
 		//TO-DO
 		
@@ -75,12 +73,12 @@ public class RiproductionCollision extends CollisionDetector{
 				double tempAngle = cell2.getAngle();
 				cell2.setAngleRadians(cell1.getAngle());
 				cell1.setAngleRadians(tempAngle);
-				newCell = new Zlife(cell1.getDimension(), cell1.getX(),cell1.getY(),newBornDna);
+				newCell = new Zretador(cell1.getDimension(), cell1.getX(),cell1.getY(),newBornDna);
 				//newCell.setBored();
 				newCell.setAngleRadians( Math.random() * 2 * Math.PI );
 				newCell.setName( combineName(cell1.getName(),cell2.getName()));
 				newCell.setEnergy(20); 
-				jlc.addCell(newCell);
+				jlc.addZretador(newCell);
 				newCell.live();
 				cell1.live();
 				cell2.live();
@@ -114,5 +112,4 @@ public class RiproductionCollision extends CollisionDetector{
 		 
 		 return name;
 	 }
-
 }

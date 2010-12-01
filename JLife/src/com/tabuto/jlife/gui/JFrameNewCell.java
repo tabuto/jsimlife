@@ -39,6 +39,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,6 +48,7 @@ import javax.swing.JTextField;
 import com.tabuto.jenetic.Dna;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Zlife;
+import com.tabuto.jlife.Zretador;
 
 
 
@@ -68,6 +70,7 @@ public class JFrameNewCell extends JFrame {
 	
 	JSlider multiplierSlider;
 	
+	JComboBox cellChooser;
 	
 	public JFrameNewCell(final JLife Game)
 	{
@@ -90,6 +93,7 @@ public class JFrameNewCell extends JFrame {
 		addNameField();
 		addXYField();
 		addColorChooser();
+		addCellChooser();
 		
 		dnaPanel.setLayout( new GridLayout(0,4,5,5));
 		addRadiusSlider();
@@ -133,7 +137,7 @@ public class JFrameNewCell extends JFrame {
 				newCell.setScarySpeed(scarySpeedSlider.getValue() );
 				newCell.setAgeFactor(ageFactorSlider.getValue()/100 );
 				*/
-		for(int i=0;i< multiplierSlider.getValue();i++)
+		for(int i=0;i< multiplierSlider.getValue()+1;i++)
 		{
 				Dna ZlifeDna = new Dna();
 				
@@ -154,20 +158,46 @@ public class JFrameNewCell extends JFrame {
 					ZlifeDna.add(colorButton.getBackground().getBlue(), "B", "Blue component of Zlife color");
 					ZlifeDna.add(radiusSlider.getValue(), "radius", "Zlife's radius ");
 					ZlifeDna.add((double)ageFactorSlider.getValue()/100 , "ageFactor", "Zlife's age Factor ");
-				
-					Zlife newCell = new Zlife( Game.getDimension(), 
+			
+			int choose = cellChooser.getSelectedIndex();
+			Zlife newCell;
+			Zretador newZretador;
+			
+			if(choose==0)
+			{
+					newCell = new Zlife( Game.getDimension(), 
 							Integer.valueOf(xField.getText() ) ,
 							Integer.valueOf(yField.getText()),
 							ZlifeDna);
+					
+					if(multiplierSlider.getValue()<2)
+						newCell.setAngleDegree( directionSlider.getValue());
+					else
+						newCell.setAngleRadians(Math.random()*2*Math.PI );
+					
+					newCell.live();
+					newCell.setName( nameField.getText());
+					Game.addCell(newCell);
+			}
+			else
+			{
+					newZretador = new Zretador( Game.getDimension(), 
+							Integer.valueOf(xField.getText() ) ,
+							Integer.valueOf(yField.getText()),
+							ZlifeDna);
+					
+					if(multiplierSlider.getValue()<2)
+						newZretador.setAngleDegree( directionSlider.getValue());
+					else
+						newZretador.setAngleRadians(Math.random()*2*Math.PI );
+					
+					newZretador.live();
+					newZretador.setName( nameField.getText());
+					Game.addZretador(newZretador);
+			}
+			
 				
-				if(multiplierSlider.getValue()<2)
-					newCell.setAngleDegree( directionSlider.getValue());
-				else
-					newCell.setAngleRadians(Math.random()*2*Math.PI );
 				
-				newCell.live();
-				newCell.setName( nameField.getText());
-				Game.addCell(newCell);
 		}
 				dispose();
 				} 
@@ -550,15 +580,15 @@ public class JFrameNewCell extends JFrame {
 	
 	private void addMultiplierSlider()
 	{
-		 final int MIN=1;
+		 final int MIN=0;
 		 final int INIT = 5;
-		 final int MAX=10;
+		 final int MAX=60;
 		 JLabel multiplierLabel=new JLabel("Zlife Number");
 		 
 		 multiplierSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
-		 multiplierSlider.setMajorTickSpacing(5);
+		 multiplierSlider.setMajorTickSpacing(10);
 		 multiplierSlider.setMinorTickSpacing(1);
 		 multiplierSlider.setPaintTicks(true);
 		 multiplierSlider.setPaintLabels(true);
@@ -569,4 +599,13 @@ public class JFrameNewCell extends JFrame {
 		 dnaPanel.add(multiplierSlider);
 	}
 	
+	private void addCellChooser()
+	{
+		final String[] choose ={"Zlife","Zretador"};
+		
+		cellChooser = new JComboBox(choose);
+		cellChooser.setSelectedIndex(0);
+		north.add(cellChooser);
+
+	}
 }

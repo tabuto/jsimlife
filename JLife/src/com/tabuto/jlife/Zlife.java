@@ -67,50 +67,51 @@ public class Zlife extends Sprite implements Serializable{
 	 */
 	private static final long serialVersionUID = 1705433665252708243L;
 	
-	private Dna ZlifeDna;
+	protected Dna ZlifeDna;
 	
-	private double dnaParam;
+	protected double dnaParam;
 	
-	private double energy;
+	protected double energy;
 	
 	//TODO: why not delete maxEnergy?
-	private double maxEnergy;
+	protected double maxEnergy;
 	
-	private double hornyEnergy;
+	protected double hornyEnergy;
 	
-	private double hungryEnergy;
+	protected double hungryEnergy;
 	
-	private int lifeCycle;
+	protected int lifeCycle;
 	
-	private double metabolism;
+	protected double metabolism;
 	
-	private double BoredSpeed;
+	protected double BoredSpeed;
 
-	private double riproductionEnergy;
+	protected double riproductionEnergy;
 	
-	private double hungrySpeed;
+	protected double hungrySpeed;
 	
-	private double hornySpeed;
+	protected double hornySpeed;
 	
-	private double scarySpeed;
+	protected double scarySpeed;
 	
-	private int radius;
+	protected int radius;
 	
-	private double ageFactor;
+	protected double ageFactor;
 	
-	private int R;
-	private int G;
-	private int B;
+	protected int R;
+	protected int G;
+	protected int B;
 	
 	//ACTUAL-PARAMETER: NO-DNA
 	public enum CellState  {NULL, HUNGRY, HORNY, BORED, SCARY}
 	public CellState state = CellState.BORED;
-	private boolean alive=true;
-	private boolean SELECTED = false;
-	private Color zlifeColor;
-	private int actualLifeCycle=0; //the actual age of Zlife
-	private Point seedPosition = new Point();
-
+	protected boolean alive=true;
+	protected boolean SELECTED = false;
+	protected Color zlifeColor;
+	protected int actualLifeCycle=0; //the actual age of Zlife
+	protected Point seedPosition = new Point();
+	
+	private boolean attacked=false;
 
 	//CONSTRUCTOR
 	/**
@@ -192,7 +193,7 @@ public class Zlife extends Sprite implements Serializable{
 	{
 		if(actualLifeCycle<=lifeCycle)
 		{
-			int colorFactor = (int)(255/(lifeCycle*2))-1;
+			int colorFactor = (int)(255/(lifeCycle*2+1));
 			setMaxEnergy( getMaxEnergy() - getMaxEnergy()*getAgeFactor());
 			this.setZlifeColor(this.R + colorFactor, 
 				      	  	   this.G + colorFactor,
@@ -411,6 +412,7 @@ public class Zlife extends Sprite implements Serializable{
 						  //this.age();
 						  this.setSpeed((int)getBoredSpeed());
 						  state = CellState.BORED;
+						  this.setAngleRadians(Math.random()*Math.PI*2);
 						  break;
 					  }  
 					
@@ -427,6 +429,7 @@ public class Zlife extends Sprite implements Serializable{
 						//age();
 						 this.setSpeed((int)getBoredSpeed());
 						state = CellState.BORED;
+						this.setAngleRadians(Math.random()*Math.PI*2);
 						break;
 					}
 					if(energy<hungryEnergy)
@@ -434,22 +437,28 @@ public class Zlife extends Sprite implements Serializable{
 						age();
 						 this.setSpeed((int)getHungrySpeed());
 						state = CellState.HUNGRY;
+						this.setAngleRadians(Math.random()*Math.PI*2);
 						break;
 					}
 				}
 				
 			case SCARY:
 				{   
-					age();
+					
 					this.setSpeed((int)scarySpeed);
 					
-					if(energy< (hungryEnergy)/2)
+					if ((int)energy == (int)((hungryEnergy)*1.5))
+						this.setAngleRadians(Math.random()*Math.PI*2);
+					
+					if(energy< (hungryEnergy))
 					{
 						age();
 						 this.setSpeed((int)getHungrySpeed());
 						state = CellState.HUNGRY;
+						this.setAngleRadians(Math.random()*Math.PI*2);
 						break;
 					}
+					
 				}
 			
 			default:
@@ -508,7 +517,11 @@ public class Zlife extends Sprite implements Serializable{
 	 * @param boredSpeed the boredSpeed to set
 	 */
 	public void setBoredSpeed(double boredSpeed) {
-		if(boredSpeed>0 && boredSpeed<=100)
+		if(boredSpeed<0)
+			boredSpeed=0;
+		if (boredSpeed>100)
+			boredSpeed=100;
+		
 		BoredSpeed = boredSpeed;
 	}
 
@@ -538,8 +551,14 @@ public class Zlife extends Sprite implements Serializable{
 	 * @param hungrySpeed the hungrySpeed to set
 	 */
 	public void setHungrySpeed(double hungrySpeed) {
-		if(hungrySpeed>0 && hungrySpeed<=100)
-		this.hungrySpeed = hungrySpeed;
+		if(hungrySpeed<0)
+			hungrySpeed=0;
+		
+		if( hungrySpeed>100)
+			hungrySpeed=100;
+		
+			this.hungrySpeed = hungrySpeed;
+		
 	}
 
 	/**
@@ -558,7 +577,7 @@ public class Zlife extends Sprite implements Serializable{
 		
 		if(hornySpeed>100)
 			this.hornySpeed = 100;
-		else
+		
 			this.hornySpeed = hornySpeed;
 		
 	}
@@ -609,7 +628,12 @@ public class Zlife extends Sprite implements Serializable{
 	 * @param scarySpeed the scarySpeed to set
 	 */
 	public void setScarySpeed(double scarySpeed) {
-		if(scarySpeed>0 && scarySpeed<=100)
+		if(scarySpeed<0)
+			scarySpeed=0;
+		
+		if( scarySpeed>100)
+			scarySpeed=100;
+		
 		this.scarySpeed = scarySpeed;
 	}
 	
@@ -734,7 +758,7 @@ public class Zlife extends Sprite implements Serializable{
 	/**
 	 * @param alive the alive to set
 	 */
-	public void setAlive(boolean alive) {
+	public synchronized void setAlive(boolean alive) {
 		this.alive = alive;
 		if (!alive)
 		{

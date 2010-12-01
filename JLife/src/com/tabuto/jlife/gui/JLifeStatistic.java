@@ -33,7 +33,10 @@ package com.tabuto.jlife.gui;
 import java.util.Observable;
 import java.util.Observer;
 
+import com.tabuto.j2dgf.Group;
+import com.tabuto.j2dgf.Sprite;
 import com.tabuto.jlife.JLife;
+import com.tabuto.jlife.Zlife;
 
 
 public class JLifeStatistic implements Observer {
@@ -52,12 +55,13 @@ public class JLifeStatistic implements Observer {
 	double minEnergy=10000;
 	double averageRadius=0;
 	
+	//TODO: improve Statistical flexibility
 	public JLifeStatistic(JLife game)
 	{
 		Game = game;
 	}
 	
-	public void calculateStatistics()
+	public void calculateStatistics(Group<? extends Zlife> group)
 	{
 		double totalEnergy=0;
 		double totalSpeed=0;
@@ -73,13 +77,12 @@ public class JLifeStatistic implements Observer {
 		maxEnergy=0;
 		minEnergy=10000;
 		averageRadius=0;
+		if(group.get(0)!= null)
+		   maxEnergy=group.get(0).getEnergy();
 		
-		if(Game.cellsGroup.get(0)!= null)
-		   maxEnergy=Game.cellsGroup.get(0).getEnergy();
-		
-		for(int i=0;i<Game.getActualCellCount();i++)
+		for(int i=0;i<group.size();i++)
 		{
-			switch(Game.cellsGroup.get(i).getState())
+			switch(group.get(i).getState())
 			{
 				case BORED:
 				{
@@ -102,22 +105,22 @@ public class JLifeStatistic implements Observer {
 					break;
 				}
 			}
-			totalEnergy+=Game.cellsGroup.get(i).getEnergy();
-			totalSpeed+=Game.cellsGroup.get(i).getSpeed();
-			totalRadius+=Game.cellsGroup.get(i).getRadius();
+			totalEnergy+=group.get(i).getEnergy();
+			totalSpeed+=group.get(i).getSpeed();
+			totalRadius+=group.get(i).getRadius();
 			
 			//FInd zlife with max energy
-			if( Game.cellsGroup.get(i).getEnergy()> maxEnergy)
-				maxEnergy=Game.cellsGroup.get(i).getEnergy();
+			if( group.get(i).getEnergy()> maxEnergy)
+				maxEnergy=group.get(i).getEnergy();
 			//Find Zlife with min energy
-			if( Game.cellsGroup.get(i).getEnergy()< minEnergy)
-				minEnergy=Game.cellsGroup.get(i).getEnergy();
+			if( group.get(i).getEnergy()< minEnergy)
+				minEnergy=group.get(i).getEnergy();
 		}
 		
 		
-		enthropy= (totalEnergy / Game.getActualCellCount());
-		averageSpeed = totalSpeed / Game.getActualCellCount();
-		averageRadius = totalRadius /  Game.getActualCellCount();
+		enthropy= (totalEnergy / group.size());
+		averageSpeed = totalSpeed / group.size();
+		averageRadius = totalRadius /  group.size();
 	}
 	
 	
@@ -127,7 +130,8 @@ public class JLifeStatistic implements Observer {
 		if(message.equalsIgnoreCase("CountChange"))
 		{
 			//DO SOMETHING
-			calculateStatistics();
+			calculateStatistics(Game.cellsGroup);
+			
 		}
 		
 	}

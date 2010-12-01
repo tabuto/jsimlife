@@ -376,5 +376,6 @@ public class Gene<E> extends Vector<E> {
 			this.mergeable=false;
 	}
 
+	
 
 }
