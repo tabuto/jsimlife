@@ -1,5 +1,8 @@
+JLife v.0.1.10.1
+JLifeStatistic add Subtotal
+JLifeStatistic fix bug
 
-JLife v.1.10.0
+JLife v.0.1.10
 JLife class has now a Vector Group List to unify all the sprite and all the group in one object;
 JLife getActualCellCount use the new VectorGroup to calculate the Sprites number;
 JLifeStatistic is now able to manage a calculate statistic using the Vector Group List

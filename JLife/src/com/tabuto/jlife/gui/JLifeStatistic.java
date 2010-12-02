@@ -50,6 +50,8 @@ public class JLifeStatistic implements Observer {
 	
 	String[] groupNames = new String[GroupNumber];
 	
+	int[] groupSize = new  int[GroupNumber];
+	
 	int[] hornyZlifes = new  int[GroupNumber];
 	int[] hungryZlifes= new  int[GroupNumber];
 	int[] scaryZlifes= new  int[GroupNumber];
@@ -84,6 +86,8 @@ public class JLifeStatistic implements Observer {
 	for(int groupID=0; groupID<List.size();groupID++)
 	{
 		groupNames[groupID] = List.get(groupID).getGroupName();
+		
+		groupSize[groupID] = List.get(groupID).size();
 		
 		hornyZlifes[groupID]=0;
 		hungryZlifes[groupID]=0;
@@ -140,18 +144,24 @@ public class JLifeStatistic implements Observer {
 			//Find Zlife with min energy
 			if( List.get(groupID).get(i).getEnergy()< minEnergy[groupID])
 				minEnergy[groupID]=List.get(groupID).get(i).getEnergy();
-		}
+		
 		
 		
 		enthropy[groupID]= (totalEnergy / List.get(groupID).size());
-		averageSpeed[groupID] = totalSpeed / List.get(groupID).size();
-		averageRadius[groupID] = totalRadius /  List.get(groupID).size();
-		
+		averageSpeed[groupID] = (totalSpeed / List.get(groupID).size());
+		averageRadius[groupID] = (totalRadius /  List.get(groupID).size());
+		}
+		totalEnergy=0;
+		totalSpeed=0;
+		totalRadius=0;
 		//Da dividere sul numero di gruppi presenti
 		TotalEnergy+=enthropy[groupID];
 		TotalSpeed+=averageSpeed[groupID];
 		TotalRadius+=averageRadius[groupID];
-		}
+		
+		
+		
+	}
  }
 	
 	/**
@@ -182,6 +192,10 @@ public class JLifeStatistic implements Observer {
 		
 		for(int i=0;i<GroupNumber;i++)
 			result+= groupNames[i]+"\t";
+		
+		result+="\n Subtotal: \t";
+		for(int i=0;i<GroupNumber;i++)
+			result+= groupSize[i] +"\t";
 		
 		result+="\n Horny: \t";
 		for(int i=0;i<GroupNumber;i++)
