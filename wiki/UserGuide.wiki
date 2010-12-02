@@ -208,9 +208,11 @@ if(isAlive())
 
 }}}
 
-= Details =
+== Riproducing ==
+When Zlife or Zredator are horny, they are able to riproduce itself. When they meet an other horny zlife they spend a HornyEnergy quantity. So, riducing this parameter increase the number of sons born on a single "love act"! The new born zlife has got a 20 energy starting point.
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+==Eating==
+When a Zlife is hungry, the move in search of food. Zlifes eating seeds, but Zredator eat Zlife. When a ZLife passes beside a Zredator is the end for it, cause Zredator eat it. But when a ZLife dies, it becomes a seed. 
+When a Zredator eat, his energe increase to a value equal to five times the Zlife radius.
+
+= Details =
