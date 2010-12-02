@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 22.40.29
+* Date: 02/dic/2010 22.40.29
 * Titolo: JLifeShowZlife.java
-* Versione: 0.1.9 Rev.a:
+* Versione: 0.1.10 Rev.a:
 */
 
 

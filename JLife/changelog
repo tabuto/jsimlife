@@ -1,3 +1,11 @@
+
+JLife v.1.10.0
+JLife class has now a Vector Group List to unify all the sprite and all the group in one object;
+JLife getActualCellCount use the new VectorGroup to calculate the Sprites number;
+JLifeStatistic is now able to manage a calculate statistic using the Vector Group List
+JLifeRightControlPanel is updated to manage the updated JLifeStatistic class
+Fix some IndexOutOfBoundsException and a lot of minor bug
+
 JLife v.0.1.9.1
 Add Zredator type of ZLife
 Update AddCell Panel

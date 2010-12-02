@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 15.24.07
+* Date: 02/dic/2010 15.24.07
 * Titolo: JLifeLeftControlPanel.java
-* Versione: 0.1.9 Rev.a:
+* Versione: 0.1.10 Rev.a:
 */
 
 
