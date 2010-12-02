@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 15.26.42
+* Date: 02/dic/2010 15.26.42
 * Titolo: JLifeRightControlPanel.java
-* Versione: 0.1.9 Rev.a:
+* Versione: 0.1.10 Rev.a:
 */
 
 
@@ -44,7 +44,6 @@ import javax.swing.JTextField;
 import com.tabuto.j2dgf.gui.J2DControlPanel;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Zlife;
-import com.tabuto.jlife.Zretador;
 
 
 
@@ -97,9 +96,7 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 	 					   	if(game.getSelectedCell()!=null)
 	 					   	{
 	 					   		if(game.getSelectedCell() instanceof Zlife)
-	 					   	jls.calculateStatistics(game.cellsGroup);
-	 					   	if(game.getSelectedCell() instanceof Zretador)
-		 					   	jls.calculateStatistics(game.zretadorGroup);
+	 					   	jls.calculateStatistics(game.groupList);
 	 					   		
 	 					   		ZlifeInfo.setText( 
 	 					   			jls.toString());
@@ -117,10 +114,8 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 			{
 	 			public void actionPerformed( ActionEvent action )
 						{
-	 				if(game.getSelectedCell() instanceof Zlife)
- 					   	jls.calculateStatistics(game.cellsGroup);
- 					   	if(game.getSelectedCell() instanceof Zretador)
-	 					   	jls.calculateStatistics(game.zretadorGroup);
+ 					   	jls.calculateStatistics(game.groupList);
+ 					 
 	 				ZlifeInfo.setText( 
 			   				jls.toString());
 			   	ZlifeInfo.setCaretPosition(0);

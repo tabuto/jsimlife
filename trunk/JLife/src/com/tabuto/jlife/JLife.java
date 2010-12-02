@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 12.05.43
+* Date: 02/Dic/2010 12.05.43
 * Titolo: JLife.java
-* Versione: 0.1.9 Rev.a:
+* Versione: 0.1.10 Rev.a:
 */
 
 
@@ -41,6 +41,7 @@ import java.awt.Graphics;
 import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
 
 import com.tabuto.j2dgf.Game2D;
 import com.tabuto.j2dgf.Group;
@@ -102,9 +103,12 @@ public class JLife extends Game2D implements Serializable,Observer {
 	/**
 	 * Group contanis Zlifes and Seeds
 	 */
-	public  Group<Zlife> cellsGroup = new Group<Zlife>("CellsSprite");
+	public  Group<Zlife> cellsGroup = new Group<Zlife>("ZlifeGroup");
 	public Group<Seed> seedsGroup = new Group<Seed>("SeedsSprite");
-	public Group<Zretador> zretadorGroup = new Group<Zretador>("ZretadorsSprite");
+	public Group<Zretador> zretadorGroup = new Group<Zretador>("ZretadorsGroup");
+	
+	
+	public Vector<Group<? extends Zlife>> groupList = new Vector<Group<? extends Zlife>>();
 	
 	/**
 	 * 
@@ -203,7 +207,11 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 */
 	public int getActualCellCount()
 	{
-		return cellsGroup.size();
+		int result=0;
+		for(int i=0;i<groupList.size();i++)
+			result+= groupList.get(i).size();
+		
+		return result;
 	}
 	
 	public void setActualCellCount()
@@ -250,6 +258,10 @@ public class JLife extends Game2D implements Serializable,Observer {
 	public void initGame() 
 	{
 		cm = new CollisionManager();
+		
+		//Add Group at GroupList
+		groupList.add(cellsGroup);
+		groupList.add(zretadorGroup);
 		
 		cbdZlife = new CollisionBoundDetector(cellsGroup,DIM);
 		cbdZretador = new CollisionBoundDetector(zretadorGroup,DIM);

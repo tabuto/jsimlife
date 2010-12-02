@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 15.18.55
+* Date: 02/dic/2010 15.18.55
 * Titolo: JLifeMainWindow.java
-* Versione: 0.1.9 Rev.a:
+* Versione: 0.1.10 Rev.a:
 */
 
 
@@ -60,7 +60,7 @@ public class JLifeMainWindow extends JFrame {
 	BufferStrategy bs;      //BufferStrategy
     int W=1024,H=668;       //Window Frame Size
     Dimension d;            //Dimension of window size
-    private static final String version =" v.0.1.9 BETA";
+    private static final String version =" v.0.1.10 BETA";
     private static final String title="JSimLife";
     
     //GAME STATUS VARIABLES

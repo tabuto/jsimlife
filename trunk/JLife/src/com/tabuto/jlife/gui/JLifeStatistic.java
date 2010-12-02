@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 20.49.46
+* Date: 02/Dic/2010 20.49.46
 * Titolo: JLifeStatistic.java
-* Versione: 0.1.9 Rev.a:
+* Versione: 0.1.10 Rev.a:
 */
 
 
@@ -32,123 +32,187 @@ package com.tabuto.jlife.gui;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Vector;
 
 import com.tabuto.j2dgf.Group;
-import com.tabuto.j2dgf.Sprite;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Zlife;
 
-
+/**
+ * Calculate some statistical value using the Vector Group List provides by JLife Class.
+ */
 public class JLifeStatistic implements Observer {
 
 	public JLife Game;
+	private final int GroupNumber=2;
 	
 	//STATISTICAL DATA
-	int hornyZlifes=0;
-	int hungryZlifes=0;
-	int scaryZlifes=0;
-	int boredZlifes=0;
-	//energia media del sistema;
-	double enthropy=0;
-	double averageSpeed=0;
-	double maxEnergy=0;
-	double minEnergy=10000;
-	double averageRadius=0;
 	
-	//TODO: improve Statistical flexibility
+	String[] groupNames = new String[GroupNumber];
+	
+	int[] hornyZlifes = new  int[GroupNumber];
+	int[] hungryZlifes= new  int[GroupNumber];
+	int[] scaryZlifes= new  int[GroupNumber];
+	int[] boredZlifes= new  int[GroupNumber];
+	//energia media del sistema;
+	double[] enthropy= new  double[GroupNumber];
+	double[] averageSpeed= new  double[GroupNumber];
+	double[] maxEnergy= new  double[GroupNumber];
+	double[] minEnergy= new  double[GroupNumber];
+	double[] averageRadius= new  double[GroupNumber];
+	
+	double TotalEnergy=0;
+	double TotalSpeed=0;
+	double TotalRadius=0;
+	
+	
 	public JLifeStatistic(JLife game)
 	{
 		Game = game;
 	}
 	
-	public void calculateStatistics(Group<? extends Zlife> group)
+	/**
+	 * Calculate some statistical Parameter and store it in some array.
+	 * @param List
+	 */
+	public void calculateStatistics(Vector<Group<? extends Zlife>> List)
 	{
 		double totalEnergy=0;
 		double totalSpeed=0;
 		double totalRadius=0;
-
-		hornyZlifes=0;
-		hungryZlifes=0;
-		scaryZlifes=0;
-		boredZlifes=0;
-		//energia media del sistema;
-		enthropy=0;
-		averageSpeed=0;
-		maxEnergy=0;
-		minEnergy=10000;
-		averageRadius=0;
-		if(group.get(0)!= null)
-		   maxEnergy=group.get(0).getEnergy();
 		
-		for(int i=0;i<group.size();i++)
+	for(int groupID=0; groupID<List.size();groupID++)
+	{
+		groupNames[groupID] = List.get(groupID).getGroupName();
+		
+		hornyZlifes[groupID]=0;
+		hungryZlifes[groupID]=0;
+		scaryZlifes[groupID]=0;
+		boredZlifes[groupID]=0;
+		//energia media del sistema;
+		enthropy[groupID]=0;
+		averageSpeed[groupID]=0;
+		maxEnergy[groupID]=0;
+		minEnergy[groupID]=10000;
+		averageRadius[groupID]=0;
+		try{
+			
+		if(List.get(groupID).get(0)!= null)
+		   maxEnergy[groupID]=List.get(groupID).get(0).getEnergy();
+		}
+		catch (IndexOutOfBoundsException e)
 		{
-			switch(group.get(i).getState())
+			continue;
+		}
+		
+		for(int i=0;i<List.get(groupID).size();i++)
+		{
+			switch(List.get(groupID).get(i).getState())
 			{
 				case BORED:
 				{
-					boredZlifes++;
+					boredZlifes[groupID]++;
 					break;
 				}
 				case SCARY:
 				{
-					scaryZlifes++;
+					scaryZlifes[groupID]++;
 					break;
 				}
 				case HORNY:
 				{
-					hornyZlifes++;
+					hornyZlifes[groupID]++;
 					break;
 				}
 				case HUNGRY:
 				{
-					hungryZlifes++;
+					hungryZlifes[groupID]++;
 					break;
 				}
 			}
-			totalEnergy+=group.get(i).getEnergy();
-			totalSpeed+=group.get(i).getSpeed();
-			totalRadius+=group.get(i).getRadius();
+			totalEnergy+=List.get(groupID).get(i).getEnergy();
+			totalSpeed+=List.get(groupID).get(i).getSpeed();
+			totalRadius+=List.get(groupID).get(i).getRadius();
 			
 			//FInd zlife with max energy
-			if( group.get(i).getEnergy()> maxEnergy)
-				maxEnergy=group.get(i).getEnergy();
+			if( List.get(groupID).get(i).getEnergy()> maxEnergy[groupID])
+				maxEnergy[groupID]=List.get(groupID).get(i).getEnergy();
 			//Find Zlife with min energy
-			if( group.get(i).getEnergy()< minEnergy)
-				minEnergy=group.get(i).getEnergy();
+			if( List.get(groupID).get(i).getEnergy()< minEnergy[groupID])
+				minEnergy[groupID]=List.get(groupID).get(i).getEnergy();
 		}
 		
 		
-		enthropy= (totalEnergy / group.size());
-		averageSpeed = totalSpeed / group.size();
-		averageRadius = totalRadius /  group.size();
-	}
+		enthropy[groupID]= (totalEnergy / List.get(groupID).size());
+		averageSpeed[groupID] = totalSpeed / List.get(groupID).size();
+		averageRadius[groupID] = totalRadius /  List.get(groupID).size();
+		
+		//Da dividere sul numero di gruppi presenti
+		TotalEnergy+=enthropy[groupID];
+		TotalSpeed+=averageSpeed[groupID];
+		TotalRadius+=averageRadius[groupID];
+		}
+ }
 	
-	
+	/**
+	 * This is an Observer class Observe the JLife Game2D Class. WHen JLife class
+	 * change his "count" notify it to all its observer. JLifeStatistic simply recalculate
+	 * its statistical data recalling the CalculateStatistic Methods
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		String message = (String) arg1;
 		if(message.equalsIgnoreCase("CountChange"))
 		{
 			//DO SOMETHING
-			calculateStatistics(Game.cellsGroup);
+			calculateStatistics(Game.groupList);
 			
 		}
 		
 	}
 	
+	/**
+	 * Return a String with all the Calculated Values
+	 */
 	public String toString()
 	{
-		return "\n Statistics:  \t"+
-				"\n\n Total Zlife's:  \t" + Game.getActualCellCount() +
-				"\n Horny Zlifes:  \t"  + hornyZlifes +
-				"\n Hungry Zlifes: \t" + hungryZlifes +
-				"\n Scary ZLifes:  \t"  + scaryZlifes +
-				"\n Bored Zlifes:  \t"  + boredZlifes +
-				"\n Energy Average: \t" + Math.rint(enthropy*100)/100 +
-				"\n Speed Average: \t" + Math.rint(averageSpeed*100)/100 +
-				"\n Radius Average: \t" + Math.rint(averageRadius*100)/100 +
-				"\n Zlife with Max Energy: \t" + Math.rint(maxEnergy*100)/100 +
-				"\n Zlifes with Min Energy: \t" + Math.rint(minEnergy*100)/100;
+		//SHOW RESULT
+		String result="\n STATISTICAL DATA \n";
+		result+="\n Total elements: "+ Game.getActualCellCount()+"\n\n\t" ;
+		
+		for(int i=0;i<GroupNumber;i++)
+			result+= groupNames[i]+"\t";
+		
+		result+="\n Horny: \t";
+		for(int i=0;i<GroupNumber;i++)
+			result+= hornyZlifes[i] +"\t";
+		
+		result+="\n Hungry: \t";
+		for(int i=0;i<GroupNumber;i++)
+			result+= hungryZlifes[i] +"\t";
+		
+		result+="\n Scary: \t";
+		for(int i=0;i<GroupNumber;i++)
+			result+= scaryZlifes[i] +"\t";
+		
+		result+="\n Bored: \t";
+		for(int i=0;i<GroupNumber;i++)
+			result+= boredZlifes[i] +"\t";
+	
+		result+="\n Enthropy: \t";
+		for(int i=0;i<GroupNumber;i++)
+			result+= Math.rint(enthropy[i]*100)/100 +"\t";
+		 
+		
+		result+="\n Speed: \t";
+		for(int i=0;i<GroupNumber;i++)
+			result+= Math.rint(averageSpeed[i]*100)/100 +"\t";
+		
+		result+="\n Radius: \t";
+		for(int i=0;i<GroupNumber;i++)
+			result+= Math.rint(averageRadius[i]*100)/100 +"\t";
+		
+		return result;
 	}
 
 	public void setGame(JLife game)
