@@ -112,6 +112,8 @@ public class Zlife extends Sprite implements Serializable{
 	protected Point seedPosition = new Point();
 	
 	private boolean attacked=false;
+	
+	private double realMetabolism;
 
 	//CONSTRUCTOR
 	/**
@@ -128,6 +130,7 @@ public class Zlife extends Sprite implements Serializable{
 		setMaxOffset(getRadius(), getRadius(), getRadius(), getRadius());
 		setState(CellState.BORED);
 		
+		realMetabolism = Math.sqrt(getRadius()) * getMetabolism();
 	}
 	
 	/**
@@ -613,7 +616,9 @@ public class Zlife extends Sprite implements Serializable{
 	 */
 	public void setRadius(int radius)
 	{
-		if(radius>0)
+		if(radius<0)
+			radius=0;
+		
 			this.radius=radius;
 	}
 	
@@ -925,7 +930,7 @@ public class Zlife extends Sprite implements Serializable{
   		setChanged();
 		notifyObservers("ZLife:Move");
   		  
-  		  energy = (energy - metabolism);
+  		  energy = (energy - realMetabolism - (getSpeed()/100));
   		  if(energy<0)
   			 {setAlive(false);Deactivate();}
   		  else
@@ -933,6 +938,7 @@ public class Zlife extends Sprite implements Serializable{
   		
   	  }
 	}
+	
 	
 	public void ThisIsMe(Graphics g2d)
 	{

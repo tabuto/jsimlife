@@ -69,15 +69,15 @@ public class ZlifeVsZretadorCollision extends CollisionDetector {
 			{
 				//Zretador eat ZLife
 				//z.age();
-				z.setEnergy( z.getEnergy()+( c.getRadius()*5) );
+				z.setEnergy( z.getEnergy()+( c.getRadius()*10) );
 				z.setAngleRadians(Math.random()*2*Math.PI);
 				z.preda=null;
 				if(z.getEnergy()>z.getHungryEnergy())
 					z.setBored();
 				z.live();
 				
-				//Zlife die
-				c.setAlive(false);
+				//Zlife hit but not necessary die
+				c.setEnergy( c.getEnergy()-( z.getRadius()*10) );
 				return;
 			}
 			

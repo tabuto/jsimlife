@@ -64,8 +64,7 @@ import com.tabuto.jlife.collisions.ZretadorRiproduction;
  * 
  * @author tabuto83
  * 
- * @version 0.1.7
- * @param <synchronyzed>
+ * @version 0.1.10.1
  * 
  * @see Gene
  * @see Dna
@@ -82,7 +81,7 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 */
 	//private String Name=""; 
 	/**
-	 * The actual selected Cell (Not yet used)
+	 * The actual selected Cell 
 	 */
 	private Zlife selectedCell;
 	
@@ -90,10 +89,7 @@ public class JLife extends Game2D implements Serializable,Observer {
 	
 	private int cellCount=0;
 	
-	/**
-	 * Actual game state, if saved (save action allows) else only saveAs permitted;
-	 */
-	//private boolean saved=false;
+
 	/**
 	 * The Directory path where Game file is saved/loaded.
 	 * Not yet used
@@ -107,14 +103,20 @@ public class JLife extends Game2D implements Serializable,Observer {
 	public Group<Seed> seedsGroup = new Group<Seed>("SeedsSprite");
 	public Group<Zretador> zretadorGroup = new Group<Zretador>("ZretadorsGroup");
 	
-	
+	/**
+	 * Vector Group List, it used by JLifeStatistic to calculate statistical data
+	 * from Sprite's Group
+	 */
 	public Vector<Group<? extends Zlife>> groupList = new Vector<Group<? extends Zlife>>();
 	
 	/**
-	 * 
+	 * Max ZLifes number
 	 */
 	private final int MAX_CELL_NUMBER = 250;
 	
+	/**
+	 * Max Zredator number
+	 */
 	private final int MAX_ZRETADOR_NUMBER = 250;
 
 	/**
@@ -123,12 +125,11 @@ public class JLife extends Game2D implements Serializable,Observer {
 	private final int MAX_SEEDS=30;
 	
 	//COLLISIONS
-	//public CollisionManager cm;
-	EatingCollision eating;
-	ZlifeVsZretadorCollision zretadorEating;
-	RiproductionCollision riproductionZlife;
-	ZretadorRiproduction riproductionZretador;
-	CollisionBoundDetector cbdZretador,cbdZlife;
+	EatingCollision eating; //Collision beetween seed and Zlifes
+	ZlifeVsZretadorCollision zretadorEating; //Collision Between Zlifes and predator
+	RiproductionCollision riproductionZlife; //Collision between Zlifes
+	ZretadorRiproduction riproductionZretador; //COllision between Zredators
+	CollisionBoundDetector cbdZretador,cbdZlife; //Collision boundDetector
 
 	/**
 	 * Jlife Constructor 
@@ -214,10 +215,6 @@ public class JLife extends Game2D implements Serializable,Observer {
 		return result;
 	}
 	
-	public void setActualCellCount()
-	{
-		cellCount = cellsGroup.size();
-	}
 	
 	/**
 	 * Return a Dna from a Zlife
@@ -239,10 +236,17 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 */
 	public Zlife getSelectedCell()
 	{
-		if (selectedCell!= null)
+	  try{
+		  if (selectedCell!= null)
 			return selectedCell;
-		else
+		  else
 			return null;
+	  	}
+	  catch(NullPointerException e)
+	  {
+		  return null;
+	  }
+	  
 	}
 	
 	/**
@@ -250,10 +254,13 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 */
 	public String getPath(){return this.PATH;}
 	
+	/**
+	 * Return the Canvas's playfield Dimension 
+	 */
 	public Dimension getDimension(){return this.DIM;}
 	
 	/**
-	 * Init the collisions classes
+	 * Init the Game's components
 	 */
 	public void initGame() 
 	{
@@ -296,8 +303,9 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 */
 	public void reset()
 	{
-		cellsGroup.clear();
-		seedsGroup.clear();
+		for(int i=0;i<groupList.size();i++)
+			groupList.get(i).clear();
+		
 		setChanged();
 		notifyObservers("CountChange");
 	}
@@ -371,8 +379,11 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 */
 	public void setPath(String p){this.PATH = p;}
 	
-	public int getMaxCellsNumber(){return MAX_CELL_NUMBER;}
+	public int getMaxCellsNumber(){return MAX_CELL_NUMBER + MAX_ZRETADOR_NUMBER;}
 
+	/**
+	 * Move and drow all the sprite
+	 */
 	@Override
 	public void drawStuff(Graphics g) {
 		
@@ -383,14 +394,22 @@ public class JLife extends Game2D implements Serializable,Observer {
 		cellsGroup.draw(g);
 		seedsGroup.draw(g);
 		zretadorGroup.draw(g);
-		if((cellsGroup.size() + zretadorGroup.size()) != cellCount)
-		{
-			setChanged();
-			notifyObservers("CountChange");
-		}
+		//if((cellsGroup.size() + zretadorGroup.size()) != cellCount)
+		//{
+		//	setChanged();
+		//	notifyObservers("CountChange");
+		//}
 		
 	}
 
+	/**
+	 * This class Observe collision Manager, when CollisionMAnager changeState
+	 * it sends a message to this class, the message is sending by calling the
+	 * observer update method.
+	 * @param arg1 is the parameter passed by the Observable class
+	 * 
+	 *  @see CollisionManager
+	 */
 	@Override
 	public void update(Observable arg0, Object arg1) {
 		
@@ -406,6 +425,7 @@ public class JLife extends Game2D implements Serializable,Observer {
 					{//z is die
 						cellsGroup.remove(z);
 						cellsGroup.trimToSize();
+						notifyObservers("CountChange");
 						Seed s = new Seed(
 								z.getDimension(),
 								(int)z.getX(),(int)z.getY(),
@@ -422,6 +442,7 @@ public class JLife extends Game2D implements Serializable,Observer {
 			{//z is die
 				zretadorGroup.remove(z);
 				zretadorGroup.trimToSize();
+				notifyObservers("CountChange");
 				Seed s = new Seed(
 						z.getDimension(),
 						(int)z.getX(),(int)z.getY(),
