@@ -35,7 +35,7 @@ import com.tabuto.j2dgf.collision.CollisionDetector;
 import com.tabuto.jenetic.Dna;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Zlife;
-import com.tabuto.jlife.Zretador;
+
 
 
 public class RiproductionCollision extends CollisionDetector{
