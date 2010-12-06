@@ -214,6 +214,8 @@ public class JFrameNewCell extends JFrame {
 		add(north,BorderLayout.NORTH);
 		add(dnaPanel,BorderLayout.CENTER);
 		add(south,BorderLayout.SOUTH);
+		 this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
+	        		(this.getClass().getResource("icon_alpha_48x48.gif")));
 		
 	}
 	
