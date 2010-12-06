@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 05/dic/2010 16.59.47
+* Date: 06/dic/2010 16.59.47
 * Titolo: JFrameStatistic.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.1.10.3 Rev.a:
 */
 
 
@@ -30,41 +30,44 @@
 
 package com.tabuto.jlife.statistic;
 
-import info.monitorenter.gui.chart.Chart2D;
-import info.monitorenter.gui.chart.ITrace2D;
-import info.monitorenter.gui.chart.io.ADataCollector;
-import info.monitorenter.gui.chart.traces.Trace2DLtd;
 
-import java.awt.Canvas;
-import java.awt.Color;
+import info.monitorenter.gui.chart.views.ChartPanel;
+
+import java.awt.BorderLayout;
+
+import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Paint;
-import java.awt.image.BufferedImage;
-import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.xml.bind.PropertyException;
-
-import org.jCharts.chartData.ChartDataException;
-import org.jCharts.chartData.PieChartDataSet;
-import org.jCharts.nonAxisChart.PieChart2D;
-import org.jCharts.properties.ChartProperties;
-import org.jCharts.properties.LegendProperties;
-import org.jCharts.properties.PieChart2DProperties;
-
-import com.tabuto.jlife.JLife;
 
 
 
-public class JFrameStatistic extends JFrame{
+/**
+ * A JFRame to show, using a JComboBox, several dynamic chart type 
+ * shows Statistic information
+ * 
+ * @author tabuto83
+ * 
+ * @version 0.1.10.3
+ *
+ */
+public class JFrameStatistic extends JFrame implements ActionListener{
 
-	private stateBarChart graphPanel;
-	private  JPanel panel;
+	JComboBox chartChooser;
+	
+	private JPanel north;
+	private ChartPanel panelChart;
+	private  GroupSizeChartPanel gscp;
+	
+	
 	Statistic GameStatistic;
 
+	 Container c;
 	/**
 	 * 
 	 */
@@ -74,130 +77,105 @@ public class JFrameStatistic extends JFrame{
 	{
 		super("Statistics");
 		GameStatistic = s;
+	
+		c = this.getContentPane();
+		c.setLayout(new BorderLayout());
+		
+		north=new JPanel( true );
+		
+		//Create the default chart to set on
+		gscp = new GroupSizeChartPanel(GameStatistic);
+		
+		addChartChooser();
+		
 		setPreferredSize(new Dimension(500,500));
-		this.setSize( 500, 500 );
-		this.panel=new JPanel( true );
-		this.panel.setSize(400,400);
-		this.getContentPane().add( this.panel );
+		this.setSize( 300, 200 );
+	    //Set the JFrame Icon
+		this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
+	        		(this.getClass().getResource("icon_alpha_48x48.gif")));
+		
 		this.setVisible( true );
-		setIgnoreRepaint(true);
-		panel.setIgnoreRepaint(true);
-		
-		//this.setPreferredSize(new Dimension(600,600));
-		try {
-			initComponent();
+
+		//ADD panel and chart
+		c.add(north,BorderLayout.NORTH);
+		panelChart = new ChartPanel(gscp.getChart());
+		c.add( panelChart);
 			
-		} catch (PropertyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ChartDataException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (org.jCharts.properties.PropertyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	
-	
-
-		
-
     }
 	
-		
-	public void initComponent() throws ChartDataException, PropertyException, org.jCharts.properties.PropertyException
+	/**
+	 * Add a JComboBox chartChooser to the north panel of this JFrame
+	 */
+	private void addChartChooser()
 	{
-		
-		
-		drawChart2();
-		//repaint();
+		final String[] choose ={
+								"Group Numbers",
+								"System Energy",
+								"Average Radius",
+								"Average Speed"
+								//"Groups States", //NOT USED!!
+								};
+		chartChooser = new JComboBox(choose);
+		chartChooser.setSelectedIndex(0);
+		chartChooser.addActionListener(this);
+
+		north.add(chartChooser);
 	}
-	
-	
-	private void drawChart() throws ChartDataException, PropertyException, org.jCharts.properties.PropertyException
-	{
-		 GameStatistic.calculateStatistics();
-         int GroupNumber = GameStatistic.GroupNumber;
-         double[] DATA = new double[4];
-         
-     	String[] labelName={"Horny","Hungry","Scary","Bored"};
-    	
-    	Color hornyColor=new Color(255,125,0);
-    	Color hungryColor = new Color(0,125,255);
-    	Color scaryColor = new Color(125,255,0);
-    	Color boredColor = new Color(0,255,125);
-    	
-    	Paint[] paints = {hornyColor, hungryColor, scaryColor,boredColor};
-         
-         
-         int[] horny  = new  int[GroupNumber];
-         int[] hungry = new  int[GroupNumber];
-         int[] scary  = new  int[GroupNumber];
-         int[] bored  = new  int[GroupNumber];
-         
-         PieChart2D pieChart2D;
-	
-         //DATA
-         	//for(int j=0;j<GroupNumber;j++)
-         			//FILL DATA
-         			DATA[0]=(double) GameStatistic.hornyZlifes[0];
-         			DATA[1]=(double) GameStatistic.hungryZlifes[0];
-         			DATA[2]=(double) GameStatistic.scaryZlifes[0];
-         			DATA[3]=(double) GameStatistic.boredZlifes[0];
-         			
-         			DATA[0]=23d;
-         			DATA[1]=33d;
-         			DATA[2]=29d;
-         			DATA[3]=51d;
-         				
-         				PieChart2DProperties pieChart2DProperties=new PieChart2DProperties();
-						PieChartDataSet pieChartDataSet = new PieChartDataSet( "Zlifes", DATA,
-						        labelName, paints, pieChart2DProperties );
-						
-						  Dimension dimension= this.getSize();
-					      pieChart2D = new PieChart2D( pieChartDataSet,
-					                                              new LegendProperties(),
-					                                              new ChartProperties(),
-					                                             350,
-					                                              350);
 
-					      
-					      pieChart2D.setGraphics2D( (Graphics2D) this.panel.getGraphics());
-					      pieChart2D.render();
 
-					  
+	/**
+	 * The ActionPerformed by this ActionListener
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		chartChooser = (JComboBox)e.getSource();
+        String choosedChart = (String)chartChooser.getSelectedItem();
+        updateChartPanel(choosedChart);
 	}
+
+
+	/**
+	 * Set the current correct chart
+	 * @param choosedChart String passed by the chartChooser JComboBox
+	 */
+	private void updateChartPanel(String choosedChart) {
 		
-	
 		
-	public void drawChart2()
-	{
-		 Chart2D chart = new Chart2D();
-		    // Create an ITrace: 
-		// Note that dynamic charts need limited amount of values!!! 
-		    ITrace2D trace1 = new Trace2DLtd(200); 
-		    trace1.setColor(Color.RED);
-		    
-		    ITrace2D trace2 = new Trace2DLtd(200); 
-		    trace1.setColor(Color.BLUE);
-		    
-		    chart.addTrace(trace1);
-		    chart.addTrace(trace2);
-		    
-		    getContentPane().add(chart);
-
-		    
-		   ADataCollector collector1 = new GroupSizeDataCollector(trace1, 100,GameStatistic,0);
-		   ADataCollector collector2 = new GroupSizeDataCollector(trace2, 100,GameStatistic,1);
-
-		   collector1.start();
-		   collector2.start();
-
-
-		    
-		    
-
+		if (choosedChart.equalsIgnoreCase("System Energy"))
+		{
+			EnergyChartPanel ecp = new EnergyChartPanel(GameStatistic);
+			c.remove(panelChart);
+				panelChart = new ChartPanel(ecp.getChart());
+			
+		}
+		
+		if (choosedChart.equalsIgnoreCase("Group Numbers"))
+		{
+			GroupSizeChartPanel gscp = new GroupSizeChartPanel(GameStatistic);
+			c.remove(panelChart);
+				panelChart = new ChartPanel(gscp.getChart());
+				//c.add(panelChart);
+		}
+		
+		if (choosedChart.equalsIgnoreCase("Average Speed"))
+		{
+			SpeedChartPanel scp = new SpeedChartPanel(GameStatistic);
+			c.remove(panelChart);
+				panelChart = new ChartPanel(scp.getChart());
+				//c.add(panelChart);
+		}
+		
+		if (choosedChart.equalsIgnoreCase("Average Radius"))
+		{
+			RadiusChartPanel scp = new RadiusChartPanel(GameStatistic);
+			c.remove(panelChart);
+				panelChart = new ChartPanel(scp.getChart());
+				//c.add(panelChart);
+		}
+		
+		c.add(panelChart);
+		c.validate();
 	}
 
 

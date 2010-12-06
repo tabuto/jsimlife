@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 02/Dic/2010 20.49.46
+* Date: 06/Dic/2010 20.49.46
 * Titolo: JLifeStatistic.java
-* Versione: 0.1.10 Rev.a:
+* Versione: 0.1.10.3 Rev.a:
 */
 
 
@@ -41,6 +41,7 @@ import com.tabuto.jlife.Zlife;
 
 /**
  * Calculate some statistical value using the Vector Group List provides by JLife Class.
+ * Uses a TimerTask to calculate Statistics at time!
  */
 public class Statistic extends TimerTask implements Observer {
 
@@ -79,7 +80,6 @@ public class Statistic extends TimerTask implements Observer {
 	
 	/**
 	 * Calculate some statistical Parameter and store it in some array.
-	 * @param List
 	 */
 	public void calculateStatistics()
 	{
@@ -234,6 +234,10 @@ public class Statistic extends TimerTask implements Observer {
 		return result;
 	}
 
+	/**
+	 * Set the JLife Game2D component
+	 * @param game
+	 */
 	public void setGame(JLife game)
 	{
 		this.Game = game;

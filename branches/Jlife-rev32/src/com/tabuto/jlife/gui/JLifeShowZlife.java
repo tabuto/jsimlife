@@ -164,6 +164,7 @@ public class JLifeShowZlife extends JFrame implements Observer {
 
 public void refresh()
 {
+	try{
 	nameField.setText( Game.getSelectedCell().getName());
 	positionField.setText("["+ (int)Game.getSelectedCell().getPosition().getX() +", "+ (int)Game.getSelectedCell().getPosition().getY() +"]"  );
 	directionField.setText(""+ (int) Math.toDegrees( Game.getSelectedCell().getAngle()));
@@ -176,7 +177,11 @@ public void refresh()
 	colorButton.setBackground(new Color(Game.getSelectedCell().getR(),
 										Game.getSelectedCell().getG(),
 										Game.getSelectedCell().getB()));
-	
+	}
+	catch(NullPointerException e)
+	{
+		e.printStackTrace();
+	}
 
 	
 }
