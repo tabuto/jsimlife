@@ -36,6 +36,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -44,12 +47,16 @@ import javax.swing.JTextField;
 import com.tabuto.j2dgf.gui.J2DControlPanel;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Zlife;
+import com.tabuto.jlife.statistic.JFrameStatistic;
+import com.tabuto.jlife.statistic.Statistic;
 
 
 
 public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 	
  static JLife game;
+ private Timer timer;
+ private TimerTask statTask;
 	/**
 	 * 
 	 */
@@ -59,19 +66,24 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 	 JButton Count = new JButton("Refresh");
 	 JButton Statistic = new JButton("Statistics");
 	 JLabel SelectZlife = new JLabel("Display Info on selected Zlife");
-	 JButton displayInfo = new JButton("Refresh");
+	 JButton graphButton = new JButton("Charts");
 	 JTextArea ZlifeInfo = new JTextArea();
 	 JScrollPane ZlifeInfoScroll = new JScrollPane(ZlifeInfo);
 	 JTextField CellCountField = new JTextField(4);
 	
-	JLifeStatistic jls;
+	Statistic jls;
 	public JLifeRightControlPanel(Dimension d, JLife game)
 	{
 		super(d);
 		this.setLayout(new FlowLayout());
 		addContent();
 		this.game=game;
-		jls= new JLifeStatistic(game);
+		jls= new Statistic(game);
+		
+		timer = new Timer();
+		statTask = new StatisticTask();
+		timer.schedule( statTask, 500,1500 );
+		
 		
 		
 	}
@@ -89,32 +101,27 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 		ZlifeInfoScroll.setPreferredSize(new Dimension(this.getWidth(), 300));
 		//ZlifeInfo.setLineWrap(true);
 		 
-		 displayInfo.addActionListener(new ActionListener()
+		graphButton.addActionListener(new ActionListener()
 			{
 	 			public void actionPerformed( ActionEvent action )
 						{
-	 					   	if(game.getSelectedCell()!=null)
-	 					   	{
-	 					   		if(game.getSelectedCell() instanceof Zlife)
-	 					   	jls.calculateStatistics(game.groupList);
-	 					   		
-	 					   		ZlifeInfo.setText( 
-	 					   			jls.toString());
-	 					   	ZlifeInfo.setCaretPosition(0);
-	 					   	}
+	 				new JFrameStatistic(jls);
+	 				//JFrameStatistic newStatisticCharts = new JFrameStatistic(jls);
+	 				//newStatisticCharts.pack();
+	 				//newStatisticCharts.setVisible(true);
 						}
 				});
 		 
 		
 		 this.add(ZlifeInfoScroll);
-		 this.add(displayInfo);
+		 this.add(graphButton);
 		 
 		 this.add(Statistic);
 		 Statistic.addActionListener(new ActionListener()
 			{
 	 			public void actionPerformed( ActionEvent action )
 						{
- 					   	jls.calculateStatistics(game.groupList);
+ 					   	jls.calculateStatistics();
  					 
 	 				ZlifeInfo.setText( 
 			   				jls.toString());
@@ -133,6 +140,7 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 	{
 		this.game = game;
 		jls.setGame(game);
+		
 	}
 
 
@@ -148,5 +156,29 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 				setCellCount();
 				}
 		}
+	}
+	
+	
+	public class StatisticTask extends TimerTask
+	{
+
+		public StatisticTask()
+		{
+			super();
+		}
+		
+		@Override
+		public void run() 
+		{
+			JLifeRightControlPanel.this.jls.calculateStatistics();
+			
+			JLifeRightControlPanel.this.ZlifeInfo.setText( 
+					JLifeRightControlPanel.this.jls.toString()
+														  );
+			JLifeRightControlPanel.this.ZlifeInfo.setCaretPosition(0);
+				
+		}
+		
+		
 	}
 }

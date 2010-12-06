@@ -1,3 +1,15 @@
+
+JLife v.1.11 MILESTONE
+
+JLife v.1.10.3
+Add JFrame icon to JFrameStatistic and JFrameNewCell
+The JFrameStatistic now show several chart choosed using a JComboBox
+Using JCharts2D library;
+Now Statistic auto update info into JRightControlPanel using a Timer; 
+Add a JFrameStatistic class to draw chart; 
+Add a statistic package;
+
+
 JLife v.1.10.2
 Zlife spend more energy if faster!
 Zredator eating now not necessary killing zlife!!
