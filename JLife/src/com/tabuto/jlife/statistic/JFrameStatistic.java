@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 06/dic/2010 16.59.47
 * Titolo: JFrameStatistic.java
-* Versione: 0.1.10.3 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 

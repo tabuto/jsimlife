@@ -1,0 +1,75 @@
+README
+
+JSimLife v.0.1.11
+
+#1 How run this Application
+#2 User Guide
+#3 For Developers
+#4 About
+#5 License
+
+#1 How run this Application
+To run this application you need teh Java Runtime Enviroment (JRE) v.6. You can download it at http://www.java.com/it/download/index.jsp.
+Java is a cross platform language:
+
+	Microsoft Windows
+ If you are on Windows, just extract in a directory the JSimLifeV0.1.11.zip and to click the JSimLife_WindowsLauncher.bat file or simply double clicking on jar file.
+
+	Linux/MacOs
+If  Java Runtime Enviroment (JRE) is already installed on your machine simply extract JSimLifeV0.1.11.zip in a directory and double clicking on the jar file.
+
+
+#2 USER GUIDE
+JSimLife it's a simple life simulation, that implemented a Jenetics riproduction of a simple life form called Zlife e Zredator.
+The Zlifes and Predator's Dna contains 17 genes controlling several life parameter:
+
+   1. dnaParam: the Dna random parameter simulate Genetics mutation: how change genes when Zlifes are reproducing?
+   2. energy: actual Zlife's energy 
+   3. maxEnergy: max Zlife's energy
+   4. hornyEnergy: the minimum energy needs to riproduce
+   5. hungryEnergy: the energy below which Zlifes are hungry
+   6. lifeCycle: the number of lifeCycle before the Zlife Die. When Zlife's change his state it spends a lifeCycle! 
+   7. metabolism: the energy needs for each Zlife's move. this value is subtract to energy
+   8. BoredSpeed: the speed when the cell is in BORED state
+   9. riproductionEnergy: the energy zlife's spend to riproduce itself
+  10. hungrySpeed: the speed when cell is hungry
+  11. hornySpeed: the speed when cell is horny
+  12. scarySpeed: the speed when cell is scary (NOT YET USED!)
+  13. radius: Zlife's radius size
+  14. R: the red color's component of this cell
+  15. G: the green color's component of this cell
+  16. B: the blue color's component of this cell
+  17. ageFactor: energy percent subtract to max energy for each life cycle cell spends 
+
+Each Zlife's live it life using 4 life state:
+
+    * BORED: when bored the cell moving random until his energy is below the HungryEnergy?. If cell meet some seed, store its position for future meal!! 
+
+    * HUNGRY: when hungry the cell move to seed position (if exist) or moving randomly in search of it! After meal the cell's energy are max and it is ready to riproduce itself; 
+
+    * HORNY: when cell is horny, it moves fast in search of onether Horny-Cell. If they collide another life is born! 
+
+Every change state mean a lifeCycle spends! When cells finished his lifeCycle or if his energy is below zero, cell die. 
+
+When a ZLifes die, it changes in Seed.
+
+The Zredator represent the predator of ZLifes. When they hungry, they hunting Zilfes for eating.
+
+You can add new Zlifes and Zredator's from Zlife Add button, and watch the simulation. You can also select a Zlife's and controlling its actual state and its Dna.
+You can save and load simulation, but remember that the maximum number of ZLife's presents on game at same time is limited to 125!
+You can watch how evolves in time Game's parameter using the "CHART" button.
+
+#3 Developer
+An help should be great!!! So, read the ToDo wiki at http://code.google.com/p/jsimlife/wiki/ToDo for the future feature I want to implements!
+If you want to join the project contact me at (tabuto83@gmail.com]
+If you want you can download the source code at http://code.google.com/p/jsimlife/source/browse/#svn/trunk/JLife/src/com/tabuto/jlife. 
+N.B. This game use a JDOM library: youu need to import it in your project if you want recompile it!
+
+#4 About
+JSimLife is currently at version 0.1.11 BETA, is developed by tabuto83 under Gnu GPLv3 LESSER license. 
+
+#5 License
+This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, ot (at your option) any later version.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+You should have received a copy of the GNU Lesser General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.

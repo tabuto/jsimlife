@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 02/dic/2010 22.40.29
 * Titolo: JLifeShowZlife.java
-* Versione: 0.1.10 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -48,8 +48,18 @@ import javax.swing.JTextField;
 import com.tabuto.j2dgf.Game2D;
 import com.tabuto.jlife.JLife;
 
-
+/**
+ * Simple JFrame to show detailed info about selected Cell such as:
+ * Actual Life Parameter and a Genes List.
+ * @author tabuto83
+ *
+ */
 public class JLifeShowZlife extends JFrame implements Observer {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public JLife Game;
 	
@@ -82,8 +92,13 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		setResizable(false);
 		initComponent();
 		setAlwaysOnTop(true);
+		
+		//ADD ICON
+		 this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
+	        		(this.getClass().getResource("icon_alpha_48x48.gif")));
 	}
 	
+	//Add and init component
 	private void initComponent()
 	{
 		north.setLayout( new GridLayout(0,2,5,5));
@@ -161,7 +176,9 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		this.add(south,BorderLayout.SOUTH);
 	}
 	
-
+/**
+ * Update the information about selected ZLife
+ */
 public void refresh()
 {
 	try{
@@ -185,7 +202,9 @@ public void refresh()
 
 	
 }
-
+/**
+ * Check if this Frame is visible
+ */
 private void checkVisibility()
 {
 	if(!this.isVisible())
@@ -194,7 +213,9 @@ private void checkVisibility()
 		this.setVisible(true);
 	}
 }
-
+/**
+ * Set the Dna text to the JTextPane
+ */
 private void  setDnaText()
 {
 	ZlifeDna.setText( 
@@ -202,14 +223,22 @@ private void  setDnaText()
 ZlifeDna.setCaretPosition(0);
 }
 
+/**
+ * Set the Current Game
+ * @param game
+ */
 public void setGame(JLife game)
 {
 	Game = game;
 	
 }
 
-	@Override
-	public void update(Observable arg0, Object arg1) {
+
+/**
+ * When an Observed SPrite change position, refresh  information!
+ */
+@Override
+public void update(Observable arg0, Object arg1) {
 
 		if(arg1 instanceof String)
 		{

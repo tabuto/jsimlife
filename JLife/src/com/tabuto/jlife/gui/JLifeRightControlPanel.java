@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 02/dic/2010 15.26.42
 * Titolo: JLifeRightControlPanel.java
-* Versione: 0.1.10 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -46,12 +46,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import com.tabuto.j2dgf.gui.J2DControlPanel;
 import com.tabuto.jlife.JLife;
-import com.tabuto.jlife.Zlife;
 import com.tabuto.jlife.statistic.JFrameStatistic;
 import com.tabuto.jlife.statistic.Statistic;
 
 
-
+/**
+ * SImple panel shows some control:Statistical view, cell count and Charts
+ * @author tabuto83
+ *
+ */
 public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 	
  static JLife game;
@@ -88,6 +91,7 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 		
 	}
 
+	//Add component to this panel
 	protected void addContent()
 	{
 		
@@ -100,7 +104,10 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 		 
 		ZlifeInfoScroll.setPreferredSize(new Dimension(this.getWidth(), 300));
 		//ZlifeInfo.setLineWrap(true);
-		 
+		
+		/*
+		 * When graphButton pressed create a new JFRameStatistic view
+		 */
 		graphButton.addActionListener(new ActionListener()
 			{
 	 			public void actionPerformed( ActionEvent action )
@@ -116,6 +123,9 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 		 this.add(ZlifeInfoScroll);
 		 this.add(graphButton);
 		 
+		 /*
+		  * When Statistic button pressed, refresh statistic
+		  */
 		 this.add(Statistic);
 		 Statistic.addActionListener(new ActionListener()
 			{
@@ -131,14 +141,17 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 		 
 	}
 	
+	//Return the actual cell count
 	private void setCellCount()
 	{
 		CellCountField.setText(  Integer.toString(game.getActualCellCount() ) );
 	}
 	
-	public void setGame(JLife game)
+	//Set the Game. Useful when load a new Game to reference the new one
+	public void setGame(JLife g)
 	{
-		this.game = game;
+		game = g;
+		//Set the new Game for statistic too
 		jls.setGame(game);
 		
 	}
@@ -146,6 +159,9 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 
 	
 	@Override
+	/**
+	 * When Game cell count change, update statistic!
+	 */
 	public void update(Observable o, Object arg) {
 		
 		if (arg instanceof String)
@@ -158,7 +174,9 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 		}
 	}
 	
-	
+	/*
+	 * Implements a timer task to calculate statistic every Timer check
+	 */
 	public class StatisticTask extends TimerTask
 	{
 

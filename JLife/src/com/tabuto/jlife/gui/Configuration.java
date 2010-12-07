@@ -30,7 +30,11 @@
 
 package com.tabuto.jlife.gui;
 
-
+/**
+ * NOT YET IMPLEMENTED
+ * @author user
+ *
+ */
 public class Configuration {
 	
 	/**

@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 01/dic/2010 10.19.59
 * Titolo: ZlifeVsZretadorCollision.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -35,7 +35,16 @@ import com.tabuto.j2dgf.collision.CollisionDetector;
 import com.tabuto.jlife.Zlife;
 import com.tabuto.jlife.Zretador;
 
-
+/**
+ * Class extends CollisionDetector to perform a collisionAction between
+ * Zlifes and Zredator Group's elements. 
+ * When an Hungry Zredator is near (<100 pixel) a Zlife, it hunt that ZLife.
+ * It following ZLifes until is next to it, then eat it.
+ * 
+ * 
+ * @author tabuto83
+ *
+ */
 public class ZlifeVsZretadorCollision extends CollisionDetector {
 
 	
@@ -69,7 +78,7 @@ public class ZlifeVsZretadorCollision extends CollisionDetector {
 			{
 				//Zretador eat ZLife
 				//z.age();
-				z.setEnergy( z.getEnergy()+( c.getRadius()*10) );
+				z.setEnergy( z.getEnergy()+( (c.getRadius()+1)*10) );
 				z.setAngleRadians(Math.random()*2*Math.PI);
 				z.preda=null;
 				if(z.getEnergy()>z.getHungryEnergy())
@@ -77,7 +86,7 @@ public class ZlifeVsZretadorCollision extends CollisionDetector {
 				z.live();
 				
 				//Zlife hit but not necessary die
-				c.setEnergy( c.getEnergy()-( z.getRadius()*10) );
+				c.setEnergy( c.getEnergy()-( (z.getRadius()+1)*10) );
 				return;
 			}
 			

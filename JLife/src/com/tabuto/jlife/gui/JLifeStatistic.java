@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 02/Dic/2010 20.49.46
 * Titolo: JLifeStatistic.java
-* Versione: 0.1.10 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -40,6 +40,7 @@ import com.tabuto.jlife.Zlife;
 
 /**
  * Calculate some statistical value using the Vector Group List provides by JLife Class.
+ * @deprecated
  */
 public class JLifeStatistic implements Observer {
 
@@ -231,7 +232,7 @@ public class JLifeStatistic implements Observer {
 
 	public void setGame(JLife game)
 	{
-		this.Game = game;
+		Game = game;
 	}
 
 }

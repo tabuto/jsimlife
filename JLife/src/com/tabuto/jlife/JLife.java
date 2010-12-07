@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 02/Dic/2010 12.05.43
+* Date: 06/Dic/2010 12.05.43
 * Titolo: JLife.java
-* Versione: 0.1.10 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -64,7 +64,7 @@ import com.tabuto.jlife.collisions.ZretadorRiproduction;
  * 
  * @author tabuto83
  * 
- * @version 0.1.10.1
+ * @version 0.1.10.3
  * 
  * @see Gene
  * @see Dna
@@ -83,12 +83,7 @@ public class JLife extends Game2D implements Serializable,Observer {
 	/**
 	 * The actual selected Cell 
 	 */
-	private Zlife selectedCell;
-	
-	
-	
-	private int cellCount=0;
-	
+	private Zlife selectedCell;	
 
 	/**
 	 * The Directory path where Game file is saved/loaded.
@@ -417,7 +412,6 @@ public class JLife extends Game2D implements Serializable,Observer {
 		this.notifyObservers(arg1);
 		
 		
-		
 		if( arg1 instanceof Zlife)
 				{
 					Zlife z = (Zlife) arg1;
@@ -456,7 +450,7 @@ public class JLife extends Game2D implements Serializable,Observer {
 		
 		if (arg1 instanceof String)
 		{
-			String message = (String) arg1;
+			//String message = (String) arg1;
 			
 				
 		}

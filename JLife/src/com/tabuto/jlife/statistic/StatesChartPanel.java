@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 06/dic/2010 19.38.03
 * Titolo: StatesChartPanel.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 

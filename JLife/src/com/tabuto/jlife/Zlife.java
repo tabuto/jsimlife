@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 29/nov/2010 23.39.33
 * Titolo: Zlife.java
-* Versione: 0.1.9 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -55,7 +55,7 @@ import com.tabuto.util.Point;
  * 
  * @author tabuto83
  * 
- * @version 0.1.8
+ * @version 0.1.10.2
  * 
  * @see Gene
  * @see Dna
@@ -111,7 +111,7 @@ public class Zlife extends Sprite implements Serializable{
 	protected int actualLifeCycle=0; //the actual age of Zlife
 	protected Point seedPosition = new Point();
 	
-	private boolean attacked=false;
+	//private boolean attacked=false;
 	
 	private double realMetabolism;
 
@@ -179,16 +179,7 @@ public class Zlife extends Sprite implements Serializable{
 		
 	}
 	
-//PUBLIC METHODS
-	
-	/**
-	 * @return the Actual Life Cycle
-	 */
-	public int getActualLifeCycle()
-	{
-		return this.actualLifeCycle;
-	}
-	
+//PUBLIC METHODS	
 	/**
 	 * This method simulate the Zlife Age's process 
 	 */
@@ -206,6 +197,21 @@ public class Zlife extends Sprite implements Serializable{
 		else
 			{setAlive(false); Deactivate();}
 	}
+
+	/**
+	 * Deselect this Zlife
+	 */
+	public void deselect(){SELECTED=false;}
+	
+	
+	
+	/**
+	 * @return the Actual Life Cycle
+	 */
+	public int getActualLifeCycle()
+	{
+		return this.actualLifeCycle;
+	}
 	
 	/**
 	 * @return the Zlife age factor 
@@ -213,35 +219,155 @@ public class Zlife extends Sprite implements Serializable{
 	public double getAgeFactor(){return ageFactor;}
 	
 	/**
-	 * @param af set the new age factor for this Zlife
-	 */
-	public void setAgeFactor(double af)
-	{
-		if(af<0)
-			af= Math.abs(af);
-	  if(af > 1 )
-			af = 1/af;
-	  
-	  ageFactor=af;
-	}
-	
-	/**
-	 * @return the b
+	 * @return the Zlife's Color Blue Component
 	 */
 	public int getB() {
 		return B;
 	}
+	
+	/**
+	 * @return the boredSpeed
+	 */
+	public double getBoredSpeed() {
+		return BoredSpeed;
+	}
+	
+	/**
+	 * @return the dnaParam
+	 * @see {@link Dna#getParam()}
+	 */
+	public double getDnaParam() {
+		return dnaParam;
+	}
 
 	/**
-	 * @param b the b to set
+	 * @return the energy
 	 */
-	public void setB(int b) {
-		if(b>=0 && b<=255)
-			B = b;
-		if(b<0)
-			B=0;
-		if(b>255)
-			B = 255;
+	public double getEnergy() {
+		return energy;
+	}
+	
+	/**
+	 * @return the Zlife's Color Green Component
+	 */
+	public int getG() {
+	return G;
+	}
+		
+	/**
+	 * @return the hornyEnergy
+	 */
+	public double getHornyEnergy() {
+		return hornyEnergy;
+	}
+
+
+	/**
+	 * @return the hornySpeed
+	 */
+	public double getHornySpeed() {
+		return hornySpeed;
+	}
+
+	/**
+	 * @return the hungrySpeed
+	 */
+	public double getHungrySpeed() {
+		return hungrySpeed;
+	}
+
+	/**
+	 * @return the hungryEnergy
+	 */
+	public double getHungryEnergy() {
+		return hungryEnergy;
+	}
+
+	
+	/**
+	 * @return the lifeCycle
+	 */
+	public int getLifeCycle() {
+		return lifeCycle;
+	}
+
+	/**
+	 * @return the maxEnergy
+	 */
+	public double getMaxEnergy() {
+		return maxEnergy;
+	}
+
+	/**
+	 * @return the metabolism
+	 */
+	public double getMetabolism() {
+		return metabolism;
+	}
+
+
+	/**
+	 * @return the COlor's Sprite red Component 
+	 */
+	public int getR() {
+		return R;
+	}
+
+	/**
+	 * @return the radius
+	 */
+	public int getRadius(){
+		return radius;
+	}
+
+	/**
+	 * @return the riproductionEnergy
+	 */
+	public double getRiproductionEnergy() {
+		return riproductionEnergy;
+	}
+
+	/**
+	 * @return the scarySpeed
+	 */
+	public double getScarySpeed() {
+		return scarySpeed;
+	}
+
+	/**
+	 * @return the actual seed position stored in this Zlife
+	 */
+	public Point getSeedPosition()
+	{
+		return seedPosition;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public CellState getState() {
+		return state;
+	}
+
+	/**
+	 * @return the zlifeColor
+	 */
+	public Color getZlifeColor() {
+		return zlifeColor;
+	}
+	
+	/**
+	 * @return the Zlife's {@link Dna}
+	 */
+	public Dna getZlifeDna() {
+		return ZlifeDna;
+	}
+	
+	/**
+	 * @return the alive
+	 */
+	public boolean isAlive() {
+		return alive;
 	}
 	
 	/**
@@ -254,109 +380,38 @@ public class Zlife extends Sprite implements Serializable{
 			 else
 				 return false;
 	}
-	
+
 	/**
-	 * Set the ZLife's state as BORED
+	 * @return true if Zlife state is set HORNY
 	 */
-	public void setBored()
+	public boolean isHorny()
 	{
-		state=CellState.BORED;
+		 if (state==CellState.HORNY)
+			 return true;
+			 else
+				 return false;
 	}
 	
 	/**
-	 * @param Set the new Color of the sprite as a RGB values
+	 * @return true if Zlife state is set HUNGRY
 	 */
-	public void setColor(Color c)
+	public boolean isHungry()
 	{
-		zlifeColor=c;
-		R = c.getRed();
-		G = c.getGreen();
-		B = c.getBlue();
-	}
-	
-	/**
-	 * Deselect this Zlife
-	 */
-	public void deselect(){SELECTED=false;}
-	
-	/**
-	 * @return the dnaParam
-	 * @see {@link Dna#getParam()}
-	 */
-	public double getDnaParam() {
-		return dnaParam;
+		 if (state==CellState.HUNGRY)
+			 return true;
+			 else
+				 return false;
 	}
 
 	/**
-	 * @param dnaParam the dnaParam to set
-	 * @see {@link Dna#setParam(double)}
+	 * @return true if Zlife state is set SCARY
 	 */
-	public void setDnaParam(double dnaParam) {
-		this.ZlifeDna.setParam(dnaParam);
-		this.dnaParam = this.ZlifeDna.getParam();
-	}
-
-	/**
-	 * @return the energy
-	 */
-	public double getEnergy() {
-		return energy;
-	}
-
-	/**
-	 * @param energy the energy to set
-	 */
-	public void setEnergy(double energy) 
+	public boolean isScary()
 	{
-		if(energy>=0 && energy<= this.getMaxEnergy() )
-			this.energy = energy;
-	}
-
-	/**
-	 * @return the maxEnergy
-	 */
-	public double getMaxEnergy() {
-		return maxEnergy;
-	}
-
-	/**
-	 * @param maxEnergy the maxEnergy to set
-	 */
-	public void setMaxEnergy(double maxEnergy) {
-		if(maxEnergy>0)
-			this.maxEnergy = maxEnergy;
-		else
-			this.maxEnergy = Math.abs(maxEnergy);
-	}
-
-	/**
-	 * @return the hornyEnergy
-	 */
-	public double getHornyEnergy() {
-		return hornyEnergy;
-	}
-
-	/**
-	 * @param hornyEnergy the hornyEnergy to set
-	 */
-	public void setHornyEnergy(double hornyEnergy) {
-		if(hornyEnergy>=0 && hornyEnergy<= this.getMaxEnergy() )
-		this.hornyEnergy = hornyEnergy;
-	}
-
-	/**
-	 * @return the hungryEnergy
-	 */
-	public double getHungryEnergy() {
-		return hungryEnergy;
-	}
-
-	/**
-	 * @param hungryEnergy the hungryEnergy to set
-	 */
-	public void setHungryEnergy(double hungryEnergy) {
-		if(hungryEnergy>=0 && hungryEnergy<= this.getMaxEnergy() )
-		this.hungryEnergy = hungryEnergy;
+		 if (state==CellState.SCARY)
+			 return true;
+			 else
+				 return false;
 	}
 	
 	/**
@@ -479,43 +534,78 @@ public class Zlife extends Sprite implements Serializable{
 			}
 	}
 	
-	/**
-	 * @return the lifeCycle
-	 */
-	public int getLifeCycle() {
-		return lifeCycle;
+	@Override
+	public void move()
+	{
+		if ( ACTIVE && this.getSpeed()> 0 )
+  	  {  
+  	      
+  		  double nx = (this.vector.origin.x + this.getMySpeed() * Math.cos(this.vector.getDirectionRadians() ) );
+  		  double ny = (this.vector.origin.y + this.getMySpeed() * Math.sin(this.vector.getDirectionRadians()));
+  		  this.vector.setNewOrigin(nx,ny);
+  		  
+  		setChanged();
+		notifyObservers("ZLife:Move");
+  		  
+  		  energy = (energy - realMetabolism - (getSpeed()/100));
+  		  if(energy<0)
+  			 {setAlive(false);Deactivate();}
+  		  else
+  			  this.live();
+  		
+  	  }
 	}
-
+	
 	/**
-	 * @param lifeCycle the lifeCycle to set
+	 * Select this Zlife
 	 */
-	public void setLifeCycle(int lifeCycle) {
-		if(lifeCycle>0)
-		this.lifeCycle = lifeCycle;
-	}
-
+	public void select(){SELECTED=true;}
+	
 	/**
-	 * @return the metabolism
+	 * @param af set the new age factor for this Zlife
 	 */
-	public double getMetabolism() {
-		return metabolism;
+	public void setAgeFactor(double af)
+	{
+		if(af<0)
+			af= Math.abs(af);
+	  if(af > 1 )
+			af = 1/af;
+	  
+	  ageFactor=af;
 	}
-
+	
 	/**
-	 * @param metabolism the metabolism to set
+	 * @param alive the alive to set
 	 */
-	public void setMetabolism(double metabolism) {
-		if(metabolism>0 && metabolism<this.maxEnergy)
-			this.metabolism = metabolism;
+	public synchronized void setAlive(boolean alive) {
+		this.alive = alive;
+		if (!alive)
+		{
+			setChanged();
+			notifyObservers(this);
+		}
 	}
-
+	
 	/**
-	 * @return the boredSpeed
+	 * @param b the blue Component Zlife's color to set
 	 */
-	public double getBoredSpeed() {
-		return BoredSpeed;
+	public void setB(int b) {
+		if(b>=0 && b<=255)
+			B = b;
+		if(b<0)
+			B=0;
+		if(b>255)
+			B = 255;
 	}
-
+	
+	/**
+	 * Set the ZLife's state as BORED
+	 */
+	public void setBored()
+	{
+		state=CellState.BORED;
+	}
+	
 	/**
 	 * @param boredSpeed the boredSpeed to set
 	 */
@@ -527,13 +617,118 @@ public class Zlife extends Sprite implements Serializable{
 		
 		BoredSpeed = boredSpeed;
 	}
+	
+	/**
+	 * @param Set the new Color of the sprite as a RGB values
+	 */
+	public void setColor(Color c)
+	{
+		zlifeColor=c;
+		R = c.getRed();
+		G = c.getGreen();
+		B = c.getBlue();
+	}
+	
+	
+
 
 	/**
-	 * @return the riproductionEnergy
+	 * @param dnaParam the dnaParam to set
+	 * @see {@link Dna#setParam(double)}
 	 */
-	public double getRiproductionEnergy() {
-		return riproductionEnergy;
+	public void setDnaParam(double dnaParam) {
+		this.ZlifeDna.setParam(dnaParam);
+		this.dnaParam = this.ZlifeDna.getParam();
 	}
+
+
+
+	/**
+	 * @param energy the energy to set
+	 */
+	public void setEnergy(double energy) 
+	{
+		if(energy>=0 && energy<= this.getMaxEnergy() )
+			this.energy = energy;
+	}
+
+	/**
+	 * @param maxEnergy the maxEnergy to set
+	 */
+	public void setMaxEnergy(double maxEnergy) {
+		if(maxEnergy>0)
+			this.maxEnergy = maxEnergy;
+		else
+			this.maxEnergy = Math.abs(maxEnergy);
+	}
+
+	/**
+	 * @param g the g to set
+	 */
+	public void setG(int g) {
+		if(g>=0 && g<=255)
+			G = g;
+		if(g<0)
+			G=0;
+		if(g>255)
+			G = 255;
+	}
+	
+	/**
+	 * Set the Zlife state as HORNY
+	 */
+	public void setHorny()
+	{
+		state=CellState.HORNY;
+	}
+	
+	/**
+	 * Set the Zlife state as HUNGRY
+	 */
+	public void setHungry()
+	{
+		state=CellState.HUNGRY;
+	}
+
+	/**
+	 * @param hornyEnergy the hornyEnergy to set
+	 */
+	public void setHornyEnergy(double hornyEnergy) {
+		if(hornyEnergy>=0 && hornyEnergy<= this.getMaxEnergy() )
+		this.hornyEnergy = hornyEnergy;
+	}
+
+
+
+	/**
+	 * @param hungryEnergy the hungryEnergy to set
+	 */
+	public void setHungryEnergy(double hungryEnergy) {
+		if(hungryEnergy>=0 && hungryEnergy<= this.getMaxEnergy() )
+		this.hungryEnergy = hungryEnergy;
+	}
+	
+
+
+
+	/**
+	 * @param lifeCycle the lifeCycle to set
+	 */
+	public void setLifeCycle(int lifeCycle) {
+		if(lifeCycle>0)
+		this.lifeCycle = lifeCycle;
+	}
+
+
+
+	/**
+	 * @param metabolism the metabolism to set
+	 */
+	public void setMetabolism(double metabolism) {
+		if(metabolism>0 && metabolism<this.maxEnergy)
+			this.metabolism = metabolism;
+	}
+
 
 	/**
 	 * @param riproductionEnergy the riproductionEnergy to set
@@ -543,12 +738,7 @@ public class Zlife extends Sprite implements Serializable{
 		this.riproductionEnergy = riproductionEnergy;
 	}
 
-	/**
-	 * @return the hungrySpeed
-	 */
-	public double getHungrySpeed() {
-		return hungrySpeed;
-	}
+
 
 	/**
 	 * @param hungrySpeed the hungrySpeed to set
@@ -564,12 +754,7 @@ public class Zlife extends Sprite implements Serializable{
 		
 	}
 
-	/**
-	 * @return the hornySpeed
-	 */
-	public double getHornySpeed() {
-		return hornySpeed;
-	}
+
 
 	/**
 	 * @param hornySpeed the hornySpeed to set
@@ -585,15 +770,10 @@ public class Zlife extends Sprite implements Serializable{
 		
 	}
 
-	/**
-	 * @return the r
-	 */
-	public int getR() {
-		return R;
-	}
+
 
 	/**
-	 * @param r the r to set
+	 * @param r the Zlife's Color red component to set
 	 */
 	public void setR(int r) {
 		if(r>=0 && r<=255)
@@ -602,13 +782,6 @@ public class Zlife extends Sprite implements Serializable{
 			R=0;
 		if(r>255)
 			R = 255;
-	}
-
-	/**
-	 * @return the radius
-	 */
-	public int getRadius(){
-		return radius;
 	}
 	
 	/**
@@ -622,12 +795,7 @@ public class Zlife extends Sprite implements Serializable{
 			this.radius=radius;
 	}
 	
-	/**
-	 * @return the scarySpeed
-	 */
-	public double getScarySpeed() {
-		return scarySpeed;
-	}
+
 
 	/**
 	 * @param scarySpeed the scarySpeed to set
@@ -651,105 +819,10 @@ public class Zlife extends Sprite implements Serializable{
 	}
 	
 	/**
-	 * @return the actual seed position stored in this Zlife
-	 */
-	public Point getSeedPosition()
-	{
-		return seedPosition;
-	}
-
-	/**
-	 * Select this Zlife
-	 */
-	public void select(){SELECTED=true;}
-	
-	/**
-	 * @return the g
-	 */
-	public int getG() {
-	return G;
-	}
-
-	/**
-	 * @param g the g to set
-	 */
-	public void setG(int g) {
-		if(g>=0 && g<=255)
-			G = g;
-		if(g<0)
-			G=0;
-		if(g>255)
-			G = 255;
-	}
-
-	/**
-	 * @return the state
-	 */
-	public CellState getState() {
-		return state;
-	}
-
-	/**
 	 * @param state the state to set
 	 */
 	public void setState(CellState state) {
 		this.state = state;
-	}
-
-	/**
-	 * @return the alive
-	 */
-	public boolean isAlive() {
-		return alive;
-	}
-	
-	/**
-	 * @return true if Zlife state is set HORNY
-	 */
-	public boolean isHorny()
-	{
-		 if (state==CellState.HORNY)
-			 return true;
-			 else
-				 return false;
-	}
-	
-	/**
-	 * Set the Zlife state as HORNY
-	 */
-	public void setHorny()
-	{
-		state=CellState.HORNY;
-	}
-
-	/**
-	 * @return true if Zlife state is set HUNGRY
-	 */
-	public boolean isHungry()
-	{
-		 if (state==CellState.HUNGRY)
-			 return true;
-			 else
-				 return false;
-	}
-	
-	/**
-	 * Set the Zlife state as HUNGRY
-	 */
-	public void setHungry()
-	{
-		state=CellState.HUNGRY;
-	}
-	
-	/**
-	 * @return true if Zlife state is set SCARY
-	 */
-	public boolean isScary()
-	{
-		 if (state==CellState.SCARY)
-			 return true;
-			 else
-				 return false;
 	}
 	
 	/**
@@ -760,24 +833,6 @@ public class Zlife extends Sprite implements Serializable{
 		state=CellState.SCARY;
 	}
 	
-	/**
-	 * @param alive the alive to set
-	 */
-	public synchronized void setAlive(boolean alive) {
-		this.alive = alive;
-		if (!alive)
-		{
-			setChanged();
-			notifyObservers(this);
-		}
-	}
-
-	/**
-	 * @return the zlifeColor
-	 */
-	public Color getZlifeColor() {
-		return zlifeColor;
-	}
 
 	/**
 	 * @param zlifeColor the zlifeColor to set
@@ -788,13 +843,6 @@ public class Zlife extends Sprite implements Serializable{
 		setB(b);
 		zlifeColor = new Color(R,G,B);
 	}
-	
-	/**
-	 * @return the Zlife's {@link Dna}
-	 */
-	public Dna getZlifeDna() {
-		return ZlifeDna;
-	}
 
 	/**
 	 * @param zlifeDna the the Zlife's {@link Dna} to set
@@ -803,9 +851,42 @@ public class Zlife extends Sprite implements Serializable{
 		ZlifeDna = zlifeDna;
 	}
 	
-
-//PRIVATE AND PROTECTED METHODS
+	@Override
+	public void ThisIsMe(Graphics g2d)
+	{
+		g2d.setColor( getZlifeColor() );
+		g2d.drawOval((int)this.getX() - this.radius , (int)this.getY() - this.radius, this.radius, this.radius);
+		
+		if(SELECTED)
+		{
+			g2d.setColor(Color.RED);
+			g2d.drawOval((int)this.getX() - this.radius -5 , (int)this.getY() - this.radius - 5,this.radius + 10, this.radius + 10);
+			
+		}
+	}
 	
+	@Override
+	public String toString()
+	{
+		return "\nZlife name: \t" + getName() +
+		"\nPosition: \t[" + (int)this.vector.origin.getX()+","+(int)this.vector.origin.getY()+"]" +
+		"\nDirection: \t" + (int)this.vector.getDirectionDegrees()+"°"+
+		"\nState: \t" + this.state.toString() +
+		"\nSpeed: \t" + this.getSpeed() +
+		"\nLifeCycle: \t" + actualLifeCycle + "/" + lifeCycle +
+		"\nEnergy: \t" + Math.rint(energy*100)/100 +"/" + Math.rint(maxEnergy*100)/100 +
+		"\nRadius: \t" + radius +
+		"\nColor: \t["+this.R+" " + this.G +" "+this.B+"]" +
+		"\n " + this.ZlifeDna.toString();
+		
+	}
+
+//PRIVATE AND PROTECTED METHODS *********************************************
+	
+	/**
+	 * Add to this ZLifeDNA the Current Genes. USe it if you want to create
+	 * a new Zlife with your own parameter
+	 */
 	private void makeMyDna()
 	{
 		this.ZlifeDna.add(getDnaParam(), "dnaParam", "The Dna fuzzy parameter");
@@ -827,6 +908,9 @@ public class Zlife extends Sprite implements Serializable{
 		this.ZlifeDna.add(getAgeFactor(), "ageFactor", "Zlife's age Factor ");
 	}
 	
+	/**
+	 * Create a new Zlife loading the default parameter values
+	 */
 	private void loadDefaultValues()
 	{
 		dnaParam=0.2;
@@ -862,6 +946,11 @@ public class Zlife extends Sprite implements Serializable{
 		B=125;
 	}
 	
+	/**
+	 * Set the parameter values using a previously created DNA.
+	 * Use it if you already have a DNA (for example merging two DNA) and you
+	 * want use it to create a new ZLife
+	 */
 	private void loadDnaGenes()
 	{
 		//load private double dnaParam;
@@ -917,54 +1006,7 @@ public class Zlife extends Sprite implements Serializable{
 
 //OVERRIDED METHODS ***************************************************
 	
-	@Override
-	public void move()
-	{
-		if ( ACTIVE && this.getSpeed()> 0 )
-  	  {  
-  	      
-  		  double nx = (this.vector.origin.x + this.getMySpeed() * Math.cos(this.vector.getDirectionRadians() ) );
-  		  double ny = (this.vector.origin.y + this.getMySpeed() * Math.sin(this.vector.getDirectionRadians()));
-  		  this.vector.setNewOrigin(nx,ny);
-  		  
-  		setChanged();
-		notifyObservers("ZLife:Move");
-  		  
-  		  energy = (energy - realMetabolism - (getSpeed()/100));
-  		  if(energy<0)
-  			 {setAlive(false);Deactivate();}
-  		  else
-  			  this.live();
-  		
-  	  }
-	}
+
 	
-	
-	public void ThisIsMe(Graphics g2d)
-	{
-		g2d.setColor( getZlifeColor() );
-		g2d.drawOval((int)this.getX() - this.radius , (int)this.getY() - this.radius, this.radius, this.radius);
-		
-		if(SELECTED)
-		{
-			g2d.setColor(Color.RED);
-			g2d.drawOval((int)this.getX() - this.radius -5 , (int)this.getY() - this.radius - 5,this.radius + 10, this.radius + 10);
-			
-		}
-	}
-	
-	public String toString()
-	{
-		return "\nZlife name: \t" + getName() +
-		"\nPosition: \t[" + (int)this.vector.origin.getX()+","+(int)this.vector.origin.getY()+"]" +
-		"\nDirection: \t" + (int)this.vector.getDirectionDegrees()+"°"+
-		"\nState: \t" + this.state.toString() +
-		"\nSpeed: \t" + this.getSpeed() +
-		"\nLifeCycle: \t" + actualLifeCycle + "/" + lifeCycle +
-		"\nEnergy: \t" + Math.rint(energy*100)/100 +"/" + Math.rint(maxEnergy*100)/100 +
-		"\nRadius: \t" + radius +
-		"\nColor: \t["+this.R+" " + this.G +" "+this.B+"]" +
-		"\n " + this.ZlifeDna.toString();
-		
-	}
+
 }

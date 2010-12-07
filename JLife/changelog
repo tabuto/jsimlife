@@ -1,5 +1,10 @@
 
 JLife v.1.11 MILESTONE
+Reorder Code
+Zlifes changes direction when collide if scary
+Fix Bug: Statistic show now right values of a Loaded Game
+Change initial Zlifes param into add New Cell dialog to improve user's experience
+
 
 JLife v.1.10.3
 Add JFrame icon to JFrameStatistic and JFrameNewCell

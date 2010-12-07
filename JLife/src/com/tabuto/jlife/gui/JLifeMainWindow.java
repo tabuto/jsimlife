@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 02/dic/2010 15.18.55
 * Titolo: JLifeMainWindow.java
-* Versione: 0.1.10 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -53,14 +53,19 @@ import com.tabuto.jlife.JLife;
 
 
 
-
+/**
+ * The game main JFrame. It contains the menubar, the Canvas panel, and the control panels.
+ * It allow user to save or load, start or stop simulation.
+ * @author user
+ *
+ */
 public class JLifeMainWindow extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	BufferStrategy bs;      //BufferStrategy
     int W=1024,H=668;       //Window Frame Size
     Dimension d;            //Dimension of window size
-    private static final String version =" v.0.1.10 BETA";
+    private static final String version =" v.0.1.11 BETA";
     private static final String title="JSimLife";
     
     //GAME STATUS VARIABLES
@@ -118,7 +123,6 @@ public class JLifeMainWindow extends JFrame {
     }
 
     //ADDMENU ROUTINES
-    
     private void addMenu()
     {
     	 //MENU
@@ -280,7 +284,6 @@ public class JLifeMainWindow extends JFrame {
     
     
     //Create new Simulation
-    
     public void newSimulation()
     {
     	PLAY=true;
@@ -340,6 +343,11 @@ public class JLifeMainWindow extends JFrame {
     }
     	
     //INNER PRIVATE CLASSES
+    
+    /**
+     * OPen a JFileChooser to choose a previously load file
+     * and set the new Simulation as the actual simulation
+     */
     private class OpenSimChooser implements ActionListener 
     {
 
@@ -374,6 +382,9 @@ public class JLifeMainWindow extends JFrame {
         
     
     //INNER PRIVATE CLASSES
+    /**
+     * Open a JFileChooser to Save the actual simulation
+     */
     private class SaveSimChooser implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {

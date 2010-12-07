@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 29/nov/2010 17.32.16
 * Titolo: RiproductionCollision.java
-* Versione: 0.1.9 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -37,7 +37,17 @@ import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Zlife;
 
 
-
+/**
+ * Class extends CollisionDetector to perform a collisionAction between
+ * Zlifes Group's elements. When an Horny Zlifes meets another one, born a new ZLife
+ * with a merged DNA of its parent.
+ * 
+ * @see Dna
+ * @see Gene
+ * 
+ * @author tabuto83
+ *
+ */
 public class RiproductionCollision extends CollisionDetector{
 	
 	/**
@@ -46,6 +56,10 @@ public class RiproductionCollision extends CollisionDetector{
 	private static final long serialVersionUID = -1171546078549060228L;
 	public JLife jlc;
 	//Constructor
+	/**
+	 * Constructor
+	 * @param sp1 Zlifes Group
+	 */
 	 public RiproductionCollision(Group<Zlife> sp1, JLife j)
 	 {
 		 super(sp1);
@@ -54,6 +68,9 @@ public class RiproductionCollision extends CollisionDetector{
 	 
 	 
 	 //Override CollisionAction
+	 /**
+	  * Collision Action to perform the reproduction action
+	   */
 	 public void CollisionAction(int s1, int s2)
 	  {
 		//Cast to class extends Sprite 
@@ -86,6 +103,16 @@ public class RiproductionCollision extends CollisionDetector{
 				cell2.live();
 				
 				}
+		
+		else
+			//IF SCARY CHANGE DIRECTION
+		{
+			if(cell1.isScary() || cell2.isScary())
+			{
+			cell1.setAngleRadians(Math.random()*Math.PI*2);
+			cell2.setAngleRadians(Math.random()*Math.PI*2);
+			}
+		}
 		
 	  }
 		

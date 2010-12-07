@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 24/nov/2010 16.03.41
 * Titolo: Seed.java
-* Versione: 0.1.8 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -38,15 +38,57 @@ import java.util.Vector;
 import com.tabuto.j2dgf.Sprite;
 import com.tabuto.util.Point;
 
+/**
+ * Class that represents some food. Every speed as a radius and a density.
+ * The seeds quantity is equals to Density parameter.
+ * @author tabuto83
+ *
+ */
 public class Seed extends Sprite{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * The vector contains points represents a single seed
+	 */
 	Vector<Point> seeds = new Vector<Point>();
+	
+	/**
+	 * Seed Radius
+	 */
 	private int R;
+	
+	/**
+	 * Seed density: the single seed number 
+	 */
 	private int D;
+	
+	/**
+	 * Color of the seed: default GREEN
+	 */
 	private Color seedColor;
+	
+	/**
+	 * Max radius value
+	 */
 	private final int MAX_RADIUS=100;
+	
+	/**
+	 * Max density values
+	 */
 	private final int MAX_DENSITY=100;
 	
+	/**
+	 * Constructor a new seed 
+	 * @param d double, Density or seed's number
+	 * @param x int, X Coordinate
+	 * @param y int, Y Coordinate
+	 * @param radius int, radius or dimension of this Seed
+	 * @param density double, the single seed number 
+	 */
 	public Seed(Dimension d,int x, int y,int radius, double density)
 	{
 		super(d, x,y);
@@ -58,21 +100,25 @@ public class Seed extends Sprite{
 		setMe();
 	}
 	
-	public void ThisIsMe(Graphics g)
+	/**
+	 * Perform the eat action removing a point in the seeds vector
+	 */
+	public void eatMe()
 	{
-		g.setColor(seedColor);
-		for(int i=0;i<this.seeds.size();i++)
-		 g.drawRect((int) seeds.get(i).getX(),(int) seeds.get(i).getY(), 1, 1);
-	}
-	
-	public void setRadius(int r)
-	{
-		if(r>0 && r < MAX_RADIUS)
-			this.R = r;
+		if(!this.seeds.isEmpty() )
+			{ 
+			 this.seeds.remove( this.seeds.size() -1);
+			 this.seeds.trimToSize();
+			}
 		else
-			this.R = 25;
+			this.Deactivate();
+		
 	}
 	
+	/**
+	 * Set the Density parametes
+	 * @param r, int new Seed's Density
+	 */
 	public void setDensity(double d)
 	{
 		if(d>0 && d < MAX_DENSITY)
@@ -81,6 +127,9 @@ public class Seed extends Sprite{
 			this.D=50;
 	}
 	
+	/**
+	 * Fill the seeds vector point with single seed
+	 */
 	public void setMe()
 	{
 		int xmin = (int) this.getX() - this.R /2;
@@ -93,17 +142,33 @@ public class Seed extends Sprite{
 		}
 	}
 	
-	public void eatMe()
+	/**
+	 * Set the Radius parametes
+	 * @param r, int new Seed's Radius
+	 */
+	public void setRadius(int r)
 	{
-		if(!this.seeds.isEmpty() )
-			{ 
-			 this.seeds.remove( this.seeds.size() -1);
-			 this.seeds.trimToSize();
-			}
+		if(r>0 && r < MAX_RADIUS)
+			this.R = r;
 		else
-			this.Deactivate();
-		
+			this.R = 25;
 	}
+	
+	/**
+	 * Overrided ThisIsMe sprite methods
+	 */
+	@Override
+	public void ThisIsMe(Graphics g)
+	{
+		g.setColor(seedColor);
+		for(int i=0;i<this.seeds.size();i++)
+		 g.drawRect((int) seeds.get(i).getX(),(int) seeds.get(i).getY(), 1, 1);
+	}
+	
+
+	
+	
+
 	
 
 }
