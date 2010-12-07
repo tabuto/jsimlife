@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 06/dic/2010 19.22.34
 * Titolo: SpeedChartPanel.java
-* Versione: 0.10.3 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 

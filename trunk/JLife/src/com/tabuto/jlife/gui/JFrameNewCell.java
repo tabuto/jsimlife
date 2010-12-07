@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 29/nov/2010 18.15.45
 * Titolo: JFrameNewCell.java
-* Versione: 0.1.9 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -51,11 +51,19 @@ import com.tabuto.jlife.Zlife;
 import com.tabuto.jlife.Zretador;
 
 
-
+/**
+ * A JFRame to insert new ZLifes or Zredator into Simulation Game
+ * @author tabuto83
+ *
+ */
 public class JFrameNewCell extends JFrame {
 	
 	//private Game references
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JLife Game;
 	//COMPONENT
 	JPanel north,dnaPanel,south;
@@ -72,18 +80,21 @@ public class JFrameNewCell extends JFrame {
 	
 	JComboBox cellChooser;
 	
-	public JFrameNewCell(final JLife Game)
+	/**
+	 * Build a JFrameNewCell
+	 * @param game Game where insert the new ZLife
+	 */
+	public JFrameNewCell(final JLife game)
 	{
 		super("New Cell");
-		this.Game = Game;
+		Game = game;
 		
+		//ADD PANELS
 		north = new JPanel();
 		dnaPanel = new JPanel();
 		south = new JPanel();
 		
 		setLayout( new BorderLayout());
-	
-
 		//setPreferredSize(new Dimension(460,700));
 		
 		JButton okButton = new JButton("OK");
@@ -118,25 +129,15 @@ public class JFrameNewCell extends JFrame {
 		south.add(okButton);
 		south.add(cancelButton);
 		
+		/*
+		 * When the okButton pressed, read the JSlider values and create a new DNA
+		 * to insert into new ZLifes
+		 */
 		okButton.addActionListener(new ActionListener()
 		   {
 			public void actionPerformed(ActionEvent actionEvent) 
 				{
 				
-				/*
-				newCell.setDnaParam(dnaParamSlider.getValue()/100 );
-				newCell.setEnergy(energySlider.getValue() );
-				newCell.setMaxEnergy(maxEnergySlider.getValue() );
-				newCell.setHornyEnergy(hornyEnergySlider.getValue() );
-				newCell.setLifeCycle(lifeCycleSlider.getValue() );
-				newCell.setMetabolism(metabolismSlider.getValue()/1000 );
-				newCell.setBoredSpeed(boredSpeedSlider.getValue() );
-				newCell.setRiproductionEnergy(riproductionEnergySlider.getValue() );
-				newCell.setHungrySpeed(hungrySpeedSlider.getValue() );
-				newCell.setHornySpeed(hornySpeedSlider.getValue() );
-				newCell.setScarySpeed(scarySpeedSlider.getValue() );
-				newCell.setAgeFactor(ageFactorSlider.getValue()/100 );
-				*/
 		for(int i=0;i< multiplierSlider.getValue()+1;i++)
 		{
 				Dna ZlifeDna = new Dna();
@@ -162,7 +163,9 @@ public class JFrameNewCell extends JFrame {
 			int choose = cellChooser.getSelectedIndex();
 			Zlife newCell;
 			Zretador newZretador;
-			
+			/*
+			 * Choosing the right Zlifes type: ZLife or Zredator?
+			 */
 			if(choose==0)
 			{
 					newCell = new Zlife( Game.getDimension(), 
@@ -211,9 +214,12 @@ public class JFrameNewCell extends JFrame {
 				} 
 			});
 		
+		//ADD PANELS
 		add(north,BorderLayout.NORTH);
 		add(dnaPanel,BorderLayout.CENTER);
 		add(south,BorderLayout.SOUTH);
+		
+		//ADD ICON
 		 this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
 	        		(this.getClass().getResource("icon_alpha_48x48.gif")));
 		
@@ -223,6 +229,7 @@ public class JFrameNewCell extends JFrame {
 	{
 		nameLabel=new JLabel("Name");
 		nameField = new JTextField(15);
+		nameField.setText("New Name");
 		north.add(nameLabel);
 		north.add(nameField);
 		
@@ -235,6 +242,8 @@ public class JFrameNewCell extends JFrame {
 		yLabel= new JLabel("Y");
 		xField = new JTextField(4);
 		yField = new JTextField(4);
+		xField.setText( Integer.toString(100) );
+		yField.setText( Integer.toString(100) );
 		north.add(xLabel);
 		north.add(xField);
 		north.add(yLabel);
@@ -316,7 +325,7 @@ public class JFrameNewCell extends JFrame {
 	private void addEnergySlider()
 	{
 		 final int MIN=0;
-		 final int INIT=70;
+		 final int INIT=25;
 		 final int MAX=100;
 		 JLabel energyLabel=new JLabel("Energy");
 		 energySlider = new JSlider(JSlider.HORIZONTAL,
@@ -336,7 +345,7 @@ public class JFrameNewCell extends JFrame {
 	private void addMaxEnergySlider()
 	{
 		 final int MIN=10;
-		 final int INIT=100;
+		 final int INIT=140;
 		 final int MAX=200;
 		 JLabel maxEnergyLabel=new JLabel("Max Energy");
 		 maxEnergySlider = new JSlider(JSlider.HORIZONTAL,
@@ -356,7 +365,7 @@ public class JFrameNewCell extends JFrame {
 	private void addHornyEnergySlider()
 	{
 		 final int MIN=0;
-		 final int INIT=90;
+		 final int INIT=75;
 		 final int MAX=200;
 		 JLabel hornyEnergyLabel=new JLabel("Horny Energy");
 		 hornyEnergySlider = new JSlider(JSlider.HORIZONTAL,
@@ -376,7 +385,7 @@ public class JFrameNewCell extends JFrame {
 	private void addHungryEnergySlider()
 	{
 		 final int MIN=0;
-		 final int INIT=30;
+		 final int INIT=60;
 		 final int MAX=200;
 		 JLabel hungryEnergyLabel=new JLabel("Hungry Energy");
 		 hungryEnergySlider = new JSlider(JSlider.HORIZONTAL,
@@ -416,7 +425,7 @@ public class JFrameNewCell extends JFrame {
 	private void addMetabolismSlider()
 	{
 		 final int MIN=1;
-		 final int INIT=2;
+		 final int INIT=7;
 		 final int MAX=50;
 		 JLabel metabolismLabel=new JLabel("Metabolism");
 		 metabolismSlider = new JSlider(JSlider.HORIZONTAL,
@@ -521,7 +530,7 @@ public class JFrameNewCell extends JFrame {
 	private void addScarySpeedSlider()
 	{
 		 final int MIN=0;
-		 final int INIT=100;
+		 final int INIT=75;
 		 final int MAX=100;
 		 JLabel scarySpeedLabel=new JLabel("Scary Speed");
 		 scarySpeedSlider = new JSlider(JSlider.HORIZONTAL,
@@ -583,7 +592,7 @@ public class JFrameNewCell extends JFrame {
 	private void addMultiplierSlider()
 	{
 		 final int MIN=0;
-		 final int INIT = 5;
+		 final int INIT = 35;
 		 final int MAX=60;
 		 JLabel multiplierLabel=new JLabel("Zlife Number");
 		 

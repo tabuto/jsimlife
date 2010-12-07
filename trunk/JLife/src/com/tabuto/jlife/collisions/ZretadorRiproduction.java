@@ -36,7 +36,17 @@ import com.tabuto.jenetic.Dna;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Zretador;
 
-
+/**
+ * Class extends CollisionDetector to perform a collisionAction between
+ * Zredator Group's elements. When an Horny Zlifes meets another one, born a new ZLife
+ * with a merged DNA of its parent.
+ * 
+ * @see Dna
+ * @see Gene
+ * 
+ * @author tabuto83
+ *
+ */
 public class ZretadorRiproduction extends CollisionDetector{
 	
 	/**
@@ -45,6 +55,10 @@ public class ZretadorRiproduction extends CollisionDetector{
 	private static final long serialVersionUID = -1171546078549060228L;
 	public JLife jlc;
 	//Constructor
+	/**
+	 * Constructor
+	 * @param sp1 Zredator Group
+	 */
 	 public ZretadorRiproduction(Group<Zretador> sp1, JLife j)
 	 {
 		 super(sp1);
@@ -52,6 +66,9 @@ public class ZretadorRiproduction extends CollisionDetector{
 	 }
 	
 	 //Override CollisionAction
+	 /**
+	  * Collision Action to perform the reproduction action
+	   */
 	 public void CollisionAction(int s1, int s2)
 	  {
 		//Cast to class extends Sprite 
@@ -84,6 +101,7 @@ public class ZretadorRiproduction extends CollisionDetector{
 				cell2.live();
 				
 				}
+		
 		
 	  }
 		

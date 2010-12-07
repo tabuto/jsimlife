@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 06/Dic/2010 20.49.46
 * Titolo: JLifeStatistic.java
-* Versione: 0.1.10.3 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -240,7 +240,8 @@ public class Statistic extends TimerTask implements Observer {
 	 */
 	public void setGame(JLife game)
 	{
-		this.Game = game;
+		Game = game;
+		List = Game.groupList;
 	}
 
 	@Override

@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 29/nov/2010 17.31.59
 * Titolo: EatingCollision.java
-* Versione: 0.1.9 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -35,7 +35,12 @@ import com.tabuto.j2dgf.collision.CollisionDetector;
 import com.tabuto.jlife.Seed;
 import com.tabuto.jlife.Zlife;
 
-
+/**
+ * Class extends CollisionDetector to perform a collisionAction between
+ * Zlifes and seed. When a Zlifes eates seed, its energy level grow up to max.
+ * @author tabuto83
+ *
+ */
 public class EatingCollision extends CollisionDetector{
 	
 	 /**
@@ -43,6 +48,11 @@ public class EatingCollision extends CollisionDetector{
 	 */
 	private static final long serialVersionUID = -6009905497615581521L;
 	
+	/**
+	 * COnstructor
+	 * @param sp1 Zlifes Group
+	 * @param sp2 Seed Group
+	 */
 	public EatingCollision(Group<Zlife> sp1, Group<Seed> sp2)
 	 {
 		 super(sp1,sp2);
@@ -50,6 +60,9 @@ public class EatingCollision extends CollisionDetector{
 		 this.setDistance(100);
 	 }
 	 //Override CollisionAction
+	/**
+	 * Collision Action to perform the eating collision action
+	 */
 	 public void CollisionAction(int s1, int s2)
 	  {
 		//Cast to class extends Sprite 

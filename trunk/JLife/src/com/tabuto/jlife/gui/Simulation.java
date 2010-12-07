@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 02/dic/2010 18.38.01
 * Titolo: JLifeCanvas.java
-* Versione: 0.1.10 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -51,7 +51,14 @@ import com.tabuto.jlife.Seed;
 
 
 
-
+/**
+ * Class extends J2DCanvas Panel, its duty is to draw the Game drawable stuff
+ * Implements a mouse listener to allow user select a cell
+ * @author tabuto83
+ * 
+ * @see J2DCanvasPanel
+ *
+ */
 public class Simulation extends J2DCanvasPanel implements Serializable,MouseListener{
 	
 	/**
@@ -76,14 +83,21 @@ public Simulation(Dimension d,JLife g)
 	
 	}
 
-
+/**
+ * Create a new JFrameNewCell
+ * @see JFrameNewCell
+ */
 public void addCell()
 {
 	JFrameNewCell newCellFrame = new JFrameNewCell(Game);
 	newCellFrame.pack();
 	newCellFrame.setVisible(true);
 }
-     											
+     		
+/**
+ * Show a simple add seed dialog
+ * @see Seed
+ */
 public void addSeed()
 {
 	final JFrame addSeedDialog = new JFrame("Create Seed");
@@ -149,14 +163,6 @@ public void addSeed()
 
 
 
-/*
-protected void drawSprite(Graphics g)
-{
-
-				this.Game.drawStuff(g);
-
-}
-*/
 
 
 //Return the File Name to save the GAme

@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 02/dic/2010 15.24.07
 * Titolo: JLifeLeftControlPanel.java
-* Versione: 0.1.10 Rev.a:
+* Versione: 0.1.11 Rev.a:
 */
 
 
@@ -41,7 +41,11 @@ import javax.swing.JButton;
 
 import com.tabuto.j2dgf.gui.J2DControlPanel;
 
-
+/**
+ * SImple panel shows some control: Add New Cell or Add Seed
+ * @author tabuto83
+ *
+ */
 public class JLifeLeftControlPanel extends J2DControlPanel implements Observer {
 
 	/**
@@ -62,6 +66,8 @@ public class JLifeLeftControlPanel extends J2DControlPanel implements Observer {
 	{
 		 JButton AddCell = new JButton("New Zlife");
 		 this.add(AddCell);
+		 
+		 //CALL The Game method addCell that shows the JFrameNewCell
 		 AddCell.addActionListener(new ActionListener()
 			{
  			public void actionPerformed( ActionEvent action )
@@ -71,7 +77,7 @@ public class JLifeLeftControlPanel extends J2DControlPanel implements Observer {
 			});
 		 
 		 
-		 
+		 //CALL The Game method addCell that shows ta simple add Seed Dialog
 		 JButton AddEat = new JButton("New Seed");
 		 AddEat.addActionListener(new ActionListener()
 			{

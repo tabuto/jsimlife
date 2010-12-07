@@ -1,0 +1,36 @@
+NOTICE 
+
+This product optionally includes parts of software developed under other licenses and by other organizations and people.
+If you have any questions regarding access to the third party source code or binaries, please contact tabuto83@gmail.com.
+
+
+JDOM 
+
+Provides a complete, Java-based solution for accessing, manipulating, and outputting XML data from Java code.
+
+JDOM is available in binary and source form from:
+http://www.jdom.org/
+
+****************************************************************************
+
+JChart2D
+
+JChart2D is an minimalistic realtime charting library published under the OSI approved GNU LESSER GENERAL PUBLIC LICENSE. 
+It is designed for displaying multiple traces consisting of tracepoints. 
+JChart2D is centered around a single configureable swing widget: the Chart2D. 
+It is a JComponent one can add to a java swing user interface. 
+Therefore basic knowledge of java awt and swing and the information provided on this site is helpful. 
+If no basic knowledge of swing and awt is given, the example code will give a quick entry as well. 
+
+JDOM is available at:
+http://jchart2d.sourceforge.net/
+
+****************************************************************************
+
+J2DGF
+The J2DGAMEFRAMEWORK provides the necessary classes to implements a simple 2D Game in a window enviroment. 
+J2DGF is released under the GNU GPL Lesser license.
+
+J2DGF is available at:
+http://code.google.com/p/j2dgf/
+
