@@ -3,6 +3,51 @@
 
 = Changelog =
 
+== JLife v.1.11 MILESTONE == 
+ * Reorder Code
+ * Zlifes changes direction when collide if scary
+ * Fix Bug: Statistic show now right values of a Loaded Game
+ * Change initial Zlifes param into add New Cell dialog to improve user's experience
+
+
+== JLife v.1.10.3 ==
+ * Add JFrame icon to JFrameStatistic and JFrameNewCell
+ * The JFrameStatistic now show several chart choosed using a JComboBox
+ * Using JCharts2D library;
+ * Now Statistic auto update info into JRightControlPanel using a Timer; 
+ * Add a JFrameStatistic class to draw chart; 
+ * Add a statistic package;
+
+
+== JLife v.1.10.2 ==
+ * Zlife spend more energy if faster!
+ * Zredator eating now not necessary killing zlife!!
+
+== JLife v.0.1.10.1 ==
+ * JLifeStatistic add Subtotal
+ * JLifeStatistic fix bug
+
+== JLife v.0.1.10 ==
+ * JLife class has now a Vector Group List to unify all the sprite and all the group in one object;
+ * JLife getActualCellCount use the new VectorGroup to calculate the Sprites number;
+ * JLifeStatistic is now able to manage a calculate statistic using the Vector Group List
+ * JLifeRightControlPanel is updated to manage the updated JLifeStatistic class
+ * Fix some IndexOutOfBoundsException and a lot of minor bug
+
+== JLife v.0.1.9.1 ==
+ * Add Zredator type of ZLife
+ * Update AddCell Panel
+ * Fix Bug that set zero the Zlife's speed 
+ * Zlife transform to seed after die
+ * Fix a lot of small bug
+
+
+
+== JLife v.0.1.9 ==			
+ * Auto Update position in JLifeShowZlife
+ * ADD Statistical Data View
+ * ADD a Floating ShowZlifePanel Information
+
 == JLife v.0.1.8.2 ==
 
  * Auto Update position in JLifeShowZlife
