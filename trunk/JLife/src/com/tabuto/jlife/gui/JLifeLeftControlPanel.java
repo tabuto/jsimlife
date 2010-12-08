@@ -43,9 +43,13 @@ import com.tabuto.j2dgf.gui.J2DControlPanel;
 
 /**
  * SImple panel shows some control: Add New Cell or Add Seed
+ *
  * @author tabuto83
+ * @deprecated Using Toolbar now
+ *
  *
  */
+@Deprecated
 public class JLifeLeftControlPanel extends J2DControlPanel implements Observer {
 
 	/**

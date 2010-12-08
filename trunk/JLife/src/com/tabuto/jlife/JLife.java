@@ -286,6 +286,7 @@ public class JLife extends Game2D implements Serializable,Observer {
 		cm.addCollision(eating);
 		cm.addCollision(zretadorEating);
 		//cm.start();
+		//activate();
 	}
 	
 	/**
@@ -298,11 +299,15 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 */
 	public void reset()
 	{
+		deactivate();
 		for(int i=0;i<groupList.size();i++)
 			groupList.get(i).clear();
 		
+		seedsGroup.clear();
+		
 		setChanged();
 		notifyObservers("CountChange");
+		activate();
 	}
 	
 	/**

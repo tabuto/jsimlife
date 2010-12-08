@@ -30,25 +30,36 @@
 
 package com.tabuto.jlife.gui;
 
+
+
+
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSlider;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+
 import com.tabuto.jenetic.Dna;
 import com.tabuto.jlife.JLife;
 import com.tabuto.jlife.Zlife;
 import com.tabuto.jlife.Zretador;
+
 
 
 /**
@@ -56,7 +67,7 @@ import com.tabuto.jlife.Zretador;
  * @author tabuto83
  *
  */
-public class JFrameNewCell extends JFrame {
+public class JFrameNewCell extends JFrame implements ActionListener {
 	
 	//private Game references
 
@@ -66,7 +77,7 @@ public class JFrameNewCell extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private final JLife Game;
 	//COMPONENT
-	JPanel north,dnaPanel,south;
+	JPanel north,dnaPanel,south,east;
 	
 	JLabel nameLabel,xLabel,yLabel,radiusLabel,dnaParamLabel,energyLabel;
 	JTextField nameField, xField, yField;
@@ -80,6 +91,9 @@ public class JFrameNewCell extends JFrame {
 	
 	JComboBox cellChooser;
 	
+	JTextArea description;
+	JScrollPane descriptionScroll;
+	
 	/**
 	 * Build a JFrameNewCell
 	 * @param game Game where insert the new ZLife
@@ -89,23 +103,27 @@ public class JFrameNewCell extends JFrame {
 		super("New Cell");
 		Game = game;
 		
-		//ADD PANELS
+		//INIT PANELS
 		north = new JPanel();
 		dnaPanel = new JPanel();
 		south = new JPanel();
+		east = new JPanel();
 		
 		setLayout( new BorderLayout());
 		//setPreferredSize(new Dimension(460,700));
 		
+		//INIT BUTTON
 		JButton okButton = new JButton("OK");
 		JButton cancelButton = new JButton("Cancel");
 		
+		//ADD NORTH COMPONENT
 		north.setLayout( new FlowLayout(FlowLayout.LEFT));
 		addNameField();
 		addXYField();
 		addColorChooser();
 		addCellChooser();
 		
+		//ADD DNA PANEL COMPONENT
 		dnaPanel.setLayout( new GridLayout(0,4,5,5));
 		addRadiusSlider();
 		addDnaParamSlider();
@@ -125,9 +143,25 @@ public class JFrameNewCell extends JFrame {
 		
 		addMultiplierSlider();
 		
+		//ADD SOUTH COMPONENT
 		south.setLayout( new FlowLayout(FlowLayout.LEFT));
 		south.add(okButton);
 		south.add(cancelButton);
+		
+		//INIT DESCRIPTION
+		description = new JTextArea();
+		description.setEditable(false);
+		description.setPreferredSize(new Dimension(170,300) );
+		description.setLineWrap(true);
+		description.setWrapStyleWord(true);
+		Border border = BorderFactory.createBevelBorder(BevelBorder.LOWERED ); 
+		description.setBorder(border);
+		//descriptionScroll = new JScrollPane(description);
+		//descriptionScroll.setPreferredSize(new Dimension(170,300));
+		//east.add(descriptionScroll);
+		
+		//ADD EAST COMPONENT
+		east.add(description);
 		
 		/*
 		 * When the okButton pressed, read the JSlider values and create a new DNA
@@ -206,6 +240,7 @@ public class JFrameNewCell extends JFrame {
 				} 
 			});
 		
+		//WHEN CANCEL BUTTON PRESSED EXIT
 		cancelButton.addActionListener(new ActionListener()
 		   {
 			public void actionPerformed(ActionEvent actionEvent) 
@@ -214,15 +249,19 @@ public class JFrameNewCell extends JFrame {
 				} 
 			});
 		
-		//ADD PANELS
+		//ADD PANELS TO THE JFRAME
 		add(north,BorderLayout.NORTH);
 		add(dnaPanel,BorderLayout.CENTER);
+		add(east,BorderLayout.EAST);
 		add(south,BorderLayout.SOUTH);
 		
 		//ADD ICON
 		 this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-	        		(this.getClass().getResource("icon_alpha_48x48.gif")));
+	        		(this.getClass().getResource("icon/icon_alpha_48x48.gif")));
 		
+		//FIRST ZLIFE DESCRIPTION
+		 updateDescriptionPanel("Zlife");
+		 
 	}
 	
 	private void addNameField()
@@ -616,7 +655,40 @@ public class JFrameNewCell extends JFrame {
 		
 		cellChooser = new JComboBox(choose);
 		cellChooser.setSelectedIndex(0);
+		cellChooser.addActionListener(this);
 		north.add(cellChooser);
 
+	}
+
+	//WHEN A CELL CHOOSED UPDATE DESCRIPTION
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		cellChooser = (JComboBox)e.getSource();
+        String choosedCell = (String)cellChooser.getSelectedItem();
+        updateDescriptionPanel(choosedCell);
+		
+	}
+
+	//UPDATE DESCRIPTION METHOD
+	/**
+	 * Set the description JTextArea using the String Parameter
+	 */
+	private void updateDescriptionPanel(String choosedCell) {
+		
+		if (choosedCell.equalsIgnoreCase("Zlife"))
+		{
+			
+			description.setText(Zlife.getDescription());
+			
+		}
+		
+		if (choosedCell.equalsIgnoreCase("Zretador"))
+		{
+			
+			description.setText(Zretador.getDescription());
+		}
+		
+		description.setCaretPosition(0);
+		
 	}
 }

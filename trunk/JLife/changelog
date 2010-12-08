@@ -1,3 +1,16 @@
+JLife v.1.12
+Add JLifeToolbar as a iconed JToolbar;
+Remove JLifeLeftControlPanel;
+BottomPanel show now only the cell count number;
+Zlife and Zretador class has now a short friendly description;
+JFrameNewCell show a short summary of the selected Zlife's type;
+Add a preferences Frame to save and set some JSimLife's parameter;
+Add the Step feature;
+Fix a lot of small bug.
+
+
+JLife v.1.11.1
+Bufix JLife setEnergy
 
 JLife v.1.11 MILESTONE
 Reorder Code

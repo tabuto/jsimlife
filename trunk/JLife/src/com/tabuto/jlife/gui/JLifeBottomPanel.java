@@ -30,24 +30,38 @@
 
 package com.tabuto.jlife.gui;
 
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 import com.tabuto.j2dgf.gui.J2DBottomPanel;
+import com.tabuto.jlife.JLife;
 
 
 @SuppressWarnings("serial")
 public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
+
+	 static JLife game;
+	 private JTextField CountLabel;
+	 private Border border;
 	
-	public JLifeBottomPanel(Dimension d)
+	public JLifeBottomPanel( Dimension d, JLife game)
 	{
 		super(d);
-		addContent();
+		this.game = game;
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		addCountLabel();
 	}
 
+	@Deprecated
 	protected void addContent()
 	{
 			JLabel StateBar = new JLabel();
@@ -56,9 +70,40 @@ public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 	}
 	
 
-	@Override
-	public void update(Observable arg0, Object arg1) {
+	private void addCountLabel()
+	{
+		CountLabel = new JTextField(4);
+		CountLabel.setToolTipText("Actual Cells Number");
+		CountLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		CountLabel.setEditable(false);
+		border = BorderFactory.createBevelBorder(BevelBorder.LOWERED ); 
+		CountLabel.setBorder(border);
+		CountLabel.setText(Integer.toString(0));
+		add(CountLabel);
+	}
 	
+	public void setGame(JLife g)
+	{
+		game = g;
+	}
+	
+	private void setCellCount()
+	{
+		CountLabel.setText(  Integer.toString(game.getActualCellCount() ) );
+	}
+	
+	@Override
+	public void update(Observable arg0, Object arg) {
+	
+
+		if (arg instanceof String)
+		{
+			String message = (String) arg;
+			if(message.equalsIgnoreCase("CountChange"))
+				{ 
+				setCellCount();
+				}
+		}
 		
 	}
 }

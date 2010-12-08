@@ -95,7 +95,7 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		
 		//ADD ICON
 		 this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-	        		(this.getClass().getResource("icon_alpha_48x48.gif")));
+	        		(this.getClass().getResource("icon/icon_alpha_48x48.gif")));
 	}
 	
 	//Add and init component
