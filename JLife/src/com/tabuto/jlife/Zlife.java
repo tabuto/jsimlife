@@ -233,6 +233,19 @@ public class Zlife extends Sprite implements Serializable{
 	}
 	
 	/**
+	 * @return a String with a brief user friendly Zlife's description 
+	 */
+	public static String getDescription()
+	{
+		return "Zlife is a simple artificial life's form. It live its life" +
+				"crossing for 4 Life State: Bored, Horny, Scary and Hungry." +
+				"\nIt change its state when energy is under/over certain values.\n" +
+				"Its energy decrease when it moves and increase when it eats." +
+				"Every change state its LifeCycle decreases, and when it turn to zero" +
+				"it die.";
+	}
+	
+	/**
 	 * @return the dnaParam
 	 * @see {@link Dna#getParam()}
 	 */
@@ -648,7 +661,11 @@ public class Zlife extends Sprite implements Serializable{
 	 */
 	public void setEnergy(double energy) 
 	{
-		if(energy>=0 && energy<= this.getMaxEnergy() )
+		if(energy<0)
+			energy = 0;
+		if(energy>this.getMaxEnergy())
+			energy = this.getMaxEnergy();
+		
 			this.energy = energy;
 	}
 

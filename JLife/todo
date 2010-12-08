@@ -1,4 +1,17 @@
 
+TODO NEXT
+Add Zetatron with Neural Network brain IA
+
+TODO on version 0.1.12 DONE (next release)
+Insert a ToolBar with icon buttons: new,save,exit, addCell,addSeed, chart
+Delete leftControlPanel
+In the right controlPanel only a statistical view
+In the bottom panel only a cell count with tooltip
+Add a user friendly Description on a ZLife's class
+Show a description into JFRame new cell for each Zlifes type
+Fix the load game bug when after click new game!
+
+
 TODO on version 1.0
 
 Add DNA editor (edit, save, load)

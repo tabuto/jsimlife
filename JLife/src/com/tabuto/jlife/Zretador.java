@@ -63,6 +63,14 @@ public class Zretador extends Zlife implements Serializable{
 	}
 
 	
+	public static String getDescription()
+	{
+		return "Zretador is a simple simulation of a Zlifes predators. It looks" +
+				"likes a Zlifes but its meal is Zlifes. When a hungry Zretador meet" +
+				"a ZLife, it steals some energy until its hunger estingueshed." +
+				"\nFor other aspect Zretador live its life exately like a Zlifes!";
+	}
+	
 	@Override
 	public void live()
 	{

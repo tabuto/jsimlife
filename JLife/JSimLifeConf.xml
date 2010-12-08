@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<JSimLife-Preferences>
+  <PanelSize Width="1024" Height="768" />
+  <BackgroundColor R="0" G="0" B="0" />
+  <MaxSpriteNumber Zlifes="250" Zretador="250" Seeds="50" />
+</JSimLife-Preferences>
+

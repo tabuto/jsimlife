@@ -67,8 +67,8 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 	
 	 JLabel CountLabel = new JLabel("Count");
 	 JButton Count = new JButton("Refresh");
-	 JButton Statistic = new JButton("Statistics");
-	 JLabel SelectZlife = new JLabel("Display Info on selected Zlife");
+	 JButton Statistic = new JButton("Refresh Statistics");
+	 JLabel StatisticInfoLabel = new JLabel("Show Statistical Info");
 	 JButton graphButton = new JButton("Charts");
 	 JTextArea ZlifeInfo = new JTextArea();
 	 JScrollPane ZlifeInfoScroll = new JScrollPane(ZlifeInfo);
@@ -95,12 +95,12 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 	protected void addContent()
 	{
 		
-		 this.add(CountLabel);
+		 //this.add(CountLabel);
 		 
-		 this.add(CellCountField);
-		 CellCountField.setEditable(false);
+		 //this.add(CellCountField);
+		 //CellCountField.setEditable(false);
 		 
-		 this.add(SelectZlife);
+		 this.add(StatisticInfoLabel);
 		 
 		ZlifeInfoScroll.setPreferredSize(new Dimension(this.getWidth(), 300));
 		//ZlifeInfo.setLineWrap(true);
@@ -121,7 +121,7 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 		 
 		
 		 this.add(ZlifeInfoScroll);
-		 this.add(graphButton);
+		 //this.add(graphButton);
 		 
 		 /*
 		  * When Statistic button pressed, refresh statistic

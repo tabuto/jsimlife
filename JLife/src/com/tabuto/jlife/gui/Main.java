@@ -40,7 +40,8 @@ public class Main {
 
 	if ( MyUtils.isVersionHigherThan(1.6) )
 	 {
-		JLifeMainWindow main = new JLifeMainWindow();
+		Configuration conf = new Configuration(); 
+		JLifeMainWindow main = new JLifeMainWindow(conf);
 		while(true){main.startNow();}
     }
   

@@ -61,11 +61,13 @@ import com.tabuto.jlife.JLife;
  */
 public class JLifeMainWindow extends JFrame {
 	
+	public Configuration Preferences;
+	
 	private static final long serialVersionUID = 1L;
 	BufferStrategy bs;      //BufferStrategy
-    int W=1024,H=668;       //Window Frame Size
+    int W=1024,H=768;       //Window Frame Size
     Dimension d;            //Dimension of window size
-    private static final String version =" v.0.1.11 BETA";
+    private static final String version =" v.0.1.12";
     private static final String title="JSimLife";
     
     //GAME STATUS VARIABLES
@@ -75,20 +77,24 @@ public class JLifeMainWindow extends JFrame {
     boolean saved = false;
     
     //DECLARE GUI PANELS AND ELEMENTS
-    static JLife Game; //GAME MODEL
-    Simulation panel; //THE PANEL
-    JMenuBar j2dmenubar; 
-    JLifeLeftControlPanel cp_west;
-    JLifeRightControlPanel cp_east;
+    public static JLife Game; //GAME MODEL
+    public Simulation panel; //THE PANEL
+    private JMenuBar j2dmenubar;  //THE MENUBAR
+    public JLifeToolbar toolbar; //THE TOOLBAR
+    //public JLifeLeftControlPanel cp_west;
+    public JLifeRightControlPanel cp_east;
     JLifeBottomPanel bottom;
     JScrollPane scroller;
     JLifeShowZlife ZlifeView; //Frame that let you to view the selected Zlife
     
-    public JLifeMainWindow()
+    public JLifeMainWindow(Configuration conf)
     {
-    	d = new Dimension(W,H);
-    
-    	bottom = new JLifeBottomPanel(d);
+    	Preferences = conf;
+    	//d = new Dimension(W,H);
+    	d = Preferences.getPlayfieldDimension();
+    	this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);
+
+    	
     	j2dmenubar = new JMenuBar();
         setTitle(title + version);
         setSize(d.width,d.height);
@@ -99,17 +105,20 @@ public class JLifeMainWindow extends JFrame {
 		bs = getBufferStrategy();
         setLayout(new BorderLayout());
        
+        //INIT ALL COMPONENT
         newSimulation();
-        bottom.setVisible(true);
+     
+        //ADD the menu
         addMenu();
+        this.setJMenuBar(j2dmenubar);
         
         //ADD ICON TITLE
         this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-        		(this.getClass().getResource("icon_alpha_48x48.gif")));
+        		(this.getClass().getResource("icon/icon_alpha_48x48.gif")));
 
    
-        this.getContentPane().add( bottom, BorderLayout.PAGE_END);
-        this.setJMenuBar(j2dmenubar);
+    
+        
         pack();        
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);       
@@ -135,7 +144,7 @@ public class JLifeMainWindow extends JFrame {
         JMenu filemenu = new JMenu("JSimLife");
         filemenu.setMnemonic('J');
         		//ITEMS
-        				//New
+        				//New ***********************************
     	JMenuItem newSim = new JMenuItem("New");
 		newSim.setMnemonic('N');
 		newSim.addActionListener(new ActionListener()
@@ -146,13 +155,13 @@ public class JLifeMainWindow extends JFrame {
 				}
 		});
 		filemenu.add( newSim );
-        				//Open
+        				//Open ***********************************
 		JMenuItem open = new JMenuItem("Open");
 		open.setMnemonic('O');
 		open.addActionListener(new OpenSimChooser());
 		filemenu.add( open);
 		
-        				//Save
+        				//Save ***********************************
 		JMenuItem save = new JMenuItem("Save");
 		save.setMnemonic('S');
 		save.addActionListener(new ActionListener()
@@ -167,32 +176,43 @@ public class JLifeMainWindow extends JFrame {
 		});
 		filemenu.add( save );
 		
-        				//Save as
+        				//Save as ***********************************
 		JMenuItem saveAs = new JMenuItem("Save As");
 		saveAs.setMnemonic('N');
 		saveAs.addActionListener(new SaveSimChooser());
 		filemenu.add( saveAs );
-        				//EXIT
-        		JMenuItem exit = new JMenuItem("Exit");
-        		exit.setMnemonic('Q');
-        		exit.addActionListener(new ActionListener()
+
+						//PREFERENCES ***********************************
+		JMenuItem preferences = new JMenuItem("Preferences");
+		preferences.setMnemonic('P');
+		preferences.addActionListener(new ActionListener()
+						{
+							public void actionPerformed( ActionEvent action )
+								{ 
+									new JFramePreferences(Preferences);
+								}
+						});
+		filemenu.add( preferences );
+		filemenu.getPopupMenu().setLightWeightPopupEnabled(false);
+		
+        				//EXIT ***********************************
+		JMenuItem exit = new JMenuItem("Exit");
+		exit.setMnemonic('Q');
+		exit.addActionListener(new ActionListener()
 				{
         			public void actionPerformed( ActionEvent action )
-						{
-        					exitSimulation();
-        					
+						{ exitSimulation();
 						}
 				});
         		filemenu.add( exit );
-        		
-         filemenu.getPopupMenu().setLightWeightPopupEnabled(false);
+        filemenu.getPopupMenu().setLightWeightPopupEnabled(false);
 
         	
         // ACTION MENU
         JMenu actionmenu = new JMenu("Action");
         actionmenu.setMnemonic('A');
         		//ITEMS
-        				//START
+        				//START ***********************************
         	JMenuItem start = new JMenuItem("Start");
         	start.setMnemonic('S');
         	start.setAccelerator(KeyStroke.getKeyStroke(
@@ -204,7 +224,7 @@ public class JLifeMainWindow extends JFrame {
 			});
         	actionmenu.add(start);
         		
-        				//STEP
+        				//STEP ***********************************
         	JMenuItem step = new JMenuItem("Step");
         	step.setMnemonic('E');
         	step.setAccelerator(KeyStroke.getKeyStroke(
@@ -219,7 +239,7 @@ public class JLifeMainWindow extends JFrame {
 			);
         	actionmenu.add(step);
         	
-        				//STOP
+        				//STOP ***********************************
         	JMenuItem stop = new JMenuItem("Stop");
         	stop.setMnemonic('T');
         	stop.setAccelerator(KeyStroke.getKeyStroke(
@@ -233,7 +253,7 @@ public class JLifeMainWindow extends JFrame {
     			});
         	actionmenu.add(stop);
         	
-        				//RESET
+        				//RESET ***********************************
         	JMenuItem reset = new JMenuItem("Reset");
         	reset.setMnemonic(KeyEvent.VK_R);
         	reset.setAccelerator(KeyStroke.getKeyStroke(
@@ -253,17 +273,14 @@ public class JLifeMainWindow extends JFrame {
         // ABOUT MENU
         JMenu aboutmenu = new JMenu("About");
         	//ITEMS
-        				//INFO
+        				//INFO ***********************************
     		JMenuItem about = new JMenuItem("Info");
     		about.addActionListener(new ActionListener()
 			{
     			
       	      public void actionPerformed( ActionEvent action )
       	      								{
-      	    	  		JOptionPane.showMessageDialog(null, 
-      	    	  				"JLife "+ version+" is written by tabuto83", 
-      	    	  				"About", 
-      	    	  				JOptionPane.PLAIN_MESSAGE);
+      	    	  new JFrameAbout(version);
       	      								}
       									});
     	aboutmenu.add(about);
@@ -278,8 +295,6 @@ public class JLifeMainWindow extends JFrame {
         j2dmenubar.setIgnoreRepaint(true);
         j2dmenubar.setFocusable(true);
         
-        
-
     }
     
     
@@ -289,28 +304,40 @@ public class JLifeMainWindow extends JFrame {
     	PLAY=true;
     	Game = new JLife(this.d);
     	panel = new Simulation(d,Game); //Declare the DrawingPanel
-    	cp_west = new JLifeLeftControlPanel(d);
+    	panel.setBackgroundColor(Preferences.getBackgroundColor());
+    	toolbar = new JLifeToolbar(this);
+    	//cp_west = new JLifeLeftControlPanel(d);
     	cp_east = new JLifeRightControlPanel(d, panel.Game);
     	ZlifeView= new JLifeShowZlife(panel.Game);
     	scroller = new JScrollPane(panel);
     	scroller.setPreferredSize(new Dimension(600,600));
-    	cp_west.setCanvasPanel(panel);
+    	//cp_west.setCanvasPanel(panel);
+    	bottom = new JLifeBottomPanel(d,Game);
+    	bottom.setVisible(true); 
     	
-    	 cp_west.setVisible(true);
+    	 //cp_west.setVisible(true);
          //cp_west.setCanvasPanel(panel);
          cp_east.setVisible(true);
-         
          panel.setFocusable(true);
+         
+         //ADD PANELS TO THE FRAME
+         this.getContentPane().add(toolbar,BorderLayout.PAGE_START);
          this.getContentPane().add(scroller,BorderLayout.CENTER);
-         this.getContentPane().add( cp_west, BorderLayout.LINE_START);
+         //this.getContentPane().add( cp_west, BorderLayout.LINE_START);
          this.getContentPane().add( cp_east, BorderLayout.LINE_END);
+         this.getContentPane().add( bottom, BorderLayout.PAGE_END);
+         
+         //INIT GAME
          Game.initGame();
+         
+         //ADD GAME OBSERVER
          Game.addObserver(cp_east);
          Game.addObserver(ZlifeView);
+         Game.addObserver(bottom);
     }
     
    
-        
+    //RESET SIMULATION
     public void resetSimulation()
     {
     	if (JOptionPane.showConfirmDialog(this,
@@ -320,12 +347,14 @@ public class JLifeMainWindow extends JFrame {
 				 JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
 	{
     		PLAY=false;this.panel.Game.reset();  
+    		PLAY=true;
 	}
     		else
     	{};
 
     }
     
+    //QUIT SIMULATION
     public void exitSimulation()
     {
     	if (JOptionPane.showConfirmDialog(this,
@@ -348,7 +377,7 @@ public class JLifeMainWindow extends JFrame {
      * OPen a JFileChooser to choose a previously load file
      * and set the new Simulation as the actual simulation
      */
-    private class OpenSimChooser implements ActionListener 
+    public class OpenSimChooser implements ActionListener 
     {
 
         public void actionPerformed(ActionEvent e) 
@@ -371,9 +400,11 @@ public class JLifeMainWindow extends JFrame {
             	panel.Game = JLifeMainWindow.this.Game;
             	ZlifeView.Game = JLifeMainWindow.this.Game;
             	cp_east.setGame( JLifeMainWindow.this.Game);
+            	bottom.setGame(JLifeMainWindow.this.Game);
             	
             	JLifeMainWindow.this.Game.addObserver(cp_east);
             	JLifeMainWindow.this.Game.addObserver(ZlifeView);
+            	JLifeMainWindow.this.Game.addObserver(bottom);
             	}
           	 
           	} catch (Exception ex) {}
@@ -385,7 +416,7 @@ public class JLifeMainWindow extends JFrame {
     /**
      * Open a JFileChooser to Save the actual simulation
      */
-    private class SaveSimChooser implements ActionListener {
+    public class SaveSimChooser implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
           try {
