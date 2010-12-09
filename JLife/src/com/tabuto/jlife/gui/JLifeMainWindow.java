@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 02/dic/2010 15.18.55
+* Date: 09/dic/2010 15.18.55
 * Titolo: JLifeMainWindow.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.12 Rev.a:
 */
 
 
@@ -81,7 +81,6 @@ public class JLifeMainWindow extends JFrame {
     public Simulation panel; //THE PANEL
     private JMenuBar j2dmenubar;  //THE MENUBAR
     public JLifeToolbar toolbar; //THE TOOLBAR
-    //public JLifeLeftControlPanel cp_west;
     public JLifeRightControlPanel cp_east;
     JLifeBottomPanel bottom;
     JScrollPane scroller;
@@ -90,7 +89,6 @@ public class JLifeMainWindow extends JFrame {
     public JLifeMainWindow(Configuration conf)
     {
     	Preferences = conf;
-    	//d = new Dimension(W,H);
     	d = Preferences.getPlayfieldDimension();
     	this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);
 
@@ -306,26 +304,23 @@ public class JLifeMainWindow extends JFrame {
     	panel = new Simulation(d,Game); //Declare the DrawingPanel
     	panel.setBackgroundColor(Preferences.getBackgroundColor());
     	toolbar = new JLifeToolbar(this);
-    	//cp_west = new JLifeLeftControlPanel(d);
+    	
     	cp_east = new JLifeRightControlPanel(d, panel.Game);
     	ZlifeView= new JLifeShowZlife(panel.Game);
     	scroller = new JScrollPane(panel);
     	scroller.setPreferredSize(new Dimension(600,600));
-    	//cp_west.setCanvasPanel(panel);
+    	
     	bottom = new JLifeBottomPanel(d,Game);
     	bottom.setVisible(true); 
     	
-    	 //cp_west.setVisible(true);
-         //cp_west.setCanvasPanel(panel);
-         cp_east.setVisible(true);
-         panel.setFocusable(true);
+        cp_east.setVisible(true);
+        panel.setFocusable(true);
          
-         //ADD PANELS TO THE FRAME
-         this.getContentPane().add(toolbar,BorderLayout.PAGE_START);
-         this.getContentPane().add(scroller,BorderLayout.CENTER);
-         //this.getContentPane().add( cp_west, BorderLayout.LINE_START);
-         this.getContentPane().add( cp_east, BorderLayout.LINE_END);
-         this.getContentPane().add( bottom, BorderLayout.PAGE_END);
+	    //ADD PANELS TO THE FRAME
+	    this.getContentPane().add(toolbar,BorderLayout.PAGE_START);
+	    this.getContentPane().add(scroller,BorderLayout.CENTER);
+	    this.getContentPane().add( cp_east, BorderLayout.LINE_END);
+	    this.getContentPane().add( bottom, BorderLayout.PAGE_END);
          
          //INIT GAME
          Game.initGame();

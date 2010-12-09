@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 16/nov/2010 14.55.28
+* Date: 09/dic/2010 14.55.28
 * Titolo: Configuration.java
-* Versione: 0.1.2 Rev.a:
+* Versione: 0.1.12.1 Rev.a:
 */
 
 
@@ -39,11 +39,8 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -65,16 +62,36 @@ public class Configuration {
 	 */
 	private String PATH="";
 	
+	/**
+	 * The playfield color background
+	 */
 	private Color background;
 	
+	/**
+	 * The playfield Dimension
+	 * @see Dimension
+	 */
 	private Dimension playfield;
 	
+	/**
+	 * Zlifes max number
+	 */
 	private int MAX_ZLIFES;
-	
+	/**
+	 * Zretador max number
+	 */
 	private int MAX_ZRETADOR;
 	
+	/**
+	 * Seeds max number
+	 */
 	private int MAX_SEEDS;
 	
+	/*
+	 * Constructor try to load the JSimLifeConf.xml file, if it does not
+	 * exist, Configuration load the default values and create a new 
+	 * SimLifeConf.xml with JSimLife's default values
+	 */
 	public Configuration()
 	{
 		try{this.load();}
@@ -100,6 +117,9 @@ public class Configuration {
 
 	}
 	
+	/*
+	 * GETTERS FOR THE GAME PARAMETER
+	 */
 	public Color getBackgroundColor(){return background;}
 	public String getLocale(){return this.LOCALE;}
 	public int getMaxSeeds() {return MAX_SEEDS;}
@@ -108,6 +128,10 @@ public class Configuration {
 	public String getPath(){return this.PATH;}
 	public Dimension getPlayfieldDimension(){return this.playfield;}
 	
+	/*
+	 * Read a previously saved SimLifeConf.xml file and
+	 * set the relative values.
+	 */
 	public void load() throws IOException, Throwable
 	{
 		
@@ -137,6 +161,9 @@ public class Configuration {
 	    
 	}
 	
+	/*
+	 * Load the parameter's default values
+	 */
 	public void loadDefaultValues()
 	{
 		setPlayfieldDimension(1024,768);
@@ -150,26 +177,29 @@ public class Configuration {
 		
 	}
 	
+	/*
+	 * Save the current Configuration's parameters into a SimLifeConf.xml file
+	 */
 	public void save()
 	{
 		  Element preferences = new Element("JSimLife-Preferences");
 	      //Document
 	      Document document = new Document(preferences);
 	      
-	      //ELEMENTS 1
+	      //ELEMENTS 1: PanelSize
 	      Element gameSize = new Element("PanelSize");
 	      gameSize.setAttribute("Width", String.valueOf((int)playfield.getWidth()));
 	      gameSize.setAttribute("Height", String.valueOf((int)playfield.getHeight()));
 	      preferences.addContent(gameSize);
 	      
-	      //ELEMENTS 2
+	      //ELEMENTS 2: BackGround Color
 	      Element backgroundColor = new Element("BackgroundColor");
 	      backgroundColor.setAttribute("R", String.valueOf(background.getRed()));
 	      backgroundColor.setAttribute("G", String.valueOf(background.getGreen()));
 	      backgroundColor.setAttribute("B", String.valueOf(background.getBlue()));
 	      preferences.addContent(backgroundColor);
 	      
-	      //ELEMENTS 2
+	      //ELEMENTS 2 MAX SPRITES NUMBER
 	      Element maxZlifes = new Element("MaxSpriteNumber");
 	      maxZlifes.setAttribute("Zlifes", String.valueOf( getMaxZlifes() ));
 	      maxZlifes.setAttribute("Zretador", String.valueOf( getMaxZretador()) );
@@ -192,6 +222,9 @@ public class Configuration {
 		}
 	}
 	
+	/*
+	 * SETTERS FOR THE CONFIGURATION PARAMETERS
+	 */
 	public void setBackgroundColor(Color b){background = b;}
 	public void setLocale(String locale){this.LOCALE=locale;}
 	public void setMaxSeeds(int mAX_SEEDS) {MAX_SEEDS = mAX_SEEDS;}
@@ -200,14 +233,5 @@ public class Configuration {
 	public void setPath(String p){this.PATH = p;}
 	public void setPlayfieldDimension(Dimension d){playfield = d;}
 	public void setPlayfieldDimension(int w, int h){playfield = new Dimension(w,h);}
-
-
-
-
-	
-
-	
-	
-	
 	
 }

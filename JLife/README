@@ -1,27 +1,28 @@
 README
 
-JSimLife v.0.1.11
+JSimLife v.0.1.12.1
 
 #1 How run this Application
 #2 User Guide
 #3 For Developers
 #4 About
-#5 License
 
 #1 How run this Application
-To run this application you need teh Java Runtime Enviroment (JRE) v.6. You can download it at http://www.java.com/it/download/index.jsp.
-Java is a cross platform language:
+To run this application you need the Java Runtime Enviroment (JRE) v.6. You can download it at http://www.java.com/it/download/index.jsp.
+Java is a cross platform language, so you can run this software in every system with JRE.
 
 	Microsoft Windows
- If you are on Windows, just extract in a directory the JSimLifeV0.1.11.zip and to click the JSimLife_WindowsLauncher.bat file or simply double clicking on jar file.
+ If you are on Windows, just extract in a directory the JSimLifeV0.1.12.1.jar and JSimLife_WindowsLauncher.bat file. If double-click on the jar file doesn't work, click on to .bat file. 
 
 	Linux/MacOs
-If  Java Runtime Enviroment (JRE) is already installed on your machine simply extract JSimLifeV0.1.11.zip in a directory and double clicking on the jar file.
+If  Java Runtime Enviroment (JRE) is already installed on your machine simply extract JSimLifeV0.1.12.1.jar file in a directory and double clicking on the jar file.
 
 
 #2 USER GUIDE
-JSimLife it's a simple life simulation, that implemented a Jenetics riproduction of a simple life form called Zlife e Zredator.
-The Zlifes and Predator's Dna contains 17 genes controlling several life parameter:
+JSimLife it's a simple life simulation, that implemented a Jenetics riproduction of a simple life form called Zlife e Zretador.
+You can add they by clicing the "Add A Cell" button on the toolbar. So you can edit the genetic parameter values and observe the evolution.
+
+The Zlifes and Predator's Dna contains infact 17 genes controlling several life parameter:
 
    1. dnaParam: the Dna random parameter simulate Genetics mutation: how change genes when Zlifes are reproducing?
    2. energy: actual Zlife's energy 
@@ -41,7 +42,7 @@ The Zlifes and Predator's Dna contains 17 genes controlling several life paramet
   16. B: the blue color's component of this cell
   17. ageFactor: energy percent subtract to max energy for each life cycle cell spends 
 
-Each Zlife's live it life using 4 life state:
+Each Zlife's (but also Zretador) live its life using 4 life state:
 
     * BORED: when bored the cell moving random until his energy is below the HungryEnergy?. If cell meet some seed, store its position for future meal!! 
 
@@ -55,21 +56,17 @@ When a ZLifes die, it changes in Seed.
 
 The Zredator represent the predator of ZLifes. When they hungry, they hunting Zilfes for eating.
 
-You can add new Zlifes and Zredator's from Zlife Add button, and watch the simulation. You can also select a Zlife's and controlling its actual state and its Dna.
-You can save and load simulation, but remember that the maximum number of ZLife's presents on game at same time is limited to 125!
-You can watch how evolves in time Game's parameter using the "CHART" button.
+You can also select a Zlife's and controlling its actual state and its Dna.
+You can save and load simulation, but remember that the maximum number of ZLife's presents on game at same time is limited to 500!
+You can watch in real time how evolves Game's parameter using the "CHART" button.
+You can edit some Game parameters as the background color of playfield, or the playfield dimension by clicking on the preference item in JSimLife menu.
 
-#3 Developer
+
+#3 Developers
 An help should be great!!! So, read the ToDo wiki at http://code.google.com/p/jsimlife/wiki/ToDo for the future feature I want to implements!
 If you want to join the project contact me at (tabuto83@gmail.com]
 If you want you can download the source code at http://code.google.com/p/jsimlife/source/browse/#svn/trunk/JLife/src/com/tabuto/jlife. 
 N.B. This game use a JDOM library: youu need to import it in your project if you want recompile it!
 
 #4 About
-JSimLife is currently at version 0.1.11 BETA, is developed by tabuto83 under Gnu GPLv3 LESSER license. 
-
-#5 License
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License as published by the Free Software Foundation, either version 3 of the License, ot (at your option) any later version.
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
-You should have received a copy of the GNU Lesser General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
+JSimLife is currently at version 0.1.12.1 BETA, is developed by tabuto83 under MIT license. 

@@ -80,13 +80,15 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 	JPanel north,dnaPanel,south,east;
 	
 	JLabel nameLabel,xLabel,yLabel,radiusLabel,dnaParamLabel,energyLabel;
+	
 	JTextField nameField, xField, yField;
-    JButton okButton, cancelButton, colorButton;
+    
+	JButton okButton, cancelButton, colorButton;
+	
 	JSlider radiusSlider,dnaParamSlider,energySlider,maxEnergySlider;
 	JSlider hornyEnergySlider,hungryEnergySlider,lifeCycleSlider,metabolismSlider;
 	JSlider boredSpeedSlider,riproductionEnergySlider,hungrySpeedSlider;
 	JSlider hornySpeedSlider,scarySpeedSlider,ageFactorSlider, directionSlider;
-	
 	JSlider multiplierSlider;
 	
 	JComboBox cellChooser;
@@ -264,6 +266,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 
 	}
 	
+	//ADD COMPONENT METHODS
+	
 	private void addNameField()
 	{
 		nameLabel=new JLabel("Name");
@@ -289,8 +293,6 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		north.add(yField);
 		
 	}
-	
-
 	
 	private  void addColorChooser()
 	{

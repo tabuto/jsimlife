@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 02/dic/2010 18.38.01
+* Date: 09/dic/2010 18.38.01
 * Titolo: JLifeCanvas.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.12.1 Rev.a:
 */
 
 

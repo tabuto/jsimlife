@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 08/dic/2010 11.24.01
+* Date: 09/dic/2010 11.24.01
 * Titolo: JLifeToolbar.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.1.12.1 Rev.a:
 */
 
 
@@ -43,7 +43,11 @@ import javax.swing.JToolBar;
 import com.tabuto.jlife.statistic.JFrameStatistic;
 import com.tabuto.jlife.statistic.Statistic;
 
-
+/**
+ * Simple toolbar used as a shortcut to execute most common commands
+ * @author user
+ *
+ */
 public class JLifeToolbar extends JToolBar implements ActionListener{ 
 
 	
@@ -55,11 +59,12 @@ public class JLifeToolbar extends JToolBar implements ActionListener{
 	private static final long serialVersionUID = 1L;
 
 
+	/*
+	 * This String variables, identify the command to execute and the
+	 * file name of button icon images
+	 */
 	   	static final private String NEW = "new";
-	
 	   	static final private String EXIT = "close";
-	   	
-	
 	    static final private String RESET = "reset";
 	    static final private String PAUSE = "pause";
 	    static final private String START = "start";
@@ -79,7 +84,10 @@ public class JLifeToolbar extends JToolBar implements ActionListener{
 	
 	}
 	
-	
+	/*
+	 * ADD BUTTONS TO THE TOOLBAR 
+	 * using the makeNavigationButton methods
+	 */
 	protected void addButtons() 
 	{
         JButton button = null;
@@ -141,7 +149,9 @@ public class JLifeToolbar extends JToolBar implements ActionListener{
 	}
 
 
-	
+	/*
+	 * Add a JButton with an icon image
+	 */
 	protected JButton makeNavigationButton(String imageName,
             String actionCommand,
             String toolTipText,
@@ -171,7 +181,11 @@ public class JLifeToolbar extends JToolBar implements ActionListener{
 
 }
 
-
+	/*
+	 * Perform the action passed by the ActionEvent using the String name above
+	 * (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		

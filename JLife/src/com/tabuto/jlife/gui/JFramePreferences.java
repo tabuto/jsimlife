@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 08/dic/2010 17.33.29
 * Titolo: JFramePreferences.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.1.12.1 Rev.a:
 */
 
 
@@ -37,8 +37,6 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
@@ -47,7 +45,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
+/**
+ * Simple JFrame to show the editable JSimLife parameters.
+ * This parameter are first loaded from SimLifeConf.xml, and after 
+ * saved.
+ * @author tabuto83
+ *
+ */
 public class JFramePreferences extends JFrame{
 	
 	/**
@@ -66,6 +70,10 @@ public class JFramePreferences extends JFrame{
 	
 	private Configuration config;
 	
+	/*
+	 * The constructor take as argument the JSimLife configuration,
+	 * to show, and save the game parameters.
+	 */
 	public JFramePreferences(Configuration c)
 	{
 		super("Preferences");
@@ -73,6 +81,11 @@ public class JFramePreferences extends JFrame{
 		setPreferredSize(new Dimension(450,250));
 		setLayout( new BorderLayout());
 		
+		/*
+		 * NORTH PANEL has a GridLayout to divide panel into two row.
+		 * If Parameter has more than one field or label, you must wrap they
+		 * into a panel. See the setConfigValue() method to see how.
+		 */
 		north = new JPanel();
 		north.setLayout( new GridLayout(0,2,5,5));
 		
@@ -136,7 +149,7 @@ public class JFramePreferences extends JFrame{
 	
 	
 	
-	
+	//METHODS TO SET AND ADD LABEL END FIELD PARAMETERS 
 	
 	protected void setConfigValues() 
 	{
@@ -153,10 +166,6 @@ public class JFramePreferences extends JFrame{
 		
 	}
 
-
-
-
-
 	private void addPanelSizeComponents()
 	{
 		JPanel subGroup = new JPanel();
@@ -172,7 +181,6 @@ public class JFramePreferences extends JFrame{
 		
 		north.add(subGroup);
 	}
-	
 	
 	private void addColorButton()
 	{
