@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 06/dic/2010 15.29.36
+* Date: 09/dic/2010 15.29.36
 * Titolo: JLifeBottomPanel.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.12.1 Rev.a:
 */
 
 
@@ -45,7 +45,9 @@ import javax.swing.border.Border;
 import com.tabuto.j2dgf.gui.J2DBottomPanel;
 import com.tabuto.jlife.JLife;
 
-
+/**
+ * Simple Class to show a bottom panel showing game status values
+ */
 @SuppressWarnings("serial")
 public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 
@@ -53,6 +55,10 @@ public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 	 private JTextField CountLabel;
 	 private Border border;
 	
+	/*
+	 * The constructor takes a Dimension and a Game parameter to know its size
+	 * and to show the Game values
+	 */
 	public JLifeBottomPanel( Dimension d, JLife game)
 	{
 		super(d);
@@ -70,6 +76,9 @@ public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 	}
 	
 
+	/*
+	 * Add a count label
+	 */
 	private void addCountLabel()
 	{
 		CountLabel = new JTextField(4);
@@ -87,11 +96,20 @@ public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 		game = g;
 	}
 	
+	/*
+	 * Set the actual cell count into the CountLabel
+	 */
 	private void setCellCount()
 	{
 		CountLabel.setText(  Integer.toString(game.getActualCellCount() ) );
 	}
 	
+	/*
+	 * JLifeBottomPanel is an observer of Game, when JLife(Game2d) change his count,
+	 * JLIfeBottomPanel update the actual cell count
+	 * (non-Javadoc)
+	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
+	 */
 	@Override
 	public void update(Observable arg0, Object arg) {
 	

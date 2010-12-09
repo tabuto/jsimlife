@@ -22,7 +22,7 @@ It is a JComponent one can add to a java swing user interface.
 Therefore basic knowledge of java awt and swing and the information provided on this site is helpful. 
 If no basic knowledge of swing and awt is given, the example code will give a quick entry as well. 
 
-JDOM is available at:
+JChart2D is available at:
 http://jchart2d.sourceforge.net/
 
 ****************************************************************************

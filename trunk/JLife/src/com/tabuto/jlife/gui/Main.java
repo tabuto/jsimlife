@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 08/nov/2010 15.46.39
+* Date: 09/dic/2010 15.46.39
 * Titolo: Main.java
-* Versione: 0.1.5 Rev.a:
+* Versione: 0.1.12.1 Rev.a:
 */
 
 
@@ -33,15 +33,21 @@ package com.tabuto.jlife.gui;
 import javax.swing.JOptionPane;
 import com.tabuto.util.MyUtils;
 
-
+//GAME ENTRY POINT
 public class Main {
 	
 	public static void main(String[] args) {
 
+		/*
+		 * Check Version routine
+		 */
 	if ( MyUtils.isVersionHigherThan(1.6) )
 	 {
+		//LOAD CONFIGURATION
 		Configuration conf = new Configuration(); 
+		//INSTANCIATE NEW GAME
 		JLifeMainWindow main = new JLifeMainWindow(conf);
+		//START THE GAME
 		while(true){main.startNow();}
     }
   

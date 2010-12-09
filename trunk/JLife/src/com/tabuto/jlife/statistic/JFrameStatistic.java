@@ -91,7 +91,7 @@ public class JFrameStatistic extends JFrame implements ActionListener{
 		this.setSize( 300, 200 );
 	    //Set the JFrame Icon
 		this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-	        		(this.getClass().getResource("../gui/icon/icon_alpha_48x48.gif")));
+	        		(this.getClass().getResource("icon_alpha_48x48.gif")));
 		
 		this.setVisible( true );
 

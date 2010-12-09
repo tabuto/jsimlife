@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 02/dic/2010 15.26.42
+* Date: 09/dic/2010 15.26.42
 * Titolo: JLifeRightControlPanel.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.12.1 Rev.a:
 */
 
 
@@ -46,12 +46,11 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import com.tabuto.j2dgf.gui.J2DControlPanel;
 import com.tabuto.jlife.JLife;
-import com.tabuto.jlife.statistic.JFrameStatistic;
 import com.tabuto.jlife.statistic.Statistic;
 
 
 /**
- * SImple panel shows some control:Statistical view, cell count and Charts
+ * SImple panel shows some Statistical info;
  * @author tabuto83
  *
  */
@@ -75,6 +74,11 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 	 JTextField CellCountField = new JTextField(4);
 	
 	Statistic jls;
+	
+	/*
+	 * The constructor copy a reference to the actual Game, and update
+	 * using a timer the statistical info.
+	 */
 	public JLifeRightControlPanel(Dimension d, JLife game)
 	{
 		super(d);
@@ -87,42 +91,15 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 		statTask = new StatisticTask();
 		timer.schedule( statTask, 500,1500 );
 		
-		
-		
 	}
 
 	//Add component to this panel
 	protected void addContent()
 	{
-		
-		 //this.add(CountLabel);
-		 
-		 //this.add(CellCountField);
-		 //CellCountField.setEditable(false);
-		 
 		 this.add(StatisticInfoLabel);
 		 
 		ZlifeInfoScroll.setPreferredSize(new Dimension(this.getWidth(), 300));
-		//ZlifeInfo.setLineWrap(true);
-		
-		/*
-		 * When graphButton pressed create a new JFRameStatistic view
-		 */
-		graphButton.addActionListener(new ActionListener()
-			{
-	 			public void actionPerformed( ActionEvent action )
-						{
-	 				new JFrameStatistic(jls);
-	 				//JFrameStatistic newStatisticCharts = new JFrameStatistic(jls);
-	 				//newStatisticCharts.pack();
-	 				//newStatisticCharts.setVisible(true);
-						}
-				});
-		 
-		
 		 this.add(ZlifeInfoScroll);
-		 //this.add(graphButton);
-		 
 		 /*
 		  * When Statistic button pressed, refresh statistic
 		  */

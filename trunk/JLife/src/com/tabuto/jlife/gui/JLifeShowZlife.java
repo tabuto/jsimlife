@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 02/dic/2010 22.40.29
+* Date: 09/dic/2010 22.40.29
 * Titolo: JLifeShowZlife.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.12.1 Rev.a:
 */
 
 
@@ -77,6 +77,7 @@ public class JLifeShowZlife extends JFrame implements Observer {
 	JScrollPane ZlifeDnaScroll = new JScrollPane(ZlifeDna);
 	
 	private JPanel north,dnaPanel,south;
+	
 	
 	public JLifeShowZlife(Game2D game)
 	{

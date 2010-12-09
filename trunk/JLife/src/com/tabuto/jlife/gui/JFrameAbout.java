@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 07/dic/2010 23.07.36
+* Date: 09/dic/2010 23.07.36
 * Titolo: JFrameAbout.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.1.12.1 Rev.a:
 */
 
 
@@ -55,12 +55,16 @@ public class JFrameAbout extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	String Version="";
 	
+	String Version="";
 	JPanel viewer,south;
 	BackgroundPanel logoPanel;
 	JTextArea aboutInfo;
 	
+	/**
+	 * Constructor parameters is the actual JSimLife version
+	 * @param version String
+	 */
 	public JFrameAbout(String version)
 	{
 		super("About JSimLife");
@@ -101,7 +105,7 @@ public class JFrameAbout extends JFrame {
 		
 		//ADD ICON TITLE
         this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-        		(this.getClass().getResource("icon_alpha_48x48.gif")));
+        		(this.getClass().getResource("icon/icon_alpha_48x48.gif")));
 		
 		this.pack();
 		this.setVisible(true);
@@ -123,7 +127,7 @@ public class JFrameAbout extends JFrame {
 	
 	/**
 	 * Simple class extends JPanel to show a Image Background
-	 * @author user
+	 * @author tabuto83
 	 *
 	 */
 	class BackgroundPanel extends JPanel
@@ -138,9 +142,9 @@ public class JFrameAbout extends JFrame {
 		  
 	    try
 	    {
-	      image = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("icon/JSimLife-Logo-200x200.png"), "JSimLife-Logo-200x200.png"));
+	      image = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("JSimLife-Logo-200x200.png"), "JSimLife-Logo-200x200.png"));
 	    }
-	    catch (Exception e) { /*handled in paintComponent()*/ }
+	    catch (Exception e) { e.getStackTrace();}
 	    
 	    this.setSize(new Dimension(200,200));
 	    this.setPreferredSize(new Dimension(200,200));
