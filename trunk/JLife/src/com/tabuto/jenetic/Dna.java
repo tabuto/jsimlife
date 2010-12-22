@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 24 Novembre 2010 18.14
 * Titolo: Dna.java
-* Versione: 0.2.2 Rev.a:
+* Versione: 0.2.3 Rev.a:
 */
 
 
@@ -388,14 +388,16 @@ public class Dna implements Serializable{
 		try
 		{
 			  SAXBuilder builder = new SAXBuilder();
-		      Document document = builder.build(new File(fileName+".xml"));
+		      Document document = builder.build(new File(fileName));
 		      
 		      Element root = document.getRootElement();
 		      List children = root.getChildren();
 		      Iterator iterator = children.iterator(); 
 		      
-		      this.setName( root.getAttributeValue("Name") );
-		      this.setParam(Double.parseDouble(root.getAttributeValue("Param") )  );
+		      Element dna = (Element)iterator.next(); 
+		      
+		      this.setName( dna.getAttributeValue("Name") );
+		      this.setParam(Double.parseDouble(dna.getAttributeValue("Param") )  );
 		      while(iterator.hasNext())
 		      {
 		          Element gene = (Element)iterator.next(); 
