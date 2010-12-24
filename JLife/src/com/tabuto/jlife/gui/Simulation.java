@@ -75,9 +75,13 @@ public Simulation(Dimension d,JLife g)
 	super(d);
     Game = g;
 	
+    //ADD a mouse listener to select cells or seeds
 	this.addMouseListener(new MouseAdapter() { 
 	    public void mousePressed(MouseEvent me) { 
 	       ((JLife)Game).selectCell(me.getX(),me.getY(),20);
+	       
+	       Game.selectSeed(me.getX(), me.getY(), 20);
+	    	        
 	    } 
 	  }); 
 	
@@ -124,6 +128,8 @@ public void addSeed()
 	buttonCancel = new JButton("Cancel");
 	fieldX.setText( Integer.toString((int)(Math.random()* this.DIM.getWidth())) );
 	fieldY.setText( Integer.toString((int)(Math.random()* this.DIM.getHeight())) );
+	fieldRadius.setText("50");
+	fieldName.setText("50");
 	addSeedDialog.add(labelName);
 	addSeedDialog.add(fieldName);
 	addSeedDialog.add(labelRadius);

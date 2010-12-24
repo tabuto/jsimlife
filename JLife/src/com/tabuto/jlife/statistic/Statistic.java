@@ -47,7 +47,7 @@ public class Statistic extends TimerTask implements Observer {
 
 	public JLife Game;
 	private Vector<Group<? extends Zlife>> List;
-	public final int GroupNumber=2;
+	public final int GroupNumber=3;
 	
 	//PUBLIC STATISTICAL DATA
 	

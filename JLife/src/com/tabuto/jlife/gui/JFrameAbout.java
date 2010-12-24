@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 09/dic/2010 23.07.36
+* Date: 24/dic/2010 23.07.36
 * Titolo: JFrameAbout.java
-* Versione: 0.1.12.1 Rev.a:
+* Versione: 0.1.12.2 Rev.a:
 */
 
 
@@ -41,7 +41,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
+import javax.swing.JTextPane;
 
 /**
  * Simple JFrame showing Game Logo and other Information
@@ -59,7 +59,7 @@ public class JFrameAbout extends JFrame {
 	String Version="";
 	JPanel viewer,south;
 	BackgroundPanel logoPanel;
-	JTextArea aboutInfo;
+	JTextPane aboutInfo;
 	
 	/**
 	 * Constructor parameters is the actual JSimLife version
@@ -86,10 +86,11 @@ public class JFrameAbout extends JFrame {
 		logoPanel =  new BackgroundPanel();
 		south = new JPanel();
 		
-		aboutInfo = new JTextArea();
+		aboutInfo = new JTextPane();
 		aboutInfo.setBackground(this.getBackground());
+		aboutInfo.setContentType("text/html");
 		aboutInfo.setEditable(false);
-		aboutInfo.setText(this.aboutText());
+		aboutText();
 		viewer.add(aboutInfo);
 		
 		south.setLayout( new FlowLayout(FlowLayout.RIGHT));
@@ -115,13 +116,18 @@ public class JFrameAbout extends JFrame {
 	/**
 	 * @return Info about this Game
 	 */
-	private String aboutText()
+	private void aboutText()
 	{
-		return " JSimLife \n" +
-				"\n Version: " + this.Version + "\n" +
-				"\n Copyright 2010 Francesco di Dio " +
-				"\n\n This Software is released under the MIT licenses. " +
-				"\n\n Visit http://code.google.com/p/jsimlife/";
+		this.aboutInfo.setText(
+		"<span style=\"font-family: Arial; font-weight: bold;\">JSimLife</span><br>"+
+	    "<span style=\"font-family: Arial;\">Version:&nbsp;" + this.Version +"&nbsp; </span><br>"+
+		"<br style=\"font-family: Arial;\">"+
+		"<span style=\"font-family: Arial;\">Copyright&nbsp; © 2010 Francesco di Dio </span><br style=\"font-family: Arial;\">"+
+		"<br style=\"font-family: Arial;\">"+
+		"<span style=\"font-family: Arial;\">This Software is released under the "+
+		"MIT license.</span><br><br>"+
+		"<a style=\"font-family: Arial;\" href=\"http://www.jsimlife.netsons.org/\">http://www.jsimlife.netsons.org/</a><br>"
+		);
 				
 	}
 	

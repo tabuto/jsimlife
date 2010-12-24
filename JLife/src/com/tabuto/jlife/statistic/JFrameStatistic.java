@@ -77,6 +77,8 @@ public class JFrameStatistic extends JFrame implements ActionListener{
 		super("Statistics");
 		GameStatistic = s;
 	
+		setAlwaysOnTop(true);
+		
 		c = this.getContentPane();
 		c.setLayout(new BorderLayout());
 		

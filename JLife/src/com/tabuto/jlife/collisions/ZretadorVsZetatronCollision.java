@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 01/dic/2010 10.19.59
-* Titolo: ZlifeVsZretadorCollision.java
-* Versione: 0.1.11 Rev.a:
+* Date: 24/dic/2010 13.12.00
+* Titolo: ZretadorVsZetatronCollision.java
+* Versione: 0.12.2 Rev.a:
 */
 
 
@@ -32,45 +32,44 @@ package com.tabuto.jlife.collisions;
 
 import com.tabuto.j2dgf.Group;
 import com.tabuto.j2dgf.collision.CollisionDetector;
-import com.tabuto.jlife.Zlife;
+import com.tabuto.jlife.Zetatron;
 import com.tabuto.jlife.Zretador;
 
 /**
  * Class extends CollisionDetector to perform a collisionAction between
- * Zlifes and Zredator Group's elements. 
- * When an Hungry Zredator is near (<100 pixel) a Zlife, it hunt that ZLife.
- * It following ZLifes until is next to it, then eat it.
+ * Zretador and Zetatron Group's elements. 
+ * When an Hungry Zetatron is near (<100 pixel) a Zredator, it hunt that Zretador.
+ * It following Zretador until is next to it, then eat it.
  * 
  * 
  * @author tabuto83
  *
  */
+public class ZretadorVsZetatronCollision extends CollisionDetector{
 
-public class ZlifeVsZretadorCollision extends CollisionDetector {
-
-	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7053313800065136619L;
-	
-	public ZlifeVsZretadorCollision(Group<Zlife> sp1, Group<Zretador> sp2)
-	 {
-		 super(sp1,sp2);
+	private static final long serialVersionUID = 1L;
+
+	public ZretadorVsZetatronCollision(Group<Zretador> sp1,
+			Group<Zetatron> sp2) {
+		super(sp1, sp2);
 		 //"Cell "see" Seeds upon 100px of distance"
 		 this.setDistance(100);
-	 }
+	}
+	
 	 //Override CollisionAction
 	 public void CollisionAction(int s1, int s2)
 	  {
 		//Cast to class extends Sprite 
-		Zlife c;
-		Zretador z;
+		Zretador c;
+		Zetatron z;
 		//if( group1.get(s1) instanceof Zlife)
-			c = (Zlife) group1.get(s1);
+			c = (Zretador) group1.get(s1);
 		
 		//if( group2.get(s2) instanceof Zretador)
-			z = (Zretador) group2.get(s2);
+			z = (Zetatron) group2.get(s2);
 		
 		
 		if(z.isHungry())
@@ -79,7 +78,6 @@ public class ZlifeVsZretadorCollision extends CollisionDetector {
 			{
 				//Zretador eat ZLife
 				//z.age();
-				//z.setEnergy( z.getEnergy()+( (c.getRadius()+1)*10) );
 				z.setEnergy( z.getMaxEnergy() );
 				z.setAngleRadians(Math.random()*2*Math.PI);
 				z.preda=null;
@@ -104,4 +102,6 @@ public class ZlifeVsZretadorCollision extends CollisionDetector {
 		
 	  }
 	
+	
+
 }

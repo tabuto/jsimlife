@@ -81,6 +81,7 @@ public class JLifeToolbar extends JToolBar implements ActionListener{
 		this.root = root;
 		addButtons();
 		setPreferredSize(new Dimension(root.panel.getDimension().width,42));
+		
 	
 	}
 	

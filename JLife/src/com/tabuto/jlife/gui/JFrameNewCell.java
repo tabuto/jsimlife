@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 29/nov/2010 18.15.45
 * Titolo: JFrameNewCell.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.12.1 Rev.a:
 */
 
 
@@ -40,11 +40,13 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -57,6 +59,7 @@ import javax.swing.border.Border;
 
 import com.tabuto.jenetic.Dna;
 import com.tabuto.jlife.JLife;
+import com.tabuto.jlife.Zetatron;
 import com.tabuto.jlife.Zlife;
 import com.tabuto.jlife.Zretador;
 
@@ -84,6 +87,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 	JTextField nameField, xField, yField;
     
 	JButton okButton, cancelButton, colorButton;
+	JButton saveButton, loadButton;
 	
 	JSlider radiusSlider,dnaParamSlider,energySlider,maxEnergySlider;
 	JSlider hornyEnergySlider,hungryEnergySlider,lifeCycleSlider,metabolismSlider;
@@ -95,6 +99,12 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 	
 	JTextArea description;
 	JScrollPane descriptionScroll;
+	
+	Dna ZlifeDna = new Dna();
+	
+	Zlife newCell;
+	Zretador newZretador;
+	Zetatron newZetatron;
 	
 	/**
 	 * Build a JFrameNewCell
@@ -117,6 +127,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		//INIT BUTTON
 		JButton okButton = new JButton("OK");
 		JButton cancelButton = new JButton("Cancel");
+		JButton saveButton = new JButton("Save");
+		JButton loadButton = new JButton("Load");
 		
 		//ADD NORTH COMPONENT
 		north.setLayout( new FlowLayout(FlowLayout.LEFT));
@@ -148,7 +160,10 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		//ADD SOUTH COMPONENT
 		south.setLayout( new FlowLayout(FlowLayout.LEFT));
 		south.add(okButton);
+		south.add(saveButton);
+		south.add(loadButton);
 		south.add(cancelButton);
+		
 		
 		//INIT DESCRIPTION
 		description = new JTextArea();
@@ -174,37 +189,17 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent actionEvent) 
 				{
 				
-		for(int i=0;i< multiplierSlider.getValue()+1;i++)
-		{
-				Dna ZlifeDna = new Dna();
-				
-					ZlifeDna.add((double)dnaParamSlider.getValue()/100, "dnaParam", "The Dna fuzzy parameter");
-					ZlifeDna.add((double)energySlider.getValue(), "energy", "energy's zlife");
-					ZlifeDna.add((double)maxEnergySlider.getValue(), "maxEnergy", "The max energy avaible for zlife");
-					ZlifeDna.add((double)hornyEnergySlider.getValue() , "hornyEnergy", "The energy needs to riproduction");
-					ZlifeDna.add((double)hungryEnergySlider.getValue(), "hungryEnergy", "The energy because I'm hungry");
-					ZlifeDna.add(lifeCycleSlider.getValue(), "lifeCycle", "The number of lifeCycle before die");
-					ZlifeDna.add((double)metabolismSlider.getValue()/1000, "metabolism", "The energy for every move");
-					ZlifeDna.add((double)boredSpeedSlider.getValue() , "BoredSpeed", "The speed when i'm bored");
-					ZlifeDna.add((double)riproductionEnergySlider.getValue() , "riproductionEnergy", "The energy spend for embracing");
-					ZlifeDna.add((double)hungrySpeedSlider.getValue(), "hungrySpeed", "Speed when i'm hungry");
-					ZlifeDna.add((double)hornySpeedSlider.getValue(), "hornySpeed", "Speed when i'm horny");
-					ZlifeDna.add((double)scarySpeedSlider.getValue(), "scarySpeed", "Speed when i'm scary");
-					ZlifeDna.add(colorButton.getBackground().getRed(), "R", "Red component of Zlife color");
-					ZlifeDna.add(colorButton.getBackground().getGreen(), "G", "Green component of Zlife color");
-					ZlifeDna.add(colorButton.getBackground().getBlue(), "B", "Blue component of Zlife color");
-					ZlifeDna.add(radiusSlider.getValue(), "radius", "Zlife's radius ");
-					ZlifeDna.add((double)ageFactorSlider.getValue()/100 , "ageFactor", "Zlife's age Factor ");
+				createZlife();
+				for(int i=0;i< multiplierSlider.getValue()+1;i++)
+				{
+					int choose = cellChooser.getSelectedIndex();
 			
-			int choose = cellChooser.getSelectedIndex();
-			Zlife newCell;
-			Zretador newZretador;
 			/*
 			 * Choosing the right Zlifes type: ZLife or Zredator?
 			 */
-			if(choose==0)
-			{
-					newCell = new Zlife( Game.getDimension(), 
+					if(choose==0)
+					{
+						newCell = new Zlife( Game.getDimension(), 
 							Integer.valueOf(xField.getText() ) ,
 							Integer.valueOf(yField.getText()),
 							ZlifeDna);
@@ -217,10 +212,11 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 					newCell.live();
 					newCell.setName( nameField.getText());
 					Game.addCell(newCell);
-			}
-			else
-			{
-					newZretador = new Zretador( Game.getDimension(), 
+					}
+					else
+					if (choose==1)
+					{	
+						newZretador = new Zretador( Game.getDimension(), 
 							Integer.valueOf(xField.getText() ) ,
 							Integer.valueOf(yField.getText()),
 							ZlifeDna);
@@ -233,10 +229,25 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 					newZretador.live();
 					newZretador.setName( nameField.getText());
 					Game.addZretador(newZretador);
-			}
-			
-				
-				
+					}
+					else
+					if (choose==2)
+					{	
+						
+						newZetatron = new Zetatron( Game.getDimension(), 
+								Integer.valueOf(xField.getText() ) ,
+								Integer.valueOf(yField.getText()),
+								ZlifeDna);
+						
+						if(multiplierSlider.getValue()<2)
+							newZetatron.setAngleDegree( directionSlider.getValue());
+						else
+							newZetatron.setAngleRadians(Math.random()*2*Math.PI );
+						
+						newZetatron.live();
+						newZetatron.setName( nameField.getText());
+						Game.addZetatron(newZetatron);
+				}
 		}
 				dispose();
 				} 
@@ -250,6 +261,25 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 				dispose();
 				} 
 			});
+		//WHEN SAVE BUTTON PRESSED SAVE CURRENT CONFIGURATION
+		//INTO XML FILE
+		saveButton.addActionListener(new ActionListener()
+		   {
+			public void actionPerformed(ActionEvent actionEvent) 
+				{
+					saveDna();
+				}
+		   });
+		
+		//WHEN LOAD BUTTON PRESSED LOAD CURRENT CONFIGURATION
+		loadButton.addActionListener(new ActionListener()
+		   {
+			public void actionPerformed(ActionEvent actionEvent) 
+				{
+					loadDna();
+				}
+		   });
+		
 		
 		//ADD PANELS TO THE JFRAME
 		add(north,BorderLayout.NORTH);
@@ -266,6 +296,67 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 
 	}
 	
+	/**
+	 * Provides a JFileChooser to save a XML Dna file
+	 */
+	protected void loadDna() {
+		try{
+		  JFileChooser fileChooser = new JFileChooser();
+		   
+          int n = fileChooser.showOpenDialog(this);
+          if (n == JFileChooser.APPROVE_OPTION) 
+          	{	
+    			  ZlifeDna.loadXML( 
+    					  fileChooser.getSelectedFile().getAbsolutePath()
+    					  );
+          	}
+		}catch (Exception ex) {}
+		
+          
+          //SET THE SLIDER WITH Correct values
+         nameField.setText( ZlifeDna.getName());
+          
+         dnaParamSlider.setValue((int) (ZlifeDna.getGene("dnaParam").doubleValue() *100 ));
+         energySlider.setValue((int) (ZlifeDna.getGene("energy").doubleValue() ));
+         maxEnergySlider.setValue((int) (ZlifeDna.getGene("maxEnergy").doubleValue() ));
+         hornyEnergySlider.setValue((int) (ZlifeDna.getGene("hornyEnergy").doubleValue() ));
+         hungryEnergySlider.setValue((int) (ZlifeDna.getGene("hungryEnergy").doubleValue() ));
+         lifeCycleSlider.setValue( (ZlifeDna.getGene("lifeCycle").intValue()));
+         metabolismSlider.setValue((int) (ZlifeDna.getGene("metabolism").doubleValue()*1000 ));
+         boredSpeedSlider.setValue((int) (ZlifeDna.getGene("BoredSpeed").doubleValue() ));
+         riproductionEnergySlider.setValue((int) (ZlifeDna.getGene("riproductionEnergy").doubleValue() ));
+         hungrySpeedSlider.setValue((int) (ZlifeDna.getGene("hungrySpeed").doubleValue() ));
+         hornySpeedSlider.setValue((int) (ZlifeDna.getGene("hornySpeed").doubleValue() ));
+         scarySpeedSlider.setValue((int) (ZlifeDna.getGene("scarySpeed").doubleValue() ));
+         int R = ZlifeDna.getGene("R").intValue();
+         int G = ZlifeDna.getGene("G").intValue();
+         int B = ZlifeDna.getGene("B").intValue();
+         colorButton.setBackground(new Color(R,G,B));
+         radiusSlider.setValue( (ZlifeDna.getGene("radius").intValue()));
+         ageFactorSlider.setValue((int) (ZlifeDna.getGene("ageFactor").doubleValue() *100 ));
+		 	
+	}
+
+	/**
+	 * Provides a JFileChooser to save a XML Dna file
+	 */
+	protected void saveDna() {
+		  try {
+			  
+	            JFileChooser fileChooser = new JFileChooser();
+	            fileChooser.setSelectedFile(new File(nameField.getText()));
+	            int n = fileChooser.showSaveDialog(this);
+	            if (n == JFileChooser.APPROVE_OPTION) 
+	            {        	
+	            	createZlife();
+	            	this.ZlifeDna.toXML(fileChooser.getSelectedFile().getAbsolutePath());
+	            }
+	           
+	            
+	          } catch (Exception ex) {}
+		
+	}
+
 	//ADD COMPONENT METHODS
 	
 	private void addNameField()
@@ -653,7 +744,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 	
 	private void addCellChooser()
 	{
-		final String[] choose ={"Zlife","Zretador"};
+		final String[] choose ={"Zlife","Zretador","Zetatron"};
 		
 		cellChooser = new JComboBox(choose);
 		cellChooser.setSelectedIndex(0);
@@ -669,6 +760,134 @@ public class JFrameNewCell extends JFrame implements ActionListener {
         String choosedCell = (String)cellChooser.getSelectedItem();
         updateDescriptionPanel(choosedCell);
 		
+	}
+	
+	/*
+	 * Creates the correct Zlife's type and build the right dna
+	 */
+	protected void createZlife()
+	{
+		
+				ZlifeDna.setName( nameField.getText());
+				ZlifeDna.add((double)dnaParamSlider.getValue()/100, "dnaParam", "The Dna fuzzy parameter");
+				ZlifeDna.add((double)energySlider.getValue(), "energy", "energy's zlife");
+				ZlifeDna.add((double)maxEnergySlider.getValue(), "maxEnergy", "The max energy avaible for zlife");
+				ZlifeDna.add((double)hornyEnergySlider.getValue() , "hornyEnergy", "The energy needs to riproduction");
+				ZlifeDna.add((double)hungryEnergySlider.getValue(), "hungryEnergy", "The energy because I'm hungry");
+				ZlifeDna.add(lifeCycleSlider.getValue(), "lifeCycle", "The number of lifeCycle before die");
+				ZlifeDna.add((double)metabolismSlider.getValue()/1000, "metabolism", "The energy for every move");
+				ZlifeDna.add((double)boredSpeedSlider.getValue() , "BoredSpeed", "The speed when i'm bored");
+				ZlifeDna.add((double)riproductionEnergySlider.getValue() , "riproductionEnergy", "The energy spend for embracing");
+				ZlifeDna.add((double)hungrySpeedSlider.getValue(), "hungrySpeed", "Speed when i'm hungry");
+				ZlifeDna.add((double)hornySpeedSlider.getValue(), "hornySpeed", "Speed when i'm horny");
+				ZlifeDna.add((double)scarySpeedSlider.getValue(), "scarySpeed", "Speed when i'm scary");
+				ZlifeDna.add(colorButton.getBackground().getRed(), "R", "Red component of Zlife color");
+				ZlifeDna.add(colorButton.getBackground().getGreen(), "G", "Green component of Zlife color");
+				ZlifeDna.add(colorButton.getBackground().getBlue(), "B", "Blue component of Zlife color");
+				ZlifeDna.add(radiusSlider.getValue(), "radius", "Zlife's radius ");
+				ZlifeDna.add((double)ageFactorSlider.getValue()/100 , "ageFactor", "Zlife's age Factor ");
+		
+			int choose = cellChooser.getSelectedIndex();
+			
+			/*
+			 * Choosing the right Zlifes type: ZLife or Zredator?
+			 */
+			if(choose==0)
+			{
+					newCell = new Zlife( Game.getDimension(), 
+							Integer.valueOf(xField.getText() ) ,
+							Integer.valueOf(yField.getText()),
+							ZlifeDna);
+					
+			}
+			else
+				if (choose==1)
+				{	
+					newZretador = new Zretador( Game.getDimension(), 
+							Integer.valueOf(xField.getText() ) ,
+							Integer.valueOf(yField.getText()),
+							ZlifeDna);
+				}
+				
+			else
+				if (choose==2)
+				{
+					
+					//WEIGHTS
+					double HN0w0 = 1.6472350208469893;
+					double HN0w1 =  1.5259734987014437;
+					
+					double HN1w0 = 2.6628529707196837;
+					double HN1w1 = -4.3804934387500865;
+					
+					double HN2w0 = -2.530569115172068;
+					double HN2w1 = 4.769453786615226 ;
+					
+					double HN3w0 = -1.8361723886103454;
+					double HN3w1 = -0.596045032335354 ;
+					
+					double HN4w0 = 1.6588830527078904;
+					double HN4w1 = 1.9764676548651472;
+					
+					double ON0w0 = 0.05225449773499675;
+					double ON0w1 = -7.567386009338051;
+					double ON0w2 = 2.7268222830976008;
+					double ON0w3 = -0.6308534288149321;
+					double ON0w4 = 1.2607713913426353;
+					
+					double ON1w0 = -2.112897695747519 ;
+					double ON1w1 = 3.493104440667188;
+					double ON1w2 = 2.1065398047867707;
+					double ON1w3 = 4.019529986557601;
+					double ON1w4= -3.6030767528508028;
+					
+					double ON2w0 = 0.48460613526771457;
+					double ON2w1 = 3.2167614616048157;
+					double ON2w2 = -5.260496061985509;
+					double ON2w3 = -4.254364190317208;
+					double ON2w4 = 0.2761967817824116;
+						
+						//WEIGHTS
+						ZlifeDna.add(HN0w0, "HN0w0", "Zetatron Neural Network weight");
+						ZlifeDna.add(HN0w1, "HN0w1", "Zetatron Neural Network weight");
+						
+						ZlifeDna.add(HN1w0, "HN1w0", "Zetatron Neural Network weight");
+						ZlifeDna.add(HN1w1, "HN1w1", "Zetatron Neural Network weight");
+						
+						ZlifeDna.add(HN2w0, "HN2w0", "Zetatron Neural Network weight");
+						ZlifeDna.add(HN2w1, "HN2w1", "Zetatron Neural Network weight");
+					
+						ZlifeDna.add(HN3w0, "HN3w0", "Zetatron Neural Network weight");
+						ZlifeDna.add(HN3w1, "HN3w1", "Zetatron Neural Network weight");
+						
+						ZlifeDna.add(HN4w0, "HN4w0", "Zetatron Neural Network weight");
+						ZlifeDna.add(HN4w1, "HN4w1", "Zetatron Neural Network weight");
+						
+						ZlifeDna.add(ON0w0, "ON0w0", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON0w1, "ON0w1", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON0w2, "ON0w2", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON0w3, "ON0w3", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON0w4, "ON0w4", "Zetatron Neural Network weight");
+						
+						ZlifeDna.add(ON1w0, "ON1w0", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON1w1, "ON1w1", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON1w2, "ON1w2", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON1w3, "ON1w3", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON1w4, "ON1w4", "Zetatron Neural Network weight");
+						
+						ZlifeDna.add(ON2w0, "ON2w0", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON2w1, "ON2w1", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON2w2, "ON2w2", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON2w3, "ON2w3", "Zetatron Neural Network weight");
+						ZlifeDna.add(ON2w4, "ON2w4", "Zetatron Neural Network weight");
+						
+					
+					newZetatron = new Zetatron( Game.getDimension(), 
+							Integer.valueOf(xField.getText() ) ,
+							Integer.valueOf(yField.getText()),
+							ZlifeDna);
+				}
+				
 	}
 
 	//UPDATE DESCRIPTION METHOD
@@ -688,6 +907,14 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		{
 			
 			description.setText(Zretador.getDescription());
+		}
+		
+		description.setCaretPosition(0);
+		
+		if (choosedCell.equalsIgnoreCase("Zetatron"))
+		{
+			
+			description.setText(Zetatron.getDescription());
 		}
 		
 		description.setCaretPosition(0);

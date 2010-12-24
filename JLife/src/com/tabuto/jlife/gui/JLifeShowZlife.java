@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 09/dic/2010 22.40.29
+* Date: 24/dic/2010 22.40.29
 * Titolo: JLifeShowZlife.java
-* Versione: 0.1.12.1 Rev.a:
+* Versione: 0.1.12.2 Rev.a:
 */
 
 
@@ -33,18 +33,23 @@ package com.tabuto.jlife.gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import com.tabuto.j2dgf.Game2D;
 import com.tabuto.jlife.JLife;
 
@@ -73,11 +78,14 @@ public class JLifeShowZlife extends JFrame implements Observer {
 
 	private JButton colorButton;
 	
+	private JButton saveButton;
+	
 	JTextArea ZlifeDna = new JTextArea();
-	JScrollPane ZlifeDnaScroll = new JScrollPane(ZlifeDna);
+	//JScrollPane ZlifeDnaScroll = new JScrollPane(ZlifeDna);
 	
 	private JPanel north,dnaPanel,south;
-	
+	private DnaPanel dnaTreePanel;
+	JScrollPane ZlifeDnaScroll; 
 	
 	public JLifeShowZlife(Game2D game)
 	{
@@ -88,10 +96,17 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		dnaPanel = new JPanel();
 		south = new JPanel();
 		
+		dnaTreePanel = new DnaPanel();
+		dnaPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		dnaPanel.setBackground(Color.WHITE);
+		dnaPanel.add(dnaTreePanel);
+		ZlifeDnaScroll = new JScrollPane(dnaPanel);
+		
 		setLayout( new BorderLayout());
 		setPreferredSize(new Dimension(250,500));
 		setResizable(false);
 		initComponent();
+		
 		setAlwaysOnTop(true);
 		
 		//ADD ICON
@@ -167,16 +182,48 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		north.add(colorButton);
 		
 		//ADD DNAPANEL
-		ZlifeDnaScroll.setPreferredSize(new Dimension(250, 250));
-		dnaPanel.add(ZlifeDnaScroll);
-		
-		
+		//ZlifeDnaScroll.setPreferredSize(new Dimension(450, 250));
+		//dnaPanel.add(ZlifeDnaScroll);
+		//dnaTreePanel.add(ZlifeDnaScroll);
+		//dnaPanel.add(ZlifeDnaScroll);
+		//setDnaText();
+		//ADD COMMAND BUTTON
+		saveButton = new JButton("Save");
+		saveButton.addActionListener(new ActionListener()
+		   {
+			public void actionPerformed(ActionEvent actionEvent) 
+				{
+					saveDna();
+				}
+		   });
+		south.add(saveButton);
 		
 		this.add(north,BorderLayout.NORTH);
-		this.add(dnaPanel,BorderLayout.CENTER);
+		this.add(ZlifeDnaScroll,BorderLayout.CENTER);
 		this.add(south,BorderLayout.SOUTH);
 	}
 	
+/**
+ * Provides a JFileChoser for saving actual selected DNA in a XML file
+ */
+protected void saveDna() {
+	 try {
+		  
+         JFileChooser fileChooser = new JFileChooser();
+         fileChooser.setSelectedFile(new File(nameField.getText()));
+         int n = fileChooser.showSaveDialog(this);
+         if (n == JFileChooser.APPROVE_OPTION) 
+         {        	
+         	
+         	Game.getSelectedCell().getZlifeDna().toXML(fileChooser.getSelectedFile().getAbsolutePath());
+            
+         }
+        
+         
+       } catch (Exception ex) {}
+		
+	}
+
 /**
  * Update the information about selected ZLife
  */
@@ -210,6 +257,7 @@ private void checkVisibility()
 {
 	if(!this.isVisible())
 	{
+		
 		this.pack();
 		this.setVisible(true);
 	}
@@ -219,9 +267,13 @@ private void checkVisibility()
  */
 private void  setDnaText()
 {
+	/*
 	ZlifeDna.setText( 
 			Game.getSelectedCell().getZlifeDna().toString());
 ZlifeDna.setCaretPosition(0);
+*/ 
+	//this.dnaTreePanel.close();
+	dnaTreePanel.initialize( Game.getSelectedCell().getZlifeDna().toXML());
 }
 
 /**
@@ -257,10 +309,12 @@ public void update(Observable arg0, Object arg1) {
 					if(this.isVisible())
 					{
 						this.setVisible(false);
+						this.dnaTreePanel.close();
 					}
 				}
 			}
-			if(message.equalsIgnoreCase("Zlife:Move"))
+			
+			if(message.equalsIgnoreCase("Zlife:ChangeState"))
 			{
 				if(Game.getSelectedCell()!=null && this.isVisible())
 				{
@@ -268,6 +322,15 @@ public void update(Observable arg0, Object arg1) {
 					
 				}
 			}
+			
+			if(message.equalsIgnoreCase("SeedSelected"))
+			{
+				JOptionPane.showMessageDialog(this,"Seed quantity: "+
+						Game.getSelectedSeed().getQuantity());
+				
+			}
+			
+			
 		}
 			
 	}

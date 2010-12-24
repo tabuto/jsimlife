@@ -83,6 +83,11 @@ public class Configuration {
 	private int MAX_ZRETADOR;
 	
 	/**
+	 * Zetatron max number
+	 */
+	private int MAX_ZETATRON;
+	
+	/**
 	 * Seeds max number
 	 */
 	private int MAX_SEEDS;
@@ -124,6 +129,7 @@ public class Configuration {
 	public String getLocale(){return this.LOCALE;}
 	public int getMaxSeeds() {return MAX_SEEDS;}
 	public int getMaxZlifes() {return MAX_ZLIFES;}
+	public int getMaxZetatron() {return MAX_ZETATRON;}
 	public int getMaxZretador() {return MAX_ZRETADOR;}
 	public String getPath(){return this.PATH;}
 	public Dimension getPlayfieldDimension(){return this.playfield;}
@@ -156,6 +162,7 @@ public class Configuration {
 				//LOAD MAX SPRITE PARAMETER
 				Element maxSprites = (Element)iterator.next(); 
 				this.setMaxZlifes( Integer.parseInt(maxSprites.getAttributeValue("Zlifes")));
+				this.setMaxZetatron( Integer.parseInt(maxSprites.getAttributeValue("Zetatron")));
 				this.setMaxZretador( Integer.parseInt(maxSprites.getAttributeValue("Zretador")));
 				this.setMaxSeeds( Integer.parseInt(maxSprites.getAttributeValue("Seeds")));
 	    
@@ -170,7 +177,7 @@ public class Configuration {
 		setBackgroundColor(Color.BLACK);
 		
 		setMaxZlifes(250);
-		
+		setMaxZetatron(125);
 		setMaxZretador(250);
 		
 		setMaxSeeds(50);
@@ -202,6 +209,7 @@ public class Configuration {
 	      //ELEMENTS 2 MAX SPRITES NUMBER
 	      Element maxZlifes = new Element("MaxSpriteNumber");
 	      maxZlifes.setAttribute("Zlifes", String.valueOf( getMaxZlifes() ));
+	      maxZlifes.setAttribute("Zetatron", String.valueOf( getMaxZetatron()) );
 	      maxZlifes.setAttribute("Zretador", String.valueOf( getMaxZretador()) );
 	      maxZlifes.setAttribute("Seeds", String.valueOf(getMaxSeeds()));
 	      preferences.addContent(maxZlifes);
@@ -228,6 +236,7 @@ public class Configuration {
 	public void setBackgroundColor(Color b){background = b;}
 	public void setLocale(String locale){this.LOCALE=locale;}
 	public void setMaxSeeds(int mAX_SEEDS) {MAX_SEEDS = mAX_SEEDS;}
+	public void setMaxZetatron(int mAX_ZETATRON) {MAX_ZETATRON = mAX_ZETATRON;}
 	public void setMaxZlifes(int mAX_ZLIFES) {MAX_ZLIFES = mAX_ZLIFES;}
 	public void setMaxZretador(int mAX_ZRETADOR) {MAX_ZRETADOR = mAX_ZRETADOR;}
 	public void setPath(String p){this.PATH = p;}
