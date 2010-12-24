@@ -1,6 +1,6 @@
 /**
 * @author Francesco di Dio
-* Date: 24 Novembre 2010 18.14
+* Date: 24 Dicembre 2010 18.14
 * Titolo: Gene.java
 * Versione: 0.2.3 Rev.a:
 */
@@ -44,7 +44,7 @@ import java.util.Vector;
  * 
  * @author tabuto83
  * 
- * @version 0.2.2
+ * @version 0.2.3
  * 
  * @see com.tabuto.jenetic.dna
  */

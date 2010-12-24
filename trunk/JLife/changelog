@@ -1,7 +1,22 @@
-JLife v.1.12.1 MILESTONE
-Reorder Code
+JLife v.1.12.2 
 
-JLife v.1.12
+Add new Zlife type Zetatron uses a Neural Network to change state;
+Add Zetatron max number in preferences
+add save and load dialog into AddNewCell frame to save or load dna;
+add save dialog into showZlife frame to save Zlife's Dna
+add AlwaysOnTop on to Charts dialog
+fix LoadXML bug into Dna.java class
+fix zetatron weights
+fix zetatron think state
+fix reproduction: now the energy is subtract after the new cell is created!
+fix showZlife frame too slow, now refresh only if zlife's state change
+fix loadXML into Dna.java class, can't load DnaParam in root element
+Change icons and statisic panel layout
+Add DnaPanel to show Zlife's Dna in a JTree ML link to JSimLife homepage;
+Add message on click on seed showing the actual seed's quantity!
+Reorder and Comment Code
+
+JLife v.1.12 MILESTONE
 Add JLifeToolbar as a iconed JToolbar;
 Remove JLifeLeftControlPanel;
 BottomPanel show now only the cell count number;

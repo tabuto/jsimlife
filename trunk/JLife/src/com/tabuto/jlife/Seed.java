@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/nov/2010 16.03.41
+* Date: 24/Dic/2010 16.03.41
 * Titolo: Seed.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.12.2 Rev.a:
 */
 
 
@@ -113,6 +113,14 @@ public class Seed extends Sprite{
 		else
 			this.Deactivate();
 		
+	}
+	
+	/**
+	 * @return the actual seeds number
+	 */
+	public int getQuantity()
+	{
+		return seeds.size();
 	}
 	
 	/**

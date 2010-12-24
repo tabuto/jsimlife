@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 01/dic/2010 10.19.59
-* Titolo: ZlifeVsZretadorCollision.java
-* Versione: 0.1.11 Rev.a:
+* Date: 19/dic/2010 11.05.48
+* Titolo: ZetatronVsSeeds.java
+* Versione: 0.12.2 Rev.a:
 */
 
 
@@ -32,76 +32,67 @@ package com.tabuto.jlife.collisions;
 
 import com.tabuto.j2dgf.Group;
 import com.tabuto.j2dgf.collision.CollisionDetector;
-import com.tabuto.jlife.Zlife;
-import com.tabuto.jlife.Zretador;
+import com.tabuto.jlife.Seed;
+import com.tabuto.jlife.Zetatron;
+
 
 /**
  * Class extends CollisionDetector to perform a collisionAction between
- * Zlifes and Zredator Group's elements. 
- * When an Hungry Zredator is near (<100 pixel) a Zlife, it hunt that ZLife.
- * It following ZLifes until is next to it, then eat it.
- * 
+ * Zetatron and seed. When a Zetatron eates seed, its energy level grow up to max.
  * 
  * @author tabuto83
- *
  */
-
-public class ZlifeVsZretadorCollision extends CollisionDetector {
-
+public class ZetatronVsSeeds extends CollisionDetector{
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -7053313800065136619L;
-	
-	public ZlifeVsZretadorCollision(Group<Zlife> sp1, Group<Zretador> sp2)
+	private static final long serialVersionUID = 1L;
+	/**
+	 * COnstructor
+	 * @param sp1 Zetatron Group
+	 * @param sp2 Seed Group
+	 */
+	public ZetatronVsSeeds(Group<Zetatron> sp1, Group<Seed> sp2)
 	 {
 		 super(sp1,sp2);
 		 //"Cell "see" Seeds upon 100px of distance"
 		 this.setDistance(100);
 	 }
 	 //Override CollisionAction
+	/**
+	 * Collision Action to perform the eating collision action
+	 */
 	 public void CollisionAction(int s1, int s2)
 	  {
 		//Cast to class extends Sprite 
-		Zlife c;
-		Zretador z;
-		//if( group1.get(s1) instanceof Zlife)
-			c = (Zlife) group1.get(s1);
+		Zetatron cell1;
+		Seed seed2;
+		cell1 = (Zetatron) group1.get(s1);
+		seed2 = (Seed) group2.get(s2);
 		
-		//if( group2.get(s2) instanceof Zretador)
-			z = (Zretador) group2.get(s2);
+		//TO-DO
 		
-		
-		if(z.isHungry())
-		{
-			if( z.getPosition().getDistance( c.getPosition())<20)
-			{
-				//Zretador eat ZLife
-				//z.age();
-				//z.setEnergy( z.getEnergy()+( (c.getRadius()+1)*10) );
-				z.setEnergy( z.getMaxEnergy() );
-				z.setAngleRadians(Math.random()*2*Math.PI);
-				z.preda=null;
-				if(z.getEnergy()>z.getHungryEnergy())
-					z.setBored();
-				z.live();
+		//if (cell1.isAlive() && cell1.isHungry())
+		//if (cell1.isAlive() )
 				
-				//Zlife hit but not necessary die
-				c.setEnergy( c.getEnergy()-( (z.getRadius()+1)*10) );
-				return;
-			}
-			
-			if(z.preda==null)
-			{
-				c.setScary();
-				z.preda=c;
-				z.moveTo(z.preda);
-				z.live();
-			}
-		}
-		
+					if (cell1.isBored())
+					{
+						cell1.setSeedPosition( seed2.getPosition() ) ;
+					}
+				
+					if (cell1.isHungry())
+					{
+						seed2.eatMe();
+						//cell1.age();
+						cell1.setEnergy(cell1.getMaxEnergy());
+						cell1.setAngleRadians(Math.random()*2*Math.PI);
+						//cell1.setHorny();
+						cell1.live();
+					}
+				
+				
 		
 	  }
-	
+
 }

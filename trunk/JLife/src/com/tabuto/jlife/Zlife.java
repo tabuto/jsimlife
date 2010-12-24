@@ -113,7 +113,7 @@ public class Zlife extends Sprite implements Serializable{
 	
 	//private boolean attacked=false;
 	
-	private double realMetabolism;
+	protected double realMetabolism;
 
 	//CONSTRUCTOR
 	/**
@@ -447,7 +447,7 @@ public class Zlife extends Sprite implements Serializable{
 					if(energy<hungryEnergy)
 					{   age();
 						setSpeed((int) getHungrySpeed());
-						state =  CellState.HUNGRY;
+						setState(CellState.HUNGRY);
 						break;
 					}
 					
@@ -455,7 +455,7 @@ public class Zlife extends Sprite implements Serializable{
 					{
 						age();
 						setSpeed((int) getHornySpeed());
-						state =  CellState.HORNY;
+						setState(CellState.HORNY);
 						break;
 					}
 					
@@ -482,7 +482,7 @@ public class Zlife extends Sprite implements Serializable{
 					  {
 						  //this.age();
 						  this.setSpeed((int)getBoredSpeed());
-						  state = CellState.BORED;
+						  setState(CellState.BORED);
 						  this.setAngleRadians(Math.random()*Math.PI*2);
 						  break;
 					  }  
@@ -499,7 +499,7 @@ public class Zlife extends Sprite implements Serializable{
 					{
 						//age();
 						 this.setSpeed((int)getBoredSpeed());
-						state = CellState.BORED;
+						setState(CellState.BORED);
 						this.setAngleRadians(Math.random()*Math.PI*2);
 						break;
 					}
@@ -507,7 +507,7 @@ public class Zlife extends Sprite implements Serializable{
 					{
 						age();
 						 this.setSpeed((int)getHungrySpeed());
-						state = CellState.HUNGRY;
+						setState(CellState.HUNGRY);
 						this.setAngleRadians(Math.random()*Math.PI*2);
 						break;
 					}
@@ -525,7 +525,7 @@ public class Zlife extends Sprite implements Serializable{
 					{
 						age();
 						 this.setSpeed((int)getHungrySpeed());
-						state = CellState.HUNGRY;
+						setState(CellState.HUNGRY);
 						this.setAngleRadians(Math.random()*Math.PI*2);
 						break;
 					}
@@ -617,6 +617,8 @@ public class Zlife extends Sprite implements Serializable{
 	public void setBored()
 	{
 		state=CellState.BORED;
+		setChanged();
+		notifyObservers("ZLife:ChangeState");
 	}
 	
 	/**
@@ -697,6 +699,8 @@ public class Zlife extends Sprite implements Serializable{
 	public void setHorny()
 	{
 		state=CellState.HORNY;
+		setChanged();
+		notifyObservers("ZLife:ChangeState");
 	}
 	
 	/**
@@ -705,6 +709,8 @@ public class Zlife extends Sprite implements Serializable{
 	public void setHungry()
 	{
 		state=CellState.HUNGRY;
+		setChanged();
+		notifyObservers("ZLife:ChangeState");
 	}
 
 	/**
@@ -745,7 +751,17 @@ public class Zlife extends Sprite implements Serializable{
 		if(metabolism>0 && metabolism<this.maxEnergy)
 			this.metabolism = metabolism;
 	}
-
+	
+	/**
+	 * Set the Zlife's name both class and dna 
+	 * @param name String Zlife's name
+	 */
+	@Override
+	public void setName(String name)
+	{
+		this.Name = name;
+		this.ZlifeDna.setName(name);
+	}
 
 	/**
 	 * @param riproductionEnergy the riproductionEnergy to set
@@ -768,6 +784,7 @@ public class Zlife extends Sprite implements Serializable{
 			hungrySpeed=100;
 		
 			this.hungrySpeed = hungrySpeed;
+			
 		
 	}
 
@@ -840,6 +857,8 @@ public class Zlife extends Sprite implements Serializable{
 	 */
 	public void setState(CellState state) {
 		this.state = state;
+		setChanged();
+		notifyObservers("ZLife:ChangeState");
 	}
 	
 	/**
@@ -848,6 +867,8 @@ public class Zlife extends Sprite implements Serializable{
 	public void setScary()
 	{
 		state=CellState.SCARY;
+		setChanged();
+		notifyObservers("ZLife:ChangeState");
 	}
 	
 
@@ -904,8 +925,9 @@ public class Zlife extends Sprite implements Serializable{
 	 * Add to this ZLifeDNA the Current Genes. USe it if you want to create
 	 * a new Zlife with your own parameter
 	 */
-	private void makeMyDna()
+	protected void makeMyDna()
 	{
+		this.ZlifeDna.setName( this.Name);
 		this.ZlifeDna.add(getDnaParam(), "dnaParam", "The Dna fuzzy parameter");
 		this.ZlifeDna.add(getEnergy(), "energy", "energy's zlife");
 		this.ZlifeDna.add(getMaxEnergy(), "maxEnergy", "The max energy avaible for zlife");
@@ -928,7 +950,7 @@ public class Zlife extends Sprite implements Serializable{
 	/**
 	 * Create a new Zlife loading the default parameter values
 	 */
-	private void loadDefaultValues()
+	protected void loadDefaultValues()
 	{
 		dnaParam=0.2;
 		
@@ -968,8 +990,10 @@ public class Zlife extends Sprite implements Serializable{
 	 * Use it if you already have a DNA (for example merging two DNA) and you
 	 * want use it to create a new ZLife
 	 */
-	private void loadDnaGenes()
+	protected void loadDnaGenes()
 	{
+		setName( this.ZlifeDna.getName() );
+		
 		//load private double dnaParam;
 		setDnaParam( this.ZlifeDna.getGene("dnaParam").doubleValue()  ); //0
 		

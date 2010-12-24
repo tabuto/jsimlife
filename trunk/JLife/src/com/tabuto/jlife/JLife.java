@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 06/Dic/2010 12.05.43
+* Date: 24/Dic/2010 12.05.43
 * Titolo: JLife.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.12.2 Rev.a:
 */
 
 
@@ -52,6 +52,9 @@ import com.tabuto.jenetic.Dna;
 import com.tabuto.jenetic.Gene;
 import com.tabuto.jlife.collisions.EatingCollision;
 import com.tabuto.jlife.collisions.RiproductionCollision;
+import com.tabuto.jlife.collisions.ZetatronRiproduction;
+import com.tabuto.jlife.collisions.ZetatronVsSeeds;
+import com.tabuto.jlife.collisions.ZretadorVsZetatronCollision;
 import com.tabuto.jlife.collisions.ZlifeVsZretadorCollision;
 import com.tabuto.jlife.collisions.ZretadorRiproduction;
 
@@ -64,7 +67,7 @@ import com.tabuto.jlife.collisions.ZretadorRiproduction;
  * 
  * @author tabuto83
  * 
- * @version 0.1.10.3
+ * @version 0.1.12.2
  * 
  * @see Gene
  * @see Dna
@@ -86,6 +89,11 @@ public class JLife extends Game2D implements Serializable,Observer {
 	private Zlife selectedCell;	
 
 	/**
+	 * The actual selected Seed
+	 */
+	private Seed selectedSeed;
+	
+	/**
 	 * The Directory path where Game file is saved/loaded.
 	 * Not yet used
 	 */
@@ -94,10 +102,10 @@ public class JLife extends Game2D implements Serializable,Observer {
 	/**
 	 * Group contanis Zlifes and Seeds
 	 */
-	public  Group<Zlife> cellsGroup = new Group<Zlife>("ZlifeGroup");
+	public  Group<Zlife> cellsGroup = new Group<Zlife>("Zlifes");
 	public Group<Seed> seedsGroup = new Group<Seed>("SeedsSprite");
-	public Group<Zretador> zretadorGroup = new Group<Zretador>("ZretadorsGroup");
-	
+	public Group<Zretador> zretadorGroup = new Group<Zretador>("Zretadors");
+	public Group<Zetatron> zetatronGroup = new Group<Zetatron>("Zetatrons");
 	/**
 	 * Vector Group List, it used by JLifeStatistic to calculate statistical data
 	 * from Sprite's Group
@@ -114,6 +122,13 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 */
 	private final int MAX_ZRETADOR_NUMBER = 250;
 
+	
+	/**
+	 * Max Zetatron number
+	 */
+	private final int MAX_ZETATRON_NUMBER = 125;
+	
+	
 	/**
 	 * Max number of seed element game can show
 	 */
@@ -122,9 +137,12 @@ public class JLife extends Game2D implements Serializable,Observer {
 	//COLLISIONS
 	EatingCollision eating; //Collision beetween seed and Zlifes
 	ZlifeVsZretadorCollision zretadorEating; //Collision Between Zlifes and predator
+	ZretadorVsZetatronCollision zetatronEating; 
+	ZetatronVsSeeds zetatronSeedEating;
 	RiproductionCollision riproductionZlife; //Collision between Zlifes
 	ZretadorRiproduction riproductionZretador; //COllision between Zredators
-	CollisionBoundDetector cbdZretador,cbdZlife; //Collision boundDetector
+	ZetatronRiproduction riproductionZetatron;
+	CollisionBoundDetector cbdZretador,cbdZlife, cbdZetatron; //Collision boundDetector
 
 	/**
 	 * Jlife Constructor 
@@ -150,10 +168,26 @@ public class JLife extends Game2D implements Serializable,Observer {
 		notifyObservers("CountChange");
 		}
 	}
+
+	/**
+	 * Add a Zetatron in ZetatronGroup
+	 * @param c Zetatron
+	 */
+	public void addZetatron(Zetatron z)
+	{
+		if(zetatronGroup.size()<MAX_ZETATRON_NUMBER)
+		{
+			
+		z.addObserver(this);	
+		zetatronGroup.add(z);
+		setChanged();
+		notifyObservers("CountChange");
+		}
+	}
 	
 	/**
-	 * Add a Zlife in ZlifeGroup
-	 * @param c Zlife
+	 * Add a Zretador in ZretadorGroup
+	 * @param c Zretador
 	 */
 	public void addZretador(Zretador z)
 	{
@@ -245,6 +279,24 @@ public class JLife extends Game2D implements Serializable,Observer {
 	}
 	
 	/**
+	 * @return the actual selected seed
+	 */
+	public Seed getSelectedSeed()
+	{
+	  try{
+		  if (selectedSeed!= null)
+			return selectedSeed;
+		  else
+			return null;
+	  	}
+	  catch(NullPointerException e)
+	  {
+		  return null;
+	  }
+	  
+	}
+	
+	/**
 	 * @return the actual save directory path
 	 */
 	public String getPath(){return this.PATH;}
@@ -259,16 +311,20 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 */
 	public void initGame() 
 	{
+		
 		cm = new CollisionManager();
 		
 		//Add Group at GroupList
 		groupList.add(cellsGroup);
 		groupList.add(zretadorGroup);
+		groupList.add(zetatronGroup);
 		
 		cbdZlife = new CollisionBoundDetector(cellsGroup,DIM);
 		cbdZretador = new CollisionBoundDetector(zretadorGroup,DIM);
+		cbdZetatron = new CollisionBoundDetector(zetatronGroup,DIM);
 		cbdZlife.useReflection();
 		cbdZretador.useReflection();
+		cbdZetatron.useReflection();
 		
 		riproductionZlife = new RiproductionCollision(cellsGroup,this);
 		riproductionZlife.setDistance(20);
@@ -276,15 +332,24 @@ public class JLife extends Game2D implements Serializable,Observer {
 		riproductionZretador = new ZretadorRiproduction(zretadorGroup,this);
 		riproductionZretador.setDistance(20);
 		
+		riproductionZetatron = new ZetatronRiproduction(zetatronGroup,this);
+		riproductionZetatron.setDistance(20);
+		
 		eating = new EatingCollision(cellsGroup, seedsGroup);
 		zretadorEating = new ZlifeVsZretadorCollision(cellsGroup,zretadorGroup);
+		zetatronEating =  new ZretadorVsZetatronCollision(zretadorGroup,zetatronGroup);
+		zetatronSeedEating = new ZetatronVsSeeds(zetatronGroup, seedsGroup);
 		
 		cm.addCollision(cbdZlife);
 		cm.addCollision(cbdZretador);
+		cm.addCollision(cbdZetatron);
 		cm.addCollision(riproductionZlife);
 		cm.addCollision(riproductionZretador);
+		cm.addCollision(riproductionZetatron);
 		cm.addCollision(eating);
 		cm.addCollision(zretadorEating);
+		cm.addCollision(zetatronEating);
+		cm.addCollision(zetatronSeedEating);
 		//cm.start();
 		//activate();
 	}
@@ -323,6 +388,8 @@ public class JLife extends Game2D implements Serializable,Observer {
 			selectedCell = (Zlife)cellsGroup.getSpriteByPos(x,y,tolerance);	
 			if(selectedCell==null)
 				selectedCell = (Zlife)zretadorGroup.getSpriteByPos(x,y,tolerance);	
+			if(selectedCell==null)
+				selectedCell = (Zlife)zetatronGroup.getSpriteByPos(x,y,tolerance);
 			if(selectedCell!=null)
 				{
 				selectedCell.select();
@@ -348,6 +415,22 @@ public class JLife extends Game2D implements Serializable,Observer {
 				notifyObservers("SelectionChange");
 		}
 			
+	}
+	/**
+	 * Select a Seed nearby a certain coordinates, using a distance tolerance
+	 * @param x
+	 * @param y
+	 * @param tolerance
+	 */
+	public void selectSeed(int x, int y, int tolerance)
+	{
+		Seed selectedSeed = seedsGroup.getSpriteByPos(x, y, tolerance);
+		if (selectedSeed != null)
+		{
+			this.selectedSeed=selectedSeed;
+			setChanged();
+			notifyObservers("SeedSelected");
+		}
 	}
 	
 	/**
@@ -390,10 +473,12 @@ public class JLife extends Game2D implements Serializable,Observer {
 	
 		cellsGroup.move();
 		zretadorGroup.move();
+		zetatronGroup.move();
 		//cm.run();
 		cellsGroup.draw(g);
 		seedsGroup.draw(g);
 		zretadorGroup.draw(g);
+		zetatronGroup.draw(g);
 		//if((cellsGroup.size() + zretadorGroup.size()) != cellCount)
 		//{
 		//	setChanged();
@@ -417,23 +502,7 @@ public class JLife extends Game2D implements Serializable,Observer {
 		this.notifyObservers(arg1);
 		
 		
-		if( arg1 instanceof Zlife)
-				{
-					Zlife z = (Zlife) arg1;
-					if (!(z.isAlive()))
-					{//z is die
-						cellsGroup.remove(z);
-						cellsGroup.trimToSize();
-						notifyObservers("CountChange");
-						Seed s = new Seed(
-								z.getDimension(),
-								(int)z.getX(),(int)z.getY(),
-								z.getRadius()*4,
-								z.getRadius()
-								);
-						this.addSeed(s);
-					}
-				}
+		
 		if( arg1 instanceof Zretador)
 		{
 			Zretador z = (Zretador) arg1;
@@ -451,6 +520,41 @@ public class JLife extends Game2D implements Serializable,Observer {
 				this.addSeed(s);
 			}
 		}
+		
+		 if( arg1 instanceof Zetatron)
+		{
+			Zetatron z = (Zetatron) arg1;
+			if (!(z.isAlive()))
+			{//z is die
+				zetatronGroup.remove(z);
+				zetatronGroup.trimToSize();
+				notifyObservers("CountChange");
+				Seed s = new Seed(
+						z.getDimension(),
+						(int)z.getX(),(int)z.getY(),
+						z.getRadius()*4,
+						z.getRadius()
+						);
+				this.addSeed(s);
+			}
+		}
+		 if( arg1 instanceof Zlife)
+			{
+				Zlife z = (Zlife) arg1;
+				if (!(z.isAlive()))
+				{//z is die
+					cellsGroup.remove(z);
+					cellsGroup.trimToSize();
+					notifyObservers("CountChange");
+					Seed s = new Seed(
+							z.getDimension(),
+							(int)z.getX(),(int)z.getY(),
+							z.getRadius()*4,
+							z.getRadius()
+							);
+					this.addSeed(s);
+				}
+			}
 		
 		
 		if (arg1 instanceof String)

@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 08/dic/2010 17.33.29
+* Date: 24/dic/2010 17.33.29
 * Titolo: JFramePreferences.java
-* Versione: 0.1.12.1 Rev.a:
+* Versione: 0.1.12.2 Rev.a:
 */
 
 
@@ -63,8 +63,8 @@ public class JFramePreferences extends JFrame{
 	private JLabel SimSizeLabel, backgroundcolorLabel;
 	private JTextField widthField, heightField;
 	
-	private JLabel MaxZlifesLabel, MaxZretadorsLabel, MaxSeedsLabel;
-	private JTextField MaxZlifesField, MaxZretadorsField, MaxSeedsField;
+	private JLabel MaxZlifesLabel,MaxZetatronLabel, MaxZretadorsLabel, MaxSeedsLabel;
+	private JTextField MaxZlifesField,MaxZetatronField ,MaxZretadorsField, MaxSeedsField;
 	
 	private JButton colorButton, okButton, cancelButton;
 	
@@ -225,8 +225,14 @@ public class JFramePreferences extends JFrame{
 		JPanel group3 = new JPanel();
 		group3.setLayout(new FlowLayout(FlowLayout.LEFT));
 		
+		JPanel group4 = new JPanel();
+		group4.setLayout(new FlowLayout(FlowLayout.LEFT));
+		
 		MaxZlifesLabel = new JLabel(" Max Zlifes Number");
 	    MaxZlifesField = new JTextField(5);
+	    
+	    MaxZetatronLabel = new JLabel(" Max Zetatron Number");
+	    MaxZetatronField = new JTextField(5);
 	    
 	    MaxZretadorsLabel = new JLabel(" Max Zretadors Number");
 	    MaxZretadorsField = new JTextField(5);
@@ -236,6 +242,7 @@ public class JFramePreferences extends JFrame{
 	    
 	    
 	    MaxZlifesField.setText( String.valueOf( config.getMaxZlifes())); 
+	    MaxZetatronField.setText( String.valueOf(config.getMaxZetatron() ) );
 	    MaxZretadorsField.setText( String.valueOf(config.getMaxZretador() ) );
 	    MaxSeedsField.setText( String.valueOf(config.getMaxSeeds() ) );
 	    
@@ -243,12 +250,19 @@ public class JFramePreferences extends JFrame{
 	    group1.add(MaxZlifesField);
 	    north.add(group1);
 	    
+	    north.add(MaxZetatronLabel);
+	    group4.add(MaxZetatronField);
+	    north.add(group4);
+	    
 	    north.add(MaxZretadorsLabel);
 	    group2.add(MaxZretadorsField);
 	    north.add(group2);
+	    
 	    north.add(MaxSeedsLabel);
 	    group3.add(MaxSeedsField);
 	    north.add(group3);
+	    
+	    
 	}
 	
 	

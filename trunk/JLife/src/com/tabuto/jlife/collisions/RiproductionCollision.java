@@ -83,8 +83,7 @@ public class RiproductionCollision extends CollisionDetector{
 		if (cell1.isHorny() && cell2.isHorny() && (jlc.getActualCellCount()<jlc.getMaxCellsNumber()))
 				{
 				newBornDna= Dna.merge(cell1.getZlifeDna(), cell2.getZlifeDna());
-				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());
-				cell2.setEnergy(cell2.getEnergy() - cell2.getRiproductionEnergy());
+				
 				cell1.age();
 				cell2.age();
 				//cell1.setBored();
@@ -98,6 +97,8 @@ public class RiproductionCollision extends CollisionDetector{
 				newCell.setName( combineName(cell1.getName(),cell2.getName()));
 				newCell.setEnergy(20); 
 				jlc.addCell(newCell);
+				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());
+				cell2.setEnergy(cell2.getEnergy() - cell2.getRiproductionEnergy());
 				newCell.live();
 				cell1.live();
 				cell2.live();

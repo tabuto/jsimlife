@@ -89,7 +89,7 @@ public class Zretador extends Zlife implements Serializable{
 					if(energy<hungryEnergy)
 					{   age();
 						setSpeed((int) getHungrySpeed()+2);
-						state =  CellState.HUNGRY;
+						setState(CellState.HUNGRY);
 						this.setAngleRadians(Math.random()*Math.PI*2);
 						break;
 					}
@@ -98,7 +98,7 @@ public class Zretador extends Zlife implements Serializable{
 					{
 						age();
 						setSpeed((int) getHornySpeed()+3);
-						state =  CellState.HORNY;
+						setState(CellState.HORNY);
 						this.setAngleRadians(Math.random()*Math.PI*2);
 						break;
 					}
@@ -117,7 +117,7 @@ public class Zretador extends Zlife implements Serializable{
 					  {
 						  this.age();
 						  this.setSpeed((int)getBoredSpeed()+5);
-						  state = CellState.BORED;
+						  setState(CellState.BORED);
 						  this.setAngleRadians(Math.random()*Math.PI*2);
 						  break;
 					  }  
@@ -134,7 +134,7 @@ public class Zretador extends Zlife implements Serializable{
 					{
 						//age();
 						 this.setSpeed((int)getBoredSpeed());
-						state = CellState.BORED;
+						setState(CellState.BORED);
 						this.setAngleRadians(Math.random()*Math.PI*2);
 						break;
 					}
@@ -142,7 +142,7 @@ public class Zretador extends Zlife implements Serializable{
 					{
 						age();
 						 this.setSpeed((int)getHungrySpeed()+6);
-						state = CellState.HUNGRY;
+						setState(CellState.HUNGRY);
 						this.setAngleRadians(Math.random()*Math.PI*2);
 						break;
 					}
@@ -150,9 +150,16 @@ public class Zretador extends Zlife implements Serializable{
 				
 			case SCARY:
 				{   
-				
-						state = CellState.BORED;
-						break;
+					    this.setSpeed((int)getScarySpeed());
+					    
+					    if(energy<hungryEnergy)
+						{
+							age();
+							 this.setSpeed((int)getHungrySpeed()+6);
+							setState(CellState.HUNGRY);
+							this.setAngleRadians(Math.random()*Math.PI*2);
+							break;
+						}
 				
 				}
 			

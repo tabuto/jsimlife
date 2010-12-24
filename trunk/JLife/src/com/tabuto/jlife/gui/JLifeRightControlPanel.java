@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 09/dic/2010 15.26.42
+* Date: 24/dic/2010 15.26.42
 * Titolo: JLifeRightControlPanel.java
-* Versione: 0.1.12.1 Rev.a:
+* Versione: 0.1.12.2 Rev.a:
 */
 
 
@@ -30,8 +30,10 @@
 
 package com.tabuto.jlife.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -90,6 +92,9 @@ public class JLifeRightControlPanel extends J2DControlPanel implements Observer{
 		timer = new Timer();
 		statTask = new StatisticTask();
 		timer.schedule( statTask, 500,1500 );
+		ZlifeInfo.setBackground(Color.BLACK);
+		ZlifeInfo.setForeground(Color.GREEN);
+		ZlifeInfo.setFont(new Font("Courier", Font.BOLD, 10));
 		
 	}
 

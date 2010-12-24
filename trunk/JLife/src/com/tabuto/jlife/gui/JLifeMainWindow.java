@@ -301,6 +301,7 @@ public class JLifeMainWindow extends JFrame {
     {
     	PLAY=true;
     	Game = new JLife(this.d);
+    	
     	panel = new Simulation(d,Game); //Declare the DrawingPanel
     	panel.setBackgroundColor(Preferences.getBackgroundColor());
     	toolbar = new JLifeToolbar(this);
@@ -310,17 +311,22 @@ public class JLifeMainWindow extends JFrame {
     	scroller = new JScrollPane(panel);
     	scroller.setPreferredSize(new Dimension(600,600));
     	
+    	
     	bottom = new JLifeBottomPanel(d,Game);
     	bottom.setVisible(true); 
     	
         cp_east.setVisible(true);
         panel.setFocusable(true);
-         
+        
+     
+        
+        
 	    //ADD PANELS TO THE FRAME
+        
 	    this.getContentPane().add(toolbar,BorderLayout.PAGE_START);
 	    this.getContentPane().add(scroller,BorderLayout.CENTER);
 	    this.getContentPane().add( cp_east, BorderLayout.LINE_END);
-	    this.getContentPane().add( bottom, BorderLayout.PAGE_END);
+	    this.getContentPane().add( bottom,BorderLayout.PAGE_END);
          
          //INIT GAME
          Game.initGame();

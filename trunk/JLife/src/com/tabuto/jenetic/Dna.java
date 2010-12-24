@@ -1,6 +1,6 @@
 /**
 * @author Francesco di Dio
-* Date: 24 Novembre 2010 18.14
+* Date: 24 Dicembre 2010 18.14
 * Titolo: Dna.java
 * Versione: 0.2.3 Rev.a:
 */
@@ -67,7 +67,7 @@ import org.jdom.output.*;
  *
  * @author tabuto83
  * 
- * @version 0.2.2
+ * @version 0.2.3
  * 
  * @see Gene
  */
@@ -544,6 +544,46 @@ public class Dna implements Serializable{
 		return output;
 	}
 
+	/**
+	 * Return a XML document represent this DNA with description List of ist genes
+	 * @param <code>String</code> fileName
+	 * @see Dna#load(String)
+	 */
+	public Document toXML()
+	{
+		
+		 //Elemento radice
+	      Element DnaRoot = new Element("DNA");
+	      //Documento
+	      Document document = new Document(DnaRoot);
+	      Element Dna = new Element("DNA-MetaInfo");
+	      Dna.setAttribute("Name", this.Name);
+	      Dna.setAttribute("Param", String.valueOf(this.param));
+	      Dna.setAttribute("Size",String.valueOf(this.getSize()));
+	      DnaRoot.addContent(Dna);
+	      for (int i=0; i< this.DNA.size();i++)
+	      {
+	    	  Element gene = new Element("Gene-"+i);
+	    	  
+	    	  gene.setAttribute("index", String.valueOf(i));
+	    	  
+	    	  gene.setAttribute("Name",this.getGene(i).getName());
+	    	  gene.setAttribute("Type", this.getGene(i).getType());
+	    	  gene.setAttribute("Value", this.getGene(i).stringValue());
+	    	  gene.setAttribute("Description",this.getGene(i).getDescription());
+	    	  
+	    	 DnaRoot.addContent( gene );
+	     }  
+	      
+	      return document;
+	    	  
+	     
+	     
+		 
+	      
+	
+	}
+
 	
 	/**
 	 * Write a XML file represent this DNA with description List of ist genes
@@ -590,6 +630,7 @@ public class Dna implements Serializable{
 	}
 
 
+	
 	/*
 	 * *****************************************************
 	 * PRIVATE and PROTECTED METHODS
