@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 29/nov/2010 18.15.45
 * Titolo: JFrameNewCell.java
-* Versione: 0.1.12.1 Rev.a:
+* Versione: 0.1.13 Rev.a:
 */
 
 
@@ -348,6 +348,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 	            int n = fileChooser.showSaveDialog(this);
 	            if (n == JFileChooser.APPROVE_OPTION) 
 	            {        	
+	            	nameField.setText(fileChooser.getSelectedFile().getName());
 	            	createZlife();
 	            	this.ZlifeDna.toXML(fileChooser.getSelectedFile().getAbsolutePath());
 	            }
@@ -361,7 +362,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 	
 	private void addNameField()
 	{
-		nameLabel=new JLabel("Name");
+		nameLabel=new JLabel("Zlife-NAME");
 		nameField = new JTextField(15);
 		nameField.setText("New Name");
 		north.add(nameLabel);
@@ -387,8 +388,11 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 	
 	private  void addColorChooser()
 	{
-		Color CellColor = new Color(125,125,125);
-		final Color startColor = new Color(125,125,125);
+		int red= (int)(Math.random()*254);
+		int green= (int)(Math.random()*254);
+		int blue= (int)(Math.random()*254);
+		Color CellColor = new Color(red,green,blue);
+		final Color startColor = new Color(red,green,blue);
 		colorButton = new JButton("");
 		colorButton.setBackground(CellColor);
 		
@@ -900,6 +904,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		{
 			
 			description.setText(Zlife.getDescription());
+			nameField.setText("Zlife-NAME");
 			
 		}
 		
@@ -907,6 +912,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		{
 			
 			description.setText(Zretador.getDescription());
+			nameField.setText("Zretador-NAME");
 		}
 		
 		description.setCaretPosition(0);
@@ -915,6 +921,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		{
 			
 			description.setText(Zetatron.getDescription());
+			nameField.setText("Zetatron-NAME");
 		}
 		
 		description.setCaretPosition(0);

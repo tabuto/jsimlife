@@ -86,7 +86,7 @@ public class ZretadorVsZetatronCollision extends CollisionDetector{
 				z.live();
 				
 				//Zlife hit but not necessary die
-				c.setEnergy( c.getEnergy()-( (z.getRadius()+1)*10) );
+				c.setEnergy( c.getEnergy()-( (z.getRadius()+1)*4) );
 				return;
 			}
 			

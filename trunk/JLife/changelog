@@ -1,3 +1,9 @@
+JLife v.1.13
+fix the Seed's quantity message dialog in the JLifeShowZlife
+fix the save dialog into JFrameNewCell
+add automatic name choose in JFrameNewCell
+add randomColor in JFrameNewCell
+
 JLife v.1.12.2 
 
 Add new Zlife type Zetatron uses a Neural Network to change state;

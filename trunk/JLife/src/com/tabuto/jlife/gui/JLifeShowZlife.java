@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 24/dic/2010 22.40.29
 * Titolo: JLifeShowZlife.java
-* Versione: 0.1.12.2 Rev.a:
+* Versione: 0.1.13 Rev.a:
 */
 
 
@@ -325,9 +325,9 @@ public void update(Observable arg0, Object arg1) {
 			
 			if(message.equalsIgnoreCase("SeedSelected"))
 			{
-				JOptionPane.showMessageDialog(this,"Seed quantity: "+
-						Game.getSelectedSeed().getQuantity());
-				
+				JOptionPane.showMessageDialog(this, 
+						"Seed quantity: "+ Game.getSelectedSeed().getQuantity(), 
+						"Message", JOptionPane.INFORMATION_MESSAGE);	
 			}
 			
 			
