@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 19/dic/2010 11.05.48
+* Date: 27/dic/2010 11.05.48
 * Titolo: ZetatronVsSeeds.java
-* Versione: 0.12.2 Rev.a:
+* Versione: 0.13.1 Rev.a:
 */
 
 
@@ -84,15 +84,10 @@ public class ZetatronVsSeeds extends CollisionDetector{
 					if (cell1.isHungry())
 					{
 						seed2.eatMe();
-						//cell1.age();
 						cell1.setEnergy(cell1.getMaxEnergy());
 						cell1.setAngleRadians(Math.random()*2*Math.PI);
 						//cell1.setHorny();
 						cell1.live();
 					}
-				
-				
-		
 	  }
-
 }

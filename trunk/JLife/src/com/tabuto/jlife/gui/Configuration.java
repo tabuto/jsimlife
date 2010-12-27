@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 09/dic/2010 14.55.28
+* Date: 27/dic/2010 14.55.28
 * Titolo: Configuration.java
-* Versione: 0.1.12.1 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -165,6 +165,9 @@ public class Configuration {
 				this.setMaxZetatron( Integer.parseInt(maxSprites.getAttributeValue("Zetatron")));
 				this.setMaxZretador( Integer.parseInt(maxSprites.getAttributeValue("Zretador")));
 				this.setMaxSeeds( Integer.parseInt(maxSprites.getAttributeValue("Seeds")));
+				
+				Element workingspace = (Element) iterator.next();
+				this.setPath( workingspace.getAttributeValue("CurrentDefaultPath"));
 	    
 	}
 	
@@ -175,7 +178,7 @@ public class Configuration {
 	{
 		setPlayfieldDimension(1024,768);
 		setBackgroundColor(Color.BLACK);
-		
+		setPath( System.getProperty("user.dir"));
 		setMaxZlifes(250);
 		setMaxZetatron(125);
 		setMaxZretador(250);
@@ -214,6 +217,10 @@ public class Configuration {
 	      maxZlifes.setAttribute("Seeds", String.valueOf(getMaxSeeds()));
 	      preferences.addContent(maxZlifes);
 	      
+	      //ELEMENTS 3 PATH DIR
+	      Element workingspace = new Element("Workingspace");
+	      workingspace.setAttribute("CurrentDefaultPath", getPath());
+	      preferences.addContent(workingspace);
 	      
 	      //WRITE FILE
 	      XMLOutputter outputter = new XMLOutputter();

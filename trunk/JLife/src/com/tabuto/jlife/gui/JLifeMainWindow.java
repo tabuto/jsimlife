@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 09/dic/2010 15.18.55
+* Date: 27/dic/2010 15.18.55
 * Titolo: JLifeMainWindow.java
-* Versione: 0.1.13 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 
 
 import javax.swing.JFileChooser;
@@ -81,13 +82,14 @@ public class JLifeMainWindow extends JFrame {
     public Simulation panel; //THE PANEL
     private JMenuBar j2dmenubar;  //THE MENUBAR
     public JLifeToolbar toolbar; //THE TOOLBAR
-    public JLifeRightControlPanel cp_east;
-    JLifeBottomPanel bottom;
+    public JLifeRightControlPanel cp_east; //STATISTIC PANEL
+    JLifeBottomPanel bottom; //STATUS BAR
     JScrollPane scroller;
     JLifeShowZlife ZlifeView; //Frame that let you to view the selected Zlife
     
     public JLifeMainWindow(Configuration conf)
     {
+    	//Init JSimLife parameters
     	Preferences = conf;
     	d = Preferences.getPlayfieldDimension();
     	this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);
@@ -113,10 +115,6 @@ public class JLifeMainWindow extends JFrame {
         //ADD ICON TITLE
         this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
         		(this.getClass().getResource("icon/icon_alpha_48x48.gif")));
-
-   
-    
-        
         pack();        
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);       
@@ -231,7 +229,9 @@ public class JLifeMainWindow extends JFrame {
 			{
     			public void actionPerformed( ActionEvent action )
 					{
-    				if(panel!=null){} //panel.Step();
+    				if(panel!=null){}
+    				panel.drawStuff( Game);
+	        		panel.panelDraw();
 						}
 					}
 			);
@@ -301,7 +301,7 @@ public class JLifeMainWindow extends JFrame {
     {
     	PLAY=true;
     	Game = new JLife(this.d);
-    	
+    	Game.setPath(Preferences.getPath());
     	panel = new Simulation(d,Game); //Declare the DrawingPanel
     	panel.setBackgroundColor(Preferences.getBackgroundColor());
     	toolbar = new JLifeToolbar(this);
@@ -317,9 +317,6 @@ public class JLifeMainWindow extends JFrame {
     	
         cp_east.setVisible(true);
         panel.setFocusable(true);
-        
-     
-        
         
 	    //ADD PANELS TO THE FRAME
         
@@ -387,6 +384,9 @@ public class JLifeMainWindow extends JFrame {
   
             JFileChooser fileChooser = new JFileChooser();
    
+            File f = new File(Preferences.getPath()+"/.");
+            fileChooser.setCurrentDirectory(f);
+            
             int n = fileChooser.showOpenDialog(JLifeMainWindow.this);
             if (n == JFileChooser.APPROVE_OPTION) 
             	{	
@@ -423,7 +423,8 @@ public class JLifeMainWindow extends JFrame {
           try {
   
             JFileChooser fileChooser = new JFileChooser();
-   
+            File f = new File(Preferences.getPath()+"/.");
+            fileChooser.setCurrentDirectory(f);
             int n = fileChooser.showSaveDialog(JLifeMainWindow.this);
             if (n == JFileChooser.APPROVE_OPTION) 
             { 

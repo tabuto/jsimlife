@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 17.31.59
+* Date: 27/dic/2010 17.31.59
 * Titolo: EatingCollision.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -84,10 +84,9 @@ public class EatingCollision extends CollisionDetector{
 					if (cell1.isHungry())
 					{
 						seed2.eatMe();
-						cell1.age();
+					
 						cell1.setEnergy(cell1.getMaxEnergy());
 						cell1.setAngleRadians(Math.random()*2*Math.PI);
-						//cell1.setHorny();
 						cell1.live();
 					}
 				

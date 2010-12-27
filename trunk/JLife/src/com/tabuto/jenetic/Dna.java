@@ -572,6 +572,8 @@ public class Dna implements Serializable{
 	    	  gene.setAttribute("Value", this.getGene(i).stringValue());
 	    	  gene.setAttribute("Description",this.getGene(i).getDescription());
 	    	  
+	    	  gene.setName(gene.getName()+ "-"+gene.getAttributeValue("Name"));
+	    	  
 	    	 DnaRoot.addContent( gene );
 	     }  
 	      
@@ -644,6 +646,7 @@ public class Dna implements Serializable{
 	protected Gene combineGene(Gene g1, Gene g2) throws NumberFormatException
 	{
 		Gene G= new Gene();
+		double var=0;
 		//Se sono entrambi "unibili"
 		if(g1.isMeargeable() && g2.isMeargeable() )
 		{	//se sono entrambi la stessa classe
@@ -653,14 +656,19 @@ public class Dna implements Serializable{
 						G.setValue( g1.booleanValue() & g2.booleanValue() );
 					
 					if(g1.getType().equalsIgnoreCase("Integer") || g1.getType().equalsIgnoreCase("int")  )
-						G.setValue((int) (((g1.intValue() + g2.intValue())/2)+ (int)((g1.intValue() + g2.intValue())/2)*this.param )  );
+					{
+						var = ((g1.intValue() + g2.intValue())/2)*this.param;
 						
+						G.setValue((int) (((g1.intValue() + g2.intValue())/2)- var + Math.random()*var*2  ));
+					}	
 					if(g1.getType().equalsIgnoreCase("Byte"))
 						G.setValue( g1.byteValue() & g2.byteValue() );
 					
 					if(g1.getType().equalsIgnoreCase("Double") )
-						G.setValue( (((g1.doubleValue() + g2.doubleValue())/2)+ ((g1.doubleValue() + g2.doubleValue())/2)*this.param )  );
-				
+					{
+						var = ((g1.doubleValue() + g2.doubleValue())/2)*this.param;
+						G.setValue( (((g1.doubleValue() + g2.doubleValue())/2) - var + Math.random()*var*2 )  );
+					}
 				G.setName( g1.getName());
 				G.setDescription(g1.getDescription());
 				G.setMergeable(true);	

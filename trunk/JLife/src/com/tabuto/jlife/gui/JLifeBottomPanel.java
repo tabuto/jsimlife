@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 09/dic/2010 15.29.36
+* Date: 27/dic/2010 15.29.36
 * Titolo: JLifeBottomPanel.java
-* Versione: 0.1.12.1 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -52,7 +52,7 @@ import com.tabuto.jlife.JLife;
 public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 
 	 static JLife game;
-	 private JTextField CountLabel;
+	 private JTextField CountLabel, statusLabel;
 	 private Border border;
 	
 	/*
@@ -65,6 +65,7 @@ public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 		this.game = game;
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		addCountLabel();
+		addStatusLabel();
 	}
 
 	@Deprecated
@@ -81,14 +82,30 @@ public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 	 */
 	private void addCountLabel()
 	{
-		CountLabel = new JTextField(4);
+		CountLabel = new JTextField(5);
 		CountLabel.setToolTipText("Actual Cells Number");
-		CountLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		CountLabel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		CountLabel.setEditable(false);
 		border = BorderFactory.createBevelBorder(BevelBorder.LOWERED ); 
 		CountLabel.setBorder(border);
 		CountLabel.setText(Integer.toString(0));
 		add(CountLabel);
+		
+	}
+	
+	/*
+	 * Add a status label
+	 */
+	private void addStatusLabel()
+	{
+		statusLabel = new JTextField(4);
+		statusLabel.setToolTipText("Actual Simulation State");
+		statusLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		statusLabel.setEditable(false);
+		border = BorderFactory.createBevelBorder(BevelBorder.LOWERED ); 
+		statusLabel.setBorder(border);
+		statusLabel.setText("PLAY");
+		add(statusLabel);
 	}
 	
 	public void setGame(JLife g)
@@ -104,9 +121,14 @@ public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 		CountLabel.setText(  Integer.toString(game.getActualCellCount() ) );
 	}
 	
+	private void setGameStatus(String status)
+	{
+		statusLabel.setText(status);
+	}
+	
 	/*
 	 * JLifeBottomPanel is an observer of Game, when JLife(Game2d) change his count,
-	 * JLIfeBottomPanel update the actual cell count
+	 * JLIfeBottomPanel update the actual cell count and any othe information catched
 	 * (non-Javadoc)
 	 * @see java.util.Observer#update(java.util.Observable, java.lang.Object)
 	 */
@@ -117,10 +139,22 @@ public class JLifeBottomPanel extends J2DBottomPanel implements Observer {
 		if (arg instanceof String)
 		{
 			String message = (String) arg;
+			
 			if(message.equalsIgnoreCase("CountChange"))
 				{ 
 				setCellCount();
 				}
+			
+
+			if(message.equalsIgnoreCase("activate"))
+				{ 
+				setGameStatus("PLAY");
+				}
+			
+			if(message.equalsIgnoreCase("deactivate"))
+			{ 
+			setGameStatus("STOP");
+			}
 		}
 		
 	}

@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 06/dic/2010 14.08.02
+* Date: 27/dic/2010 14.08.02
 * Titolo: GroupSizeChartPanel.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -61,11 +61,14 @@ public class GroupSizeChartPanel{
 	Vector<ADataCollector> collection = new Vector<ADataCollector>();
 	Chart2D chart;
 	Paint[] colors = {Color.RED,Color.BLUE,Color.ORANGE, Color.YELLOW ,Color.GREEN,Color.MAGENTA,Color.CYAN ,Color.PINK,Color.LIGHT_GRAY };
+	
 	public GroupSizeChartPanel(Statistic s)
 	{
 		super();
 		GameStatistic = s;
 		chart = new Chart2D();
+		chart.setBackground(Color.black);
+		chart.setForeground(Color.white);
 		initChart();
 	}
 	
@@ -77,10 +80,12 @@ public class GroupSizeChartPanel{
 		
 		for(int i=0;i<GameStatistic.GroupNumber;i++)
 		{
+		// Note that charts need limited amount of values!!! 
 	    ITrace2D trace1 = new Trace2DLtd(500); 
 	    trace1.setColor((Color)colors[i]);
 	    trace1.setName(GameStatistic.groupNames[i] );
-	    collector1 = new GroupSizeDataCollector(trace1, 1000,GameStatistic,i);
+	    //Every second a new Data is collected!
+	    collector1 = new GroupSizeDataCollector(trace1, 2000,GameStatistic,i);
 	    collection.add(collector1);
 	    chart.addTrace(trace1);
 	    collector1.start();
@@ -116,6 +121,7 @@ public class GroupSizeChartPanel{
 	
 	public class GroupSizeDataCollector extends ADataCollector 
 	{
+		double initTime = System.currentTimeMillis();
 		public Statistic statistic;
 		public int groupNumber;
 			
@@ -132,8 +138,9 @@ public class GroupSizeChartPanel{
 				double currentSize=0.0;
 				statistic.calculateStatistics();
 				currentSize = statistic.groupSize[groupNumber];
-
-			    return new TracePoint2D(System.currentTimeMillis(), currentSize);
+				
+				
+			    return new TracePoint2D(System.currentTimeMillis()-initTime, currentSize);
 			}
 	}
 	

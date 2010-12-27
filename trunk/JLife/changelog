@@ -1,3 +1,15 @@
+JLife v.1.13.1
+Change charts background and foreground color;
+fix Step Action in Menu
+add status field onto statusBar
+add coordinates check value in JFrameNewCell
+fix age effect: Zlifes spend too much lifeCycle
+fix Jenetic.DNa.CombineGene() method: now the combinated values are under or bottom average value!
+fix life control in JsimLife; now ZLife die if energy == 0!
+fix riproductionCollision: now new Zlifes born hungry!
+add Path preference to select the JSimLife workingspace directory
+fix DNaPanel gene display, now every gene display its name!
+
 JLife v.1.13
 fix the Seed's quantity message dialog in the JLifeShowZlife
 fix the save dialog into JFrameNewCell
@@ -18,7 +30,7 @@ fix reproduction: now the energy is subtract after the new cell is created!
 fix showZlife frame too slow, now refresh only if zlife's state change
 fix loadXML into Dna.java class, can't load DnaParam in root element
 Change icons and statisic panel layout
-Add DnaPanel to show Zlife's Dna in a JTree ML link to JSimLife homepage;
+Add DnaPanel to show Zlife's Dna in a JTree XML;
 Add message on click on seed showing the actual seed's quantity!
 Reorder and Comment Code
 

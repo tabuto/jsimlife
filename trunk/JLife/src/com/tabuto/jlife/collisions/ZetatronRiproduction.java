@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 17/dic/2010 18.52.25
+* Date: 27/dic/2010 18.52.25
 * Titolo: ZetatronRiproduction.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.13.1 Rev.a:
 */
 
 
@@ -79,10 +79,7 @@ public class ZetatronRiproduction  extends CollisionDetector {
 				{
 				newBornDna= Dna.merge(cell1.getZlifeDna(), cell2.getZlifeDna());
 				
-				//cell1.age();
-				//cell2.age();
-				//cell1.setBored();
-				//cell2.setBored();
+			
 				double tempAngle = cell2.getAngle();
 				cell2.setAngleRadians(cell1.getAngle());
 				cell1.setAngleRadians(tempAngle);

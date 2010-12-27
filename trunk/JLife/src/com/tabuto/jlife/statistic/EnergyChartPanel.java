@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 06/dic/2010 14.08.02
+* Date: 27/dic/2010 14.08.02
 * Titolo: EnergyChartPanel.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -66,6 +66,8 @@ public class EnergyChartPanel{
 		super();
 		GameStatistic = s;
 		chart = new Chart2D();
+		chart.setBackground(Color.black);
+		chart.setForeground(Color.white);
 		initChart();
 	}
 	
@@ -82,7 +84,7 @@ public class EnergyChartPanel{
 	    ITrace2D trace1 = new Trace2DLtd(500); 
 	    trace1.setColor((Color)colors[i]);
 	    trace1.setName(GameStatistic.groupNames[i] );
-	    collector1 = new GroupSizeDataCollector(trace1, 1000,GameStatistic,i);
+	    collector1 = new GroupSizeDataCollector(trace1, 2000,GameStatistic,i);
 	    collection.add(collector1);
 	    chart.addTrace(trace1);
 	    collector1.start();
@@ -133,7 +135,7 @@ public class EnergyChartPanel{
 	{
 		public Statistic statistic;
 		public int groupNumber;
-			
+		double initTime = System.currentTimeMillis();	
 		/**
 		 * Collector Constructor
 		 * @param trace ITrace2D data
@@ -158,7 +160,7 @@ public class EnergyChartPanel{
 				statistic.calculateStatistics();
 				currentEnergy = statistic.enthropy[groupNumber];
 
-			    return new TracePoint2D(System.currentTimeMillis(), currentEnergy);
+			    return new TracePoint2D(System.currentTimeMillis()-initTime, currentEnergy);
 			}
 	}
 	

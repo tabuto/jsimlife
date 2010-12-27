@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/dic/2010 17.33.29
+* Date: 27/dic/2010 17.33.29
 * Titolo: JFramePreferences.java
-* Versione: 0.1.12.2 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -37,13 +37,19 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.File;
+
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
 
 /**
  * Simple JFrame to show the editable JSimLife parameters.
@@ -64,8 +70,9 @@ public class JFramePreferences extends JFrame{
 	private JTextField widthField, heightField;
 	
 	private JLabel MaxZlifesLabel,MaxZetatronLabel, MaxZretadorsLabel, MaxSeedsLabel;
+	private JLabel pathLabel;
 	private JTextField MaxZlifesField,MaxZetatronField ,MaxZretadorsField, MaxSeedsField;
-	
+	private JTextField pathField;
 	private JButton colorButton, okButton, cancelButton;
 	
 	private Configuration config;
@@ -90,19 +97,19 @@ public class JFramePreferences extends JFrame{
 		north.setLayout( new GridLayout(0,2,5,5));
 		
 		south = new JPanel();
-		
-		
 		south.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		
 		//ADD CONFIGURATION COMPONENTS TO NORTH PANEL
 		addPanelSizeComponents();
 		addColorButton();
 		addMaxSpritesComponent();
+		addPathDirectory();
 		
 		//ADD COMPONENTS TO THE SOUTH PANEL
 		JButton okButton = new JButton("Save");
 		JButton cancelButton = new JButton("Cancel");
 		
+		//Save the current configuration into an XML file
 		okButton.addActionListener(new ActionListener()
 		   {
 			public void actionPerformed(ActionEvent actionEvent) 
@@ -118,7 +125,7 @@ public class JFramePreferences extends JFrame{
 				}
 		   });
 		
-		
+		//Close this FRame
 		cancelButton.addActionListener(new ActionListener()
 		   {
 			public void actionPerformed(ActionEvent actionEvent) 
@@ -164,6 +171,7 @@ public class JFramePreferences extends JFrame{
 		
 		config.setMaxSeeds(Integer.parseInt(MaxSeedsField.getText()));
 		
+		config.setPath( pathField.getText());
 	}
 
 	private void addPanelSizeComponents()
@@ -265,6 +273,75 @@ public class JFramePreferences extends JFrame{
 	    
 	}
 	
-	
+	private void addPathDirectory()
+	{
+		JPanel field = new JPanel();
+		field.setLayout(new FlowLayout(FlowLayout.LEFT));
+		
+		pathLabel = new JLabel(" Zlife's Current Directory");
+	    pathField = new JTextField(15);
+	    pathField.setAutoscrolls(true);
+	    pathField.setText( config.getPath()); 
+	    
+	    pathField.addMouseListener(new MouseListener()
+		   {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+				 try{
+					  
+			            JFileChooser fileChooser = new JFileChooser("Select Workspace");
+			   
+			            File f = new File(pathField.getText()+"/.");
+			            fileChooser.setCurrentDirectory(f);
+			            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			            fileChooser.setAcceptAllFileFilterUsed(false);
+
+			            
+			            int n = fileChooser.showOpenDialog(null);
+			            if (n == JFileChooser.APPROVE_OPTION) 
+			            	{	
+			      					  pathField.setText(
+			      							  fileChooser.getCurrentDirectory().getAbsolutePath()
+			      							 
+			      							  );
+			      					  
+			            	}
+			            	
+			          	 
+			          } catch (Exception ex) {}
+			        
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mousePressed(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		   });
+	    
+	    north.add(pathLabel);
+	    field.add(pathField);
+	    north.add(field);
+	    
+	}
 
 }

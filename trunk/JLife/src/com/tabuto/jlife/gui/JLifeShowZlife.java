@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/dic/2010 22.40.29
+* Date: 27/dic/2010 22.40.29
 * Titolo: JLifeShowZlife.java
-* Versione: 0.1.13 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -210,7 +210,9 @@ protected void saveDna() {
 	 try {
 		  
          JFileChooser fileChooser = new JFileChooser();
-         fileChooser.setSelectedFile(new File(nameField.getText()));
+         File f = new File(Game.getPath()+"/"+nameField.getText());
+	     fileChooser.setCurrentDirectory(f);
+         fileChooser.setSelectedFile(f);
          int n = fileChooser.showSaveDialog(this);
          if (n == JFileChooser.APPROVE_OPTION) 
          {        	

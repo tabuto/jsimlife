@@ -3,6 +3,15 @@ NOTICE
 This product optionally includes parts of software developed under other licenses and by other organizations and people.
 If you have any questions regarding access to the third party source code or binaries, please contact tabuto83@gmail.com.
 
+****************************************************************************
+Neuroph
+
+Neuroph is lightweight Java neural network framework to develop common neural network architectures.
+It has been released as open source under the Apache 2.0 license
+
+Neuroph is available in binary and source form from:
+http://neuroph.sourceforge.net/
+****************************************************************************
 
 JDOM 
 
