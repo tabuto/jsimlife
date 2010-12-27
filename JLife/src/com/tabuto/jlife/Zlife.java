@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 23.39.33
+* Date: 27/dic/2010 23.39.33
 * Titolo: Zlife.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -55,7 +55,7 @@ import com.tabuto.util.Point;
  * 
  * @author tabuto83
  * 
- * @version 0.1.10.2
+ * @version 0.1.13.1
  * 
  * @see Gene
  * @see Dna
@@ -561,7 +561,7 @@ public class Zlife extends Sprite implements Serializable{
 		notifyObservers("ZLife:Move");
   		  
   		  energy = (energy - realMetabolism - (getSpeed()/100));
-  		  if(energy<0)
+  		  if(energy<=0)
   			 {setAlive(false);Deactivate();}
   		  else
   			  this.live();

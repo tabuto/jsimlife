@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 06/dic/2010 19.31.25
+* Date: 27/dic/2010 19.31.25
 * Titolo: RadiusChartPanel.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -66,6 +66,8 @@ public class RadiusChartPanel {
 		super();
 		GameStatistic = s;
 		chart = new Chart2D();
+		chart.setBackground(Color.black);
+		chart.setForeground(Color.white);
 		initChart();
 	}
 	
@@ -79,10 +81,10 @@ public class RadiusChartPanel {
 		
 		for(int i=0;i<GameStatistic.GroupNumber;i++)
 		{
-	    ITrace2D trace1 = new Trace2DLtd(1200); 
+	    ITrace2D trace1 = new Trace2DLtd(500); 
 	    trace1.setColor((Color)colors[i]);
 	    trace1.setName(GameStatistic.groupNames[i] );
-	    collector1 = new RadiusDataCollector(trace1, 1000,GameStatistic,i);
+	    collector1 = new RadiusDataCollector(trace1, 2000,GameStatistic,i);
 	    collection.add(collector1);
 	    chart.addTrace(trace1);
 	    collector1.start();
@@ -132,7 +134,7 @@ public class RadiusChartPanel {
 	{
 		public Statistic statistic;
 		public int groupNumber;
-			
+		double initTime = System.currentTimeMillis();
 		/**
 		 * Collector Constructor
 		 * @param trace ITrace2D data
@@ -157,7 +159,7 @@ public class RadiusChartPanel {
 				statistic.calculateStatistics();
 				currentRadius = statistic.averageRadius[groupNumber];
 
-			    return new TracePoint2D(System.currentTimeMillis(), currentRadius);
+			    return new TracePoint2D(System.currentTimeMillis()-initTime, currentRadius);
 			}
 	}
 	

@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 01/dic/2010 10.58.29
+* Date: 27/dic/2010 10.58.29
 * Titolo: ZretadorRiproduction.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.13.1 Rev.a:
 */
 
 
@@ -82,10 +82,7 @@ public class ZretadorRiproduction extends CollisionDetector{
 				{
 				newBornDna= Dna.merge(cell1.getZlifeDna(), cell2.getZlifeDna());
 				
-				cell1.age();
-				cell2.age();
-				//cell1.setBored();
-				//cell2.setBored();
+			
 				double tempAngle = cell2.getAngle();
 				cell2.setAngleRadians(cell1.getAngle());
 				cell1.setAngleRadians(tempAngle);
@@ -93,7 +90,7 @@ public class ZretadorRiproduction extends CollisionDetector{
 				//newCell.setBored();
 				newCell.setAngleRadians( Math.random() * 2 * Math.PI );
 				newCell.setName( combineName(cell1.getName(),cell2.getName()));
-				newCell.setEnergy(20); 
+				newCell.setEnergy(newCell.getHungryEnergy()*0.9); 
 				jlc.addZretador(newCell);
 				
 				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());

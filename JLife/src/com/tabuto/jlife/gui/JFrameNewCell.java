@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 18.15.45
+* Date: 27/dic/2010 18.15.45
 * Titolo: JFrameNewCell.java
-* Versione: 0.1.13 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -49,6 +49,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
@@ -66,7 +67,7 @@ import com.tabuto.jlife.Zretador;
 
 
 /**
- * A JFRame to insert new ZLifes or Zredator into Simulation Game
+ * A JFRame to insert new ZLifes (Zlifes, Zredator or Zetatron) into Simulation Game
  * @author tabuto83
  *
  */
@@ -189,66 +190,13 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent actionEvent) 
 				{
 				
+				//Check values before creates ZLifes
+				checkValues();
+				//Create a new Zlife
 				createZlife();
-				for(int i=0;i< multiplierSlider.getValue()+1;i++)
-				{
-					int choose = cellChooser.getSelectedIndex();
+				//Add the correct Zlife's number into simulation
+				addZlifes();
 			
-			/*
-			 * Choosing the right Zlifes type: ZLife or Zredator?
-			 */
-					if(choose==0)
-					{
-						newCell = new Zlife( Game.getDimension(), 
-							Integer.valueOf(xField.getText() ) ,
-							Integer.valueOf(yField.getText()),
-							ZlifeDna);
-					
-					if(multiplierSlider.getValue()<2)
-						newCell.setAngleDegree( directionSlider.getValue());
-					else
-						newCell.setAngleRadians(Math.random()*2*Math.PI );
-					
-					newCell.live();
-					newCell.setName( nameField.getText());
-					Game.addCell(newCell);
-					}
-					else
-					if (choose==1)
-					{	
-						newZretador = new Zretador( Game.getDimension(), 
-							Integer.valueOf(xField.getText() ) ,
-							Integer.valueOf(yField.getText()),
-							ZlifeDna);
-					
-					if(multiplierSlider.getValue()<2)
-						newZretador.setAngleDegree( directionSlider.getValue());
-					else
-						newZretador.setAngleRadians(Math.random()*2*Math.PI );
-					
-					newZretador.live();
-					newZretador.setName( nameField.getText());
-					Game.addZretador(newZretador);
-					}
-					else
-					if (choose==2)
-					{	
-						
-						newZetatron = new Zetatron( Game.getDimension(), 
-								Integer.valueOf(xField.getText() ) ,
-								Integer.valueOf(yField.getText()),
-								ZlifeDna);
-						
-						if(multiplierSlider.getValue()<2)
-							newZetatron.setAngleDegree( directionSlider.getValue());
-						else
-							newZetatron.setAngleRadians(Math.random()*2*Math.PI );
-						
-						newZetatron.live();
-						newZetatron.setName( nameField.getText());
-						Game.addZetatron(newZetatron);
-				}
-		}
 				dispose();
 				} 
 			});
@@ -302,7 +250,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 	protected void loadDna() {
 		try{
 		  JFileChooser fileChooser = new JFileChooser();
-		   
+	      File f = new File(Game.getPath()+"/.");
+	      fileChooser.setCurrentDirectory(f);
           int n = fileChooser.showOpenDialog(this);
           if (n == JFileChooser.APPROVE_OPTION) 
           	{	
@@ -313,7 +262,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		}catch (Exception ex) {}
 		
           
-          //SET THE SLIDER WITH Correct values
+          //SET THE SLIDER WITH loaded DNA's values
          nameField.setText( ZlifeDna.getName());
           
          dnaParamSlider.setValue((int) (ZlifeDna.getGene("dnaParam").doubleValue() *100 ));
@@ -344,7 +293,9 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		  try {
 			  
 	            JFileChooser fileChooser = new JFileChooser();
-	            fileChooser.setSelectedFile(new File(nameField.getText()));
+	            File dir = new File(Game.getPath()+"/"+nameField.getText());
+	  	        //fileChooser.setCurrentDirectory(dir);
+	            fileChooser.setSelectedFile(dir);
 	            int n = fileChooser.showSaveDialog(this);
 	            if (n == JFileChooser.APPROVE_OPTION) 
 	            {        	
@@ -766,6 +717,76 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		
 	}
 	
+	/**
+	 * Add the correct Zlife's type and numbers to Simulation
+	 */
+	protected void addZlifes()
+	{
+		//Check the Zlife's number to create
+		for(int i=0;i< multiplierSlider.getValue()+1;i++)
+		{
+			int choose = cellChooser.getSelectedIndex();
+	
+	/*
+	 * Choosing the right Zlifes type: ZLife, Zredator or Zetatron?
+	 */
+			//ZLIFE 
+			if(choose==0)
+			{
+				newCell = new Zlife( Game.getDimension(), 
+					Integer.valueOf(xField.getText() ) ,
+					Integer.valueOf(yField.getText()),
+					ZlifeDna);
+			
+			if(multiplierSlider.getValue()<2)
+				newCell.setAngleDegree( directionSlider.getValue());
+			else
+				newCell.setAngleRadians(Math.random()*2*Math.PI );
+			
+			newCell.live();
+			newCell.setName( nameField.getText());
+			Game.addCell(newCell);
+			}
+			else
+				//ZRETADOR
+			if (choose==1)
+			{	
+				newZretador = new Zretador( Game.getDimension(), 
+					Integer.valueOf(xField.getText() ) ,
+					Integer.valueOf(yField.getText()),
+					ZlifeDna);
+			
+			if(multiplierSlider.getValue()<2)
+				newZretador.setAngleDegree( directionSlider.getValue());
+			else
+				newZretador.setAngleRadians(Math.random()*2*Math.PI );
+			
+			newZretador.live();
+			newZretador.setName( nameField.getText());
+			Game.addZretador(newZretador);
+			}
+			else
+				//ZETATRON
+			if (choose==2)
+			{	
+				
+				newZetatron = new Zetatron( Game.getDimension(), 
+						Integer.valueOf(xField.getText() ) ,
+						Integer.valueOf(yField.getText()),
+						ZlifeDna);
+				
+				if(multiplierSlider.getValue()<2)
+					newZetatron.setAngleDegree( directionSlider.getValue());
+				else
+					newZetatron.setAngleRadians(Math.random()*2*Math.PI );
+				
+				newZetatron.live();
+				newZetatron.setName( nameField.getText());
+				Game.addZetatron(newZetatron);
+		}
+}
+	}
+	
 	/*
 	 * Creates the correct Zlife's type and build the right dna
 	 */
@@ -794,10 +815,10 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 			int choose = cellChooser.getSelectedIndex();
 			
 			/*
-			 * Choosing the right Zlifes type: ZLife or Zredator?
+			 * Choosing the right Zlifes type: ZLife, Zretador or Zetatron
 			 */
 			if(choose==0)
-			{
+			{ //Create ZLIFE
 					newCell = new Zlife( Game.getDimension(), 
 							Integer.valueOf(xField.getText() ) ,
 							Integer.valueOf(yField.getText()),
@@ -806,7 +827,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 			}
 			else
 				if (choose==1)
-				{	
+				{	//CREATE ZRETADOR
 					newZretador = new Zretador( Game.getDimension(), 
 							Integer.valueOf(xField.getText() ) ,
 							Integer.valueOf(yField.getText()),
@@ -815,8 +836,9 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 				
 			else
 				if (choose==2)
-				{
+				{//CREATE ZETATRON
 					
+					//Add Zetatron's DNA parameters
 					//WEIGHTS
 					double HN0w0 = 1.6472350208469893;
 					double HN0w1 =  1.5259734987014437;
@@ -892,6 +914,34 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 							ZlifeDna);
 				}
 				
+	}
+	
+	/**
+	 * Check if insert values are correct
+	 */
+	protected void checkValues()
+	{
+		try
+		{
+			Integer.valueOf(xField.getText() );
+		}
+		catch (NumberFormatException e)
+		{
+			xField.setForeground(Color.red);
+			JOptionPane.showMessageDialog(null, 
+					"The insert value is wrong", "Input Error", JOptionPane.ERROR_MESSAGE);
+		}
+		
+		try
+		{
+			Integer.valueOf(yField.getText() );
+		}
+		catch (NumberFormatException e)
+		{
+			yField.setForeground(Color.red);
+			JOptionPane.showMessageDialog(null, 
+					"The insert value is wrong", "Input Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	//UPDATE DESCRIPTION METHOD

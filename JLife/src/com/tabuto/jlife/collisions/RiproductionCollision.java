@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 29/nov/2010 17.32.16
+* Date: 27/dic/2010 17.32.16
 * Titolo: RiproductionCollision.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -84,8 +84,7 @@ public class RiproductionCollision extends CollisionDetector{
 				{
 				newBornDna= Dna.merge(cell1.getZlifeDna(), cell2.getZlifeDna());
 				
-				cell1.age();
-				cell2.age();
+		
 				//cell1.setBored();
 				//cell2.setBored();
 				double tempAngle = cell2.getAngle();
@@ -95,7 +94,7 @@ public class RiproductionCollision extends CollisionDetector{
 				//newCell.setBored();
 				newCell.setAngleRadians( Math.random() * 2 * Math.PI );
 				newCell.setName( combineName(cell1.getName(),cell2.getName()));
-				newCell.setEnergy(20); 
+				newCell.setEnergy( newCell.getHungryEnergy()*0.9); 
 				jlc.addCell(newCell);
 				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());
 				cell2.setEnergy(cell2.getEnergy() - cell2.getRiproductionEnergy());

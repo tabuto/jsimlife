@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 06/dic/2010 19.22.34
+* Date: 27/dic/2010 19.22.34
 * Titolo: SpeedChartPanel.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -62,6 +62,8 @@ public class SpeedChartPanel {
 		super();
 		GameStatistic = s;
 		chart = new Chart2D();
+		chart.setBackground(Color.black);
+		chart.setForeground(Color.white);
 		initChart();
 	}
 	
@@ -111,7 +113,8 @@ public class SpeedChartPanel {
 	{
 		public Statistic statistic;
 		public int groupNumber;
-			
+		double initTime = System.currentTimeMillis();
+		
 			public SpeedDataCollector(ITrace2D trace, long latency, Statistic s,int GroupNumber) {
 				super(trace, latency);
 				statistic = s;
@@ -126,7 +129,7 @@ public class SpeedChartPanel {
 				statistic.calculateStatistics();
 				averageSpeed = statistic.averageSpeed[groupNumber];
 
-			    return new TracePoint2D(System.currentTimeMillis(), averageSpeed);
+			    return new TracePoint2D(System.currentTimeMillis()-initTime, averageSpeed);
 			}
 	}
 }

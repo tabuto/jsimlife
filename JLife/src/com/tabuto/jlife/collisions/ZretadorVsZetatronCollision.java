@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/dic/2010 13.12.00
+* Date: 27/dic/2010 13.12.00
 * Titolo: ZretadorVsZetatronCollision.java
-* Versione: 0.12.2 Rev.a:
+* Versione: 0.13.1 Rev.a:
 */
 
 
@@ -77,7 +77,7 @@ public class ZretadorVsZetatronCollision extends CollisionDetector{
 			if( z.getPosition().getDistance( c.getPosition())<20)
 			{
 				//Zretador eat ZLife
-				//z.age();
+	
 				z.setEnergy( z.getMaxEnergy() );
 				z.setAngleRadians(Math.random()*2*Math.PI);
 				z.preda=null;

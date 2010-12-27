@@ -3,5 +3,6 @@
   <PanelSize Width="1024" Height="768" />
   <BackgroundColor R="0" G="0" B="0" />
   <MaxSpriteNumber Zlifes="250" Zetatron="125" Zretador="250" Seeds="50" />
+  <Workingspace CurrentDefaultPath="/media/DATA/Home/project/Java/Repository/JSIMLIFE" />
 </JSimLife-Preferences>
 

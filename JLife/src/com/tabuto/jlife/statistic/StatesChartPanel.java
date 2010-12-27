@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 06/dic/2010 19.38.03
+* Date: 27/dic/2010 19.38.03
 * Titolo: StatesChartPanel.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -69,6 +69,8 @@ public class StatesChartPanel {
 		super();
 		GameStatistic = s;
 		chart = new Chart2D();
+		chart.setBackground(Color.black);
+		chart.setForeground(Color.white);
 		initChart();
 	}
 	
@@ -82,10 +84,10 @@ public class StatesChartPanel {
 		
 		for(int i=0;i<GameStatistic.GroupNumber;i++)
 		{
-	    ITrace2D trace1 = new Trace2DLtd(200); 
+	    ITrace2D trace1 = new Trace2DLtd(500); 
 	    trace1.setColor((Color)colors[i]);
 	    trace1.setName(GameStatistic.groupNames[i] );
-	    collector1 = new StatesDataCollector(trace1, 100,GameStatistic,i);
+	    collector1 = new StatesDataCollector(trace1, 2000,GameStatistic,i);
 	    collection.add(collector1);
 	    chart.addTrace(trace1);
 	    collector1.start();
@@ -135,7 +137,7 @@ public class StatesChartPanel {
 	{
 		public Statistic statistic;
 		public int groupNumber;
-			
+		double initTime = System.currentTimeMillis();
 		/**
 		 * Collector Constructor
 		 * @param trace ITrace2D data
@@ -160,7 +162,7 @@ public class StatesChartPanel {
 				statistic.calculateStatistics();
 				currentRadius = statistic.enthropy[groupNumber];
 
-			    return new TracePoint2D(System.currentTimeMillis(), currentRadius);
+			    return new TracePoint2D(System.currentTimeMillis()-initTime, currentRadius);
 			}
 	}
 	

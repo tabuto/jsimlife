@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 06/dic/2010 16.59.47
+* Date: 27/dic/2010 16.59.47
 * Titolo: JFrameStatistic.java
-* Versione: 0.1.11 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -52,7 +52,7 @@ import javax.swing.JPanel;
  * 
  * @author tabuto83
  * 
- * @version 0.1.10.3
+ * @version 0.1.13.1
  *
  */
 public class JFrameStatistic extends JFrame implements ActionListener{
@@ -90,7 +90,7 @@ public class JFrameStatistic extends JFrame implements ActionListener{
 		addChartChooser();
 		
 		setPreferredSize(new Dimension(500,500));
-		this.setSize( 300, 200 );
+		this.setSize( 400, 300 );
 	    //Set the JFrame Icon
 		this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
 	        		(this.getClass().getResource("icon_alpha_48x48.gif")));
@@ -114,7 +114,8 @@ public class JFrameStatistic extends JFrame implements ActionListener{
 								"System Energy",
 								"Average Radius",
 								"Average Speed"
-								//"Groups States", //NOT USED!!
+								//"Groups States", //NOT YET USED!!
+								//TODO: add groups states chart
 								};
 		chartChooser = new JComboBox(choose);
 		chartChooser.setSelectedIndex(0);

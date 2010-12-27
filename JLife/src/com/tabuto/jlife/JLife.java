@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 24/Dic/2010 12.05.43
+* Date: 27/Dic/2010 12.05.43
 * Titolo: JLife.java
-* Versione: 0.1.12.2 Rev.a:
+* Versione: 0.1.13.1 Rev.a:
 */
 
 
@@ -67,7 +67,7 @@ import com.tabuto.jlife.collisions.ZretadorRiproduction;
  * 
  * @author tabuto83
  * 
- * @version 0.1.12.2
+ * @version 0.1.13.1
  * 
  * @see Gene
  * @see Dna
@@ -92,12 +92,6 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 * The actual selected Seed
 	 */
 	private Seed selectedSeed;
-	
-	/**
-	 * The Directory path where Game file is saved/loaded.
-	 * Not yet used
-	 */
-	private String PATH="";
 	
 	/**
 	 * Group contanis Zlifes and Seeds
@@ -151,6 +145,17 @@ public class JLife extends Game2D implements Serializable,Observer {
 	public JLife(Dimension dim)
 	{
 		super(dim);
+	}
+	
+	/**
+	 * Override activate to notify observers (Like bottomPanel) if Game is active!
+	 */
+	@Override
+	public void activate()
+	{
+		super.activate();
+		setChanged();
+		notifyObservers("activate");
 	}
 	
 	/**
@@ -231,6 +236,16 @@ public class JLife extends Game2D implements Serializable,Observer {
 		setChanged();
 	}
 	
+	/**
+	 * Override deactivate to notify observers (Like bottomPanel) if Game is active!
+	 */
+	@Override
+	public void deactivate()
+	{
+		super.deactivate();
+		setChanged();
+		notifyObservers("deactivate");
+	}
 	
 	/**
 	 * @return the number of the sprite actually active
@@ -296,10 +311,6 @@ public class JLife extends Game2D implements Serializable,Observer {
 	  
 	}
 	
-	/**
-	 * @return the actual save directory path
-	 */
-	public String getPath(){return this.PATH;}
 	
 	/**
 	 * Return the Canvas's playfield Dimension 
@@ -456,13 +467,11 @@ public class JLife extends Game2D implements Serializable,Observer {
 		notifyObservers("SelectionChange");
 		}
 	
-	/**
-	 * Set the save Path for this Game
-	 * @param p String represent the absolut Path to the save directory
-	 */
-	public void setPath(String p){this.PATH = p;}
 	
-	public int getMaxCellsNumber(){return MAX_CELL_NUMBER + MAX_ZRETADOR_NUMBER;}
+	/**
+	 * @return the max cells number as the sum of Zlife, Zredator and Zetatron's max number
+	 */
+	public int getMaxCellsNumber(){return MAX_CELL_NUMBER + MAX_ZRETADOR_NUMBER+MAX_ZETATRON_NUMBER;}
 
 	/**
 	 * Move and drow all the sprite
