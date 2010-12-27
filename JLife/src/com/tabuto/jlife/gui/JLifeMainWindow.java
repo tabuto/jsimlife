@@ -50,6 +50,7 @@ import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
 import com.tabuto.jlife.JLife;
+import com.tabuto.xmlMVC.XMLModel;
 
 
 
@@ -68,7 +69,7 @@ public class JLifeMainWindow extends JFrame {
 	BufferStrategy bs;      //BufferStrategy
     int W=1024,H=768;       //Window Frame Size
     Dimension d;            //Dimension of window size
-    private static final String version =" v.0.1.13";
+    private static final String version =" v.0.1.13.1";
     private static final String title="JSimLife";
     
     //GAME STATUS VARIABLES
@@ -268,6 +269,25 @@ public class JLifeMainWindow extends JFrame {
         	
         actionmenu.getPopupMenu().setLightWeightPopupEnabled(false);
         
+     // ACTION MENU
+        JMenu toolsmenu = new JMenu("Tools");
+        toolsmenu.setMnemonic('T');
+        //ITEMS
+        	//XML VIEWER
+        	JMenuItem xmleditor = new JMenuItem("XML Editor");
+        	xmleditor.addActionListener(new ActionListener()
+        	{
+			
+        		public void actionPerformed( ActionEvent action )
+  	      								{
+        			new XMLModel(Preferences.getPath()+"/.");
+  	      								}
+  									});
+        	toolsmenu.add(xmleditor);
+	
+        	toolsmenu.getPopupMenu().setLightWeightPopupEnabled(false);
+        
+        
         // ABOUT MENU
         JMenu aboutmenu = new JMenu("About");
         	//ITEMS
@@ -288,6 +308,7 @@ public class JLifeMainWindow extends JFrame {
     	//ADD THE MENU AT MENUBAR
         j2dmenubar.add( filemenu);
         j2dmenubar.add( actionmenu) ;
+        j2dmenubar.add( toolsmenu) ;
         j2dmenubar.add( aboutmenu);
         j2dmenubar.setVisible(true);
         j2dmenubar.setIgnoreRepaint(true);

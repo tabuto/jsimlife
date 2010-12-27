@@ -1,5 +1,8 @@
+TODO next release
+Add XML editor
+ADD easyneuroph to do your own neural network on zetatron
 
-TODO NEXT
+TODO on version 0.1.13
 Add save dialog into addNewCell form to save or load a xml dna file; DONE
 Add preferences to set Zetatron max number and other Game collision parameter; DONE
 Add save dialag into showCell form to save xml dna file of selected cell! DONE
