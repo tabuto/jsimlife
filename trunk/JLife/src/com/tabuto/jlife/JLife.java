@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 27/Dic/2010 12.05.43
 * Titolo: JLife.java
-* Versione: 0.1.13.1 Rev.a:
+* Versione: 0.1.13.2 Rev.a:
 */
 
 
@@ -57,6 +57,7 @@ import com.tabuto.jlife.collisions.ZetatronVsSeeds;
 import com.tabuto.jlife.collisions.ZretadorVsZetatronCollision;
 import com.tabuto.jlife.collisions.ZlifeVsZretadorCollision;
 import com.tabuto.jlife.collisions.ZretadorRiproduction;
+import com.tabuto.jlife.gui.Configuration;
 
 
 /**
@@ -78,6 +79,12 @@ public class JLife extends Game2D implements Serializable,Observer {
 	 * 
 	 */
 	private static final long serialVersionUID = -1995427995443955111L;
+	
+	
+	/**
+	 * Game Configuration
+	 */
+	Configuration config;
 	
 	/**
 	 * Game name, use it for save the Game
@@ -270,6 +277,11 @@ public class JLife extends Game2D implements Serializable,Observer {
 		return z.getZlifeDna();
 	}
 	
+	public Configuration getConfiguration()
+	{
+		return this.config;
+	}
+	
 	/**
 	 * @return The Game's name
 	 */
@@ -442,6 +454,15 @@ public class JLife extends Game2D implements Serializable,Observer {
 			setChanged();
 			notifyObservers("SeedSelected");
 		}
+	}
+	
+	/**
+	 * @param config Game Configuration
+	 * @see Configuration
+	 */
+	public void setConfiguration(Configuration config)
+	{
+		this.config = config;
 	}
 	
 	/**

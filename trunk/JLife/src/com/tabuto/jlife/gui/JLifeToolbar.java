@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 09/dic/2010 11.24.01
 * Titolo: JLifeToolbar.java
-* Versione: 0.1.12.1 Rev.a:
+* Versione: 0.1.13.2 Rev.a:
 */
 
 
@@ -34,6 +34,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URL;
+import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -58,12 +59,13 @@ public class JLifeToolbar extends JToolBar implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 
+	
 
 	/*
 	 * This String variables, identify the command to execute and the
 	 * file name of button icon images
 	 */
-	   	static final private String NEW = "new";
+	   	static final private String NEW = "new"; 
 	   	static final private String EXIT = "close";
 	    static final private String RESET = "reset";
 	    static final private String PAUSE = "pause";
@@ -73,16 +75,17 @@ public class JLifeToolbar extends JToolBar implements ActionListener{
 	    static final private String ADDSEED = "addSeed";
 	    static final private String CHART = "chart";
 
-
+	    private ResourceBundle resource;
 	
 	public JLifeToolbar(JLifeMainWindow root)
 	{
 		super();
 		this.root = root;
-		addButtons();
-		setPreferredSize(new Dimension(root.panel.getDimension().width,42));
 		
-	
+		setPreferredSize(new Dimension(root.panel.getDimension().width,42));
+		resource = ResourceBundle.getBundle("StringAndLabels", root.Preferences.getLocale() );
+		addButtons();
+		
 	}
 	
 	/*
@@ -95,57 +98,58 @@ public class JLifeToolbar extends JToolBar implements ActionListener{
 
         //new button
         button = makeNavigationButton(NEW, NEW,
-                                      "New Simulation",
-                                      "New");
+        		resource.getString( "jltb_newTip" ), 
+        		resource.getString( "jltb_new" )); 
         add(button);
         
         
         //exit button
         button = makeNavigationButton(EXIT, EXIT,
-                                      "Exit Simulation",
-                                      "Exit");
+        		resource.getString( "jltb_exitTip" ), //TIP
+        		resource.getString( "jltb_exit" )); //NAME
         add(button);
         
         //reset button
         button = makeNavigationButton(RESET, RESET,
-                                      "Reset Simulation",
-                                      "Reset");
+        		resource.getString( "jltb_resetTip" ), //TIP
+        		resource.getString( "jltb_reset" )); //NAME
         add(button);
         
         //pause button
         button = makeNavigationButton(PAUSE, PAUSE,
-                                      "Pause Simulation",
-                                      "Pause");
+        		resource.getString( "jltb_pauseTip" ), //TIP
+        		resource.getString( "jltb_pause" )); //NAME
         add(button);
         
         //start button
         button = makeNavigationButton(START, START,
-                                      "Start Simulation",
-                                      "Start");
+        		resource.getString( "jltb_startTip" ), //TIP
+        		resource.getString( "jltb_start" )); //NAME
         add(button);
         
         //Stop button
         button = makeNavigationButton(STEP, STEP,
-                                      "Step Simulation",
-                                      "Step");
+        		resource.getString( "jltb_stepTip" ), //TIP
+        		resource.getString( "jltb_step" )); //NAME
         add(button);
         
         //AddCell button
         button = makeNavigationButton(ADDCELL, ADDCELL,
-                                      "Add a Cell",
-                                      "Add a Cell");
+        		resource.getString( "jltb_addCellTip" ), //TIP
+        		resource.getString( "jltb_addCell" )); //NAME
         add(button);
         
         //Addseed button
         button = makeNavigationButton(ADDSEED, ADDSEED,
-                                      "Add some seed",
-                                      "Add some seed");
+        		resource.getString( "jltb_addSeedTip" ), //TIP
+        		resource.getString( "jltb_addSeed" )); //NAME
         add(button);
         
         //Chart button
         button = makeNavigationButton(CHART, CHART,
-                                      "Show Charts",
-                                      "Show Charts");
+        		resource.getString( "jltb_chartTip" ), //TIP
+        		resource.getString( "jltb_chart" )); //NAME
+                                     
         add(button);
 	}
 

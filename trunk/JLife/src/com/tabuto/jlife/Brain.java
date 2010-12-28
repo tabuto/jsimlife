@@ -111,12 +111,15 @@ public class Brain implements Serializable {
 	
 	/**
 	 * @return a integer values represent the future state of Zetatron
+	 * @param input1 as the fraction between energy/hungryEnergy
+	 * @param input2 as the fraction between energy/hornyEnergy
 	 */
 	public int think(double input1, double input2)
 	{
 		
 		myMlPerceptron.setInput(input1, input2);
 		myMlPerceptron.calculate();
+		//Return a values Vector 
 		output = myMlPerceptron.getOutput();
 				
 		

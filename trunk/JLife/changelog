@@ -1,3 +1,19 @@
+JLife v.1.13.2
+add Internationalization Routines (it_IT and US-EN)
+add Language Selection routine into JFramePreferences.java
+add Language Selection Routine into Main.java
+add set and get Configuration methods to JLife.java
+add isPresent() method in Configuration.java
+add LocaleParseString(String) method in Configuration.java
+translate: JLifeMainWindow
+translate: JFramePreferences
+translate: JFrameNewCell
+translate: JLifeToolbar
+fix Icon into Save and Open dialog;
+fix Icon into addSeed dialog;
+fix save and load simulation bug: now Configuration implements serializable
+fix XMLEditor error: freeze when export the project in a Jar file.
+
 JLife v.1.13.1
 add JEX as a Java easy XML editor in tools menu
 Change charts background and foreground color;
@@ -10,6 +26,7 @@ fix life control in JsimLife; now ZLife die if energy == 0!
 fix riproductionCollision: now new Zlifes born hungry!
 add Path preference to select the JSimLife workingspace directory
 fix DNaPanel gene display, now every gene display its name!
+add Generation Number to keep track of current Zlife's generation
 
 JLife v.1.13
 fix the Seed's quantity message dialog in the JLifeShowZlife

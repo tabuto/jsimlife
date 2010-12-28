@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 27/dic/2010 14.55.28
 * Titolo: Configuration.java
-* Versione: 0.1.13.1 Rev.a:
+* Versione: 0.1.13.2 Rev.a:
 */
 
 
@@ -36,11 +36,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
@@ -50,12 +54,17 @@ import org.jdom.output.XMLOutputter;
  * @author tabuto83
  *
  */
-public class Configuration {
+public class Configuration implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * Language Setting
 	 */
-	private String LOCALE="";
+	private Locale LOCALE;
 	
 	/**
 	 * Default Save/Load directory PATH
@@ -92,7 +101,7 @@ public class Configuration {
 	 */
 	private int MAX_SEEDS;
 	
-	/*
+	/**
 	 * Constructor try to load the JSimLifeConf.xml file, if it does not
 	 * exist, Configuration load the default values and create a new 
 	 * SimLifeConf.xml with JSimLife's default values
@@ -126,7 +135,7 @@ public class Configuration {
 	 * GETTERS FOR THE GAME PARAMETER
 	 */
 	public Color getBackgroundColor(){return background;}
-	public String getLocale(){return this.LOCALE;}
+	public Locale getLocale(){return LOCALE;}
 	public int getMaxSeeds() {return MAX_SEEDS;}
 	public int getMaxZlifes() {return MAX_ZLIFES;}
 	public int getMaxZetatron() {return MAX_ZETATRON;}
@@ -134,7 +143,7 @@ public class Configuration {
 	public String getPath(){return this.PATH;}
 	public Dimension getPlayfieldDimension(){return this.playfield;}
 	
-	/*
+	/**
 	 * Read a previously saved SimLifeConf.xml file and
 	 * set the relative values.
 	 */
@@ -166,12 +175,17 @@ public class Configuration {
 				this.setMaxZretador( Integer.parseInt(maxSprites.getAttributeValue("Zretador")));
 				this.setMaxSeeds( Integer.parseInt(maxSprites.getAttributeValue("Seeds")));
 				
+				//LOAD WORKINGSPACE
 				Element workingspace = (Element) iterator.next();
 				this.setPath( workingspace.getAttributeValue("CurrentDefaultPath"));
 	    
+				//LOAD LOCALE
+				Element locale = (Element) iterator.next();
+				this.setLocale(LocaleParseString( locale.getAttributeValue("CurrentLocale")));
+				
 	}
 	
-	/*
+	/**
 	 * Load the parameter's default values
 	 */
 	public void loadDefaultValues()
@@ -184,10 +198,11 @@ public class Configuration {
 		setMaxZretador(250);
 		
 		setMaxSeeds(50);
+		setLocale(Locale.US);
 		
 	}
 	
-	/*
+	/**
 	 * Save the current Configuration's parameters into a SimLifeConf.xml file
 	 */
 	public void save()
@@ -222,6 +237,11 @@ public class Configuration {
 	      workingspace.setAttribute("CurrentDefaultPath", getPath());
 	      preferences.addContent(workingspace);
 	      
+	      //ELEMENT 4 LOCALE
+	      Element locale = new Element("Locale");
+	      locale.setAttribute("CurrentLocale", LOCALE.toString());
+	      preferences.addContent(locale);
+	      
 	      //WRITE FILE
 	      XMLOutputter outputter = new XMLOutputter();
 	      outputter.setFormat(Format.getPrettyFormat());
@@ -241,7 +261,7 @@ public class Configuration {
 	 * SETTERS FOR THE CONFIGURATION PARAMETERS
 	 */
 	public void setBackgroundColor(Color b){background = b;}
-	public void setLocale(String locale){this.LOCALE=locale;}
+	public void setLocale(Locale locale){this.LOCALE=locale;}
 	public void setMaxSeeds(int mAX_SEEDS) {MAX_SEEDS = mAX_SEEDS;}
 	public void setMaxZetatron(int mAX_ZETATRON) {MAX_ZETATRON = mAX_ZETATRON;}
 	public void setMaxZlifes(int mAX_ZLIFES) {MAX_ZLIFES = mAX_ZLIFES;}
@@ -250,4 +270,41 @@ public class Configuration {
 	public void setPlayfieldDimension(Dimension d){playfield = d;}
 	public void setPlayfieldDimension(int w, int h){playfield = new Dimension(w,h);}
 	
+
+	/**
+	 * Parse a String value with the respective Locale object
+	 * @param locale String rapresentation of a Locale object
+	 * @return Locale
+	 */
+	public Locale LocaleParseString(String locale)
+	{
+		Locale l=Locale.US;
+		
+		if (locale.equalsIgnoreCase("en_US"))
+				l =  Locale.US;
+		else
+			if (locale.equalsIgnoreCase("it_IT"))
+				l = Locale.ITALY;
+		return l;
+	}
+	
+	/**
+	 * @return {@code true} if JSimLifeConf.xml file is present and {@code false} if not
+	 */
+	public static boolean isPresent()
+	{
+		 SAXBuilder builder = new SAXBuilder();
+	      Document document;
+	
+				try {
+					document = builder.build(new File("JSimLifeConf.xml"));
+				} catch (JDOMException e) {
+					
+					e.printStackTrace();
+				} catch (IOException e) {
+					
+					return false;
+				}
+		return true;
+	}
 }

@@ -105,7 +105,9 @@ public void addCell()
 public void addSeed()
 {
 	final JFrame addSeedDialog = new JFrame("Create Seed");
-	
+	 //ADD ICON TITLE
+    addSeedDialog.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
+    		(this.getClass().getResource("icon/icon_alpha_48x48.gif")));
 	addSeedDialog.setPreferredSize(new Dimension(160, 180));
 	addSeedDialog.setResizable(false);
 	addSeedDialog.setAlwaysOnTop(true);

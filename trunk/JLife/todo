@@ -22,7 +22,7 @@ TODO on version 1.0
 Add a small JCavansPanel to isolate cells using drag&dorp
 Add a TestTube panel to isolate Zlifes and controlling they reproduction;
 Add a internalization routines;
-ADD a routine on Zlife cell to keep track of the current number generation.
+ADD a routine on Zlife cell to keep track of the current number generation.DONE
 ADD an HTML onLine HELP
 Write the Developers Guide to JLife 
 

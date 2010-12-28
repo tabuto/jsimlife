@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 27/dic/2010 16.23.00
 * Titolo: XMLView.java
-* Versione: 0.1 Rev.a:
+* Versione: 0.1.13.2 Rev.a:
 */
 
 
@@ -329,7 +329,7 @@ public class XMLView implements XMLUpdateObserver, SelectionObserver {
 		
 		 //ADD ICON TITLE
 		XMLFrame.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-        		(this.getClass().getResource("../jlife/gui/icon/icon_alpha_48x48.gif")));
+        		(this.getClass().getResource("icon_alpha_48x48.gif")));
 		
 		// an intro splash-screen to get users started
 //		Custom button text

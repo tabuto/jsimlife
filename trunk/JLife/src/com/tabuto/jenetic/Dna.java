@@ -579,11 +579,6 @@ public class Dna implements Serializable{
 	      
 	      return document;
 	    	  
-	     
-	     
-		 
-	      
-	
 	}
 
 	
@@ -607,7 +602,7 @@ public class Dna implements Serializable{
 	      DnaRoot.addContent(Dna);
 	      for (int i=0; i< this.DNA.size();i++)
 	      {
-	    	  Element gene = new Element("gene");
+	    	  Element gene = new Element("Gene-"+i);
 	    	  
 	    	  gene.setAttribute("index", String.valueOf(i));
 	    	  
@@ -615,7 +610,7 @@ public class Dna implements Serializable{
 	    	  gene.setAttribute("Type", this.getGene(i).getType());
 	    	  gene.setAttribute("Value", this.getGene(i).stringValue());
 	    	  gene.setAttribute("Description",this.getGene(i).getDescription());
-	    	  
+	    	  gene.setName(gene.getName()+ "-"+gene.getAttributeValue("Name"));
 	    	 DnaRoot.addContent( gene );
 	     }  
 	    	  
@@ -657,17 +652,17 @@ public class Dna implements Serializable{
 					
 					if(g1.getType().equalsIgnoreCase("Integer") || g1.getType().equalsIgnoreCase("int")  )
 					{
-						var = ((g1.intValue() + g2.intValue())/2)*this.param;
+						var = ((g1.intValue() + g2.intValue()))*(0.1 + Math.random()*this.param);
 						
-						G.setValue((int) (((g1.intValue() + g2.intValue())/2)- var + Math.random()*var*2  ));
+						G.setValue((int) (((g1.intValue() + g2.intValue())/2) + Math.random()*var*2  ));
 					}	
 					if(g1.getType().equalsIgnoreCase("Byte"))
 						G.setValue( g1.byteValue() & g2.byteValue() );
 					
 					if(g1.getType().equalsIgnoreCase("Double") )
 					{
-						var = ((g1.doubleValue() + g2.doubleValue())/2)*this.param;
-						G.setValue( (((g1.doubleValue() + g2.doubleValue())/2) - var + Math.random()*var*2 )  );
+						var = ((g1.doubleValue() + g2.doubleValue()))*(0.1 + Math.random()*this.param);
+						G.setValue( (((g1.doubleValue() + g2.doubleValue())/2)  + Math.random()*var*2 )  );
 					}
 				G.setName( g1.getName());
 				G.setDescription(g1.getDescription());
