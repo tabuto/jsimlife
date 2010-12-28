@@ -89,6 +89,7 @@ public class ZetatronRiproduction  extends CollisionDetector {
 				newCell.setName( combineName(cell1.getName(),cell2.getName()));
 				newCell.setEnergy( newCell.getHungryEnergy()*(0.9)); 
 				jlc.addZetatron(newCell);
+				newCell.setGenerationNumber( Math.max(cell1.getGenerationNumber(), cell2.getGenerationNumber())+1);
 				newCell.live();
 				
 				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());

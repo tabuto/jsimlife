@@ -2,7 +2,7 @@
 * @author Francesco di Dio
 * Date: 27/dic/2010 18.15.45
 * Titolo: JFrameNewCell.java
-* Versione: 0.1.13.1 Rev.a:
+* Versione: 0.1.13.2 Rev.a:
 */
 
 
@@ -41,6 +41,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -107,14 +108,18 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 	Zretador newZretador;
 	Zetatron newZetatron;
 	
+	private ResourceBundle resource;
+	
 	/**
 	 * Build a JFrameNewCell
 	 * @param game Game where insert the new ZLife
 	 */
 	public JFrameNewCell(final JLife game)
 	{
-		super("New Cell");
+		super();
 		Game = game;
+		resource = ResourceBundle.getBundle("StringAndLabels", Game.getConfiguration().getLocale() );
+		this.setTitle( resource.getString( "jfnc_title" ));
 		
 		//INIT PANELS
 		north = new JPanel();
@@ -126,10 +131,10 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		//setPreferredSize(new Dimension(460,700));
 		
 		//INIT BUTTON
-		JButton okButton = new JButton("OK");
-		JButton cancelButton = new JButton("Cancel");
-		JButton saveButton = new JButton("Save");
-		JButton loadButton = new JButton("Load");
+		JButton okButton = new JButton(resource.getString( "jfnc_ok" ));
+		JButton cancelButton = new JButton(resource.getString( "jfnc_cancel" ));
+		JButton saveButton = new JButton(resource.getString( "jfnc_save" ));
+		JButton loadButton = new JButton(resource.getString( "jfnc_load" ));
 		
 		//ADD NORTH COMPONENT
 		north.setLayout( new FlowLayout(FlowLayout.LEFT));
@@ -318,8 +323,6 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		nameField.setText("New Name");
 		north.add(nameLabel);
 		north.add(nameField);
-		
-		
 	}
 	
 	private void addXYField()
@@ -352,14 +355,14 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 			public void actionPerformed(ActionEvent actionEvent)
 			{
 				 Color color = JColorChooser.showDialog(
-				 rootPane, "Select Color",startColor
+				 rootPane, resource.getString( "jfnc_selectColor" ),startColor
 				  );
 				 if (color!= null)
 					 colorButton.setBackground(color);
 			}
 		
 		});
-		colorButton.setToolTipText("Select Color");
+		colorButton.setToolTipText(resource.getString( "jfnc_selectColor" ));
 		north.add(colorButton);
 		
 	}
@@ -371,7 +374,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MINRAD=0;
 		 final int INITRAD=6;
 		 final int MAXRAD=12;
-		 radiusLabel=new JLabel("Radius");
+		 radiusLabel=new JLabel(resource.getString( "jfnc_radius" ));
 		 
 		 radiusSlider = new JSlider(JSlider.HORIZONTAL,
                  MINRAD, MAXRAD, INITRAD);
@@ -380,8 +383,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 radiusSlider.setMinorTickSpacing(1);
 		 radiusSlider.setPaintTicks(true);
 		 radiusSlider.setPaintLabels(true);
-		 radiusSlider.setToolTipText("Select the Zlife's radius size");
-		 radiusLabel.setToolTipText("Select the Zlife's radius size");
+		 radiusSlider.setToolTipText(resource.getString( "jfnc_radiusDesc" ));
+		 radiusLabel.setToolTipText(resource.getString( "jfnc_radiusDesc" ));
 		 
 		 dnaPanel.add(radiusLabel);
 		 dnaPanel.add(radiusSlider);
@@ -393,7 +396,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=20;
 		 final int MAX=100;
-		 JLabel dnaParamLabel=new JLabel("Dna Parameter");
+		 JLabel dnaParamLabel=new JLabel(resource.getString( "jfnc_dnaParam" ));
 		 dnaParamSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -401,8 +404,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 dnaParamSlider.setMinorTickSpacing(5);
 		 dnaParamSlider.setPaintTicks(true);
 		 dnaParamSlider.setPaintLabels(true);
-		 dnaParamSlider.setToolTipText("Select the DNA's variability parameter");
-		 dnaParamLabel.setToolTipText("Select the DNA's variability parameter");
+		 dnaParamSlider.setToolTipText(resource.getString( "jfnc_dnaParamDesc" ));
+		 dnaParamLabel.setToolTipText(resource.getString( "jfnc_dnaParamDesc" ));
 		 
 		 dnaPanel.add(dnaParamLabel);
 		 dnaPanel.add(dnaParamSlider);
@@ -414,7 +417,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=25;
 		 final int MAX=100;
-		 JLabel energyLabel=new JLabel("Energy");
+		 JLabel energyLabel=new JLabel(resource.getString( "jfnc_energy" ));
 		 energySlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -422,8 +425,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 energySlider.setMinorTickSpacing(1);
 		 energySlider.setPaintTicks(true);
 		 energySlider.setPaintLabels(true);
-		 energySlider.setToolTipText("Starting Zlife's energy");
-		 energyLabel.setToolTipText("Starting Zlife's energy");
+		 energySlider.setToolTipText(resource.getString( "jfnc_energyDesc" ));
+		 energyLabel.setToolTipText(resource.getString( "jfnc_energyDesc" ));
 		 
 		 dnaPanel.add(energyLabel);
 		 dnaPanel.add(energySlider);
@@ -434,7 +437,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=10;
 		 final int INIT=140;
 		 final int MAX=200;
-		 JLabel maxEnergyLabel=new JLabel("Max Energy");
+		 JLabel maxEnergyLabel=new JLabel(resource.getString( "jfnc_maxEnergy" ));
 		 maxEnergySlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -442,8 +445,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 maxEnergySlider.setMinorTickSpacing(10);
 		 maxEnergySlider.setPaintTicks(true);
 		 maxEnergySlider.setPaintLabels(true);
-		 maxEnergySlider.setToolTipText("Max Zlife's energy");
-		 maxEnergyLabel.setToolTipText("Max Zlife's energy");
+		 maxEnergySlider.setToolTipText(resource.getString( "jfnc_maxEnergyDesc" ));
+		 maxEnergyLabel.setToolTipText(resource.getString( "jfnc_maxEnergyDesc" ));
 		 
 		 dnaPanel.add(maxEnergyLabel);
 		 dnaPanel.add(maxEnergySlider);
@@ -454,7 +457,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=75;
 		 final int MAX=200;
-		 JLabel hornyEnergyLabel=new JLabel("Horny Energy");
+		 JLabel hornyEnergyLabel=new JLabel(resource.getString( "jfnc_hornyEnergy" ));
 		 hornyEnergySlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -462,8 +465,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 hornyEnergySlider.setMinorTickSpacing(1);
 		 hornyEnergySlider.setPaintTicks(true);
 		 hornyEnergySlider.setPaintLabels(true);
-		 hornyEnergySlider.setToolTipText("Energy higher than which ZLife is Horny");
-		 hornyEnergyLabel.setToolTipText("Energy higher than ZLife is Horny");
+		 hornyEnergySlider.setToolTipText(resource.getString( "jfnc_hornyEnergyDesc" ));
+		 hornyEnergyLabel.setToolTipText(resource.getString( "jfnc_hornyEnergyDesc" ));
 		 
 		 dnaPanel.add(hornyEnergyLabel);
 		 dnaPanel.add(hornyEnergySlider);
@@ -474,7 +477,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=60;
 		 final int MAX=200;
-		 JLabel hungryEnergyLabel=new JLabel("Hungry Energy");
+		 JLabel hungryEnergyLabel=new JLabel(resource.getString( "jfnc_hungryEnergy" ));
 		 hungryEnergySlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -482,8 +485,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 hungryEnergySlider.setMinorTickSpacing(1);
 		 hungryEnergySlider.setPaintTicks(true);
 		 hungryEnergySlider.setPaintLabels(true);
-		 hungryEnergySlider.setToolTipText("Energy below which ZLife is hungry");
-		 hungryEnergyLabel.setToolTipText("Energy below which ZLife is hungry");
+		 hungryEnergySlider.setToolTipText(resource.getString( "jfnc_hungryEnergyDesc" ));
+		 hungryEnergyLabel.setToolTipText(resource.getString( "jfnc_hungryEnergyDesc" ));
 		 
 		 dnaPanel.add(hungryEnergyLabel);
 		 dnaPanel.add(hungryEnergySlider);
@@ -494,7 +497,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=5;
 		 final int MAX=20;
-		 JLabel lifeCycleLabel=new JLabel("Life Cycles");
+		 JLabel lifeCycleLabel=new JLabel(resource.getString( "jfnc_lifeCycles" ));
 		 lifeCycleSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -502,8 +505,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 lifeCycleSlider.setMinorTickSpacing(1);
 		 lifeCycleSlider.setPaintTicks(true);
 		 lifeCycleSlider.setPaintLabels(true);
-		 lifeCycleSlider.setToolTipText("Every Zlife spend one lifeCycle when it change his state.How many cycle it can be spend before it dies?");
-		 lifeCycleLabel.setToolTipText("Every Zlife spend one lifeCycle when it change his state.How many cycle it can be spend before it dies?");
+		 lifeCycleSlider.setToolTipText(resource.getString( "jfnc_lifeCyclesDesc" ));
+		 lifeCycleLabel.setToolTipText(resource.getString( "jfnc_lifeCyclesDesc" ));
 		 
 		 dnaPanel.add(lifeCycleLabel);
 		 dnaPanel.add(lifeCycleSlider);
@@ -514,7 +517,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=1;
 		 final int INIT=7;
 		 final int MAX=50;
-		 JLabel metabolismLabel=new JLabel("Metabolism");
+		 JLabel metabolismLabel=new JLabel(resource.getString( "jfnc_metabolism" ));
 		 metabolismSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -522,8 +525,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 metabolismSlider.setMinorTickSpacing(1);
 		 metabolismSlider.setPaintTicks(true);
 		 metabolismSlider.setPaintLabels(true);
-		 metabolismSlider.setToolTipText("Energy spends by Zlife for each move");
-		 metabolismLabel.setToolTipText("Energy spends by Zlife for each move");
+		 metabolismSlider.setToolTipText(resource.getString( "jfnc_metabolismDesc" ));
+		 metabolismLabel.setToolTipText(resource.getString( "jfnc_metabolismDesc" ));
 		 
 		 dnaPanel.add(metabolismLabel);
 		 dnaPanel.add(metabolismSlider);
@@ -536,7 +539,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=40;
 		 final int MAX=100;
-		 JLabel boredSpeedLabel=new JLabel("Bored Speed");
+		 JLabel boredSpeedLabel=new JLabel(resource.getString( "jfnc_boredSpeed" ));
 		 boredSpeedSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -544,8 +547,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 boredSpeedSlider.setMinorTickSpacing(1);
 		 boredSpeedSlider.setPaintTicks(true);
 		 boredSpeedSlider.setPaintLabels(true);
-		 boredSpeedSlider.setToolTipText("Zlife's Speed when its state is Bored");
-		 boredSpeedLabel.setToolTipText("Zlife's Speed when its state is Bored");
+		 boredSpeedSlider.setToolTipText(resource.getString( "jfnc_boredSpeedDesc" ));
+		 boredSpeedLabel.setToolTipText(resource.getString( "jfnc_boredSpeedDesc" ));
 		 
 		 dnaPanel.add(boredSpeedLabel);
 		 dnaPanel.add(boredSpeedSlider);
@@ -556,7 +559,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=90;
 		 final int MAX=100;
-		 JLabel riproductionEnergyLabel=new JLabel("Riproduction Energy");
+		 JLabel riproductionEnergyLabel=new JLabel(resource.getString( "jfnc_riproductionEnergy" ));
 		 riproductionEnergySlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -564,8 +567,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 riproductionEnergySlider.setMinorTickSpacing(1);
 		 riproductionEnergySlider.setPaintTicks(true);
 		 riproductionEnergySlider.setPaintLabels(true);
-		 riproductionEnergySlider.setToolTipText("How much energy spends Zlife every time it's riproducing itself?");
-		 riproductionEnergyLabel.setToolTipText("How much energy spends Zlife every time it's riproducing itself?");
+		 riproductionEnergySlider.setToolTipText(resource.getString( "jfnc_riproductionEnergyDesc" ));
+		 riproductionEnergyLabel.setToolTipText(resource.getString( "jfnc_riproductionEnergyDesc" ));
 		 
 		 dnaPanel.add(riproductionEnergyLabel);
 		 dnaPanel.add(riproductionEnergySlider);
@@ -577,7 +580,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=60;
 		 final int MAX=100;
-		 JLabel hungrySpeedLabel=new JLabel("Hungry Speed");
+		 JLabel hungrySpeedLabel=new JLabel(resource.getString( "jfnc_hungrySpeed" ));
 		 hungrySpeedSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -585,8 +588,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 hungrySpeedSlider.setMinorTickSpacing(1);
 		 hungrySpeedSlider.setPaintTicks(true);
 		 hungrySpeedSlider.setPaintLabels(true);
-		 hungrySpeedSlider.setToolTipText("Speed when Zlife is hungry");
-		 hungrySpeedLabel.setToolTipText("Speed when Zlife is hungry");
+		 hungrySpeedSlider.setToolTipText(resource.getString( "jfnc_hungrySpeedDesc" ));
+		 hungrySpeedLabel.setToolTipText(resource.getString( "jfnc_hungrySpeedDesc" ));
 		 
 		 dnaPanel.add(hungrySpeedLabel);
 		 dnaPanel.add(hungrySpeedSlider);
@@ -598,7 +601,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=90;
 		 final int MAX=100;
-		 JLabel hornySpeedLabel=new JLabel("Horny Speed");
+		 JLabel hornySpeedLabel=new JLabel(resource.getString( "jfnc_hornySpeed" ));
 		 hornySpeedSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -606,8 +609,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 hornySpeedSlider.setMinorTickSpacing(1);
 		 hornySpeedSlider.setPaintTicks(true);
 		 hornySpeedSlider.setPaintLabels(true);
-		 hornySpeedSlider.setToolTipText("Speed when Zlife is horny");
-		 hornySpeedLabel.setToolTipText("Speed when Zlife is horny");
+		 hornySpeedSlider.setToolTipText(resource.getString( "jfnc_hornySpeedDesc" ));
+		 hornySpeedLabel.setToolTipText(resource.getString( "jfnc_hornySpeedDesc" ));
 		 
 		 dnaPanel.add(hornySpeedLabel);
 		 dnaPanel.add(hornySpeedSlider);
@@ -619,7 +622,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=75;
 		 final int MAX=100;
-		 JLabel scarySpeedLabel=new JLabel("Scary Speed");
+		 JLabel scarySpeedLabel=new JLabel(resource.getString( "jfnc_scarySpeed" ));
 		 scarySpeedSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -627,8 +630,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 scarySpeedSlider.setMinorTickSpacing(1);
 		 scarySpeedSlider.setPaintTicks(true);
 		 scarySpeedSlider.setPaintLabels(true);
-		 scarySpeedSlider.setToolTipText("Speed when Zlife is scary");
-		 scarySpeedLabel.setToolTipText("Speed when Zlife is scary");
+		 scarySpeedSlider.setToolTipText(resource.getString( "jfnc_scarySpeedDesc" ));
+		 scarySpeedLabel.setToolTipText(resource.getString( "jfnc_scarySpeedDesc" ));
 		 
 		 dnaPanel.add(scarySpeedLabel);
 		 dnaPanel.add(scarySpeedSlider);
@@ -640,7 +643,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT=10;
 		 final int MAX=100;
-		 JLabel ageFactorLabel=new JLabel("Age Factor");
+		 JLabel ageFactorLabel=new JLabel(resource.getString( "jfnc_ageFactor" ));
 		 ageFactorSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
 		
@@ -648,8 +651,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 ageFactorSlider.setMinorTickSpacing(1);
 		 ageFactorSlider.setPaintTicks(true);
 		 ageFactorSlider.setPaintLabels(true);
-		 ageFactorSlider.setToolTipText("When Zlife spends lifeCycle its MaxEnergy decreases,how much?");
-		 ageFactorLabel.setToolTipText("When Zlife spends lifeCycle its MaxEnergy decreases,how much?");
+		 ageFactorSlider.setToolTipText(resource.getString( "jfnc_ageFactorDesc" ));
+		 ageFactorLabel.setToolTipText(resource.getString( "jfnc_ageFactorDesc" ));
 		 
 		 dnaPanel.add(ageFactorLabel);
 		 dnaPanel.add(ageFactorSlider);
@@ -660,7 +663,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT = (int) (Math.random()*360);
 		 final int MAX=360;
-		 JLabel directionLabel=new JLabel("Direction °");
+		 JLabel directionLabel=new JLabel(resource.getString( "jfnc_direction" ));
 		 
 		 directionSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
@@ -669,8 +672,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 directionSlider.setMinorTickSpacing(15);
 		 directionSlider.setPaintTicks(true);
 		 directionSlider.setPaintLabels(true);
-		 directionSlider.setToolTipText("Start Zlife's direction");
-		 directionLabel.setToolTipText("Start Zlife's direction");
+		 directionSlider.setToolTipText(resource.getString( "jfnc_directionDesc" ));
+		 directionLabel.setToolTipText(resource.getString( "jfnc_directionDesc" ));
 		 
 		 dnaPanel.add(directionLabel);
 		 dnaPanel.add(directionSlider);
@@ -681,7 +684,7 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 final int MIN=0;
 		 final int INIT = 35;
 		 final int MAX=60;
-		 JLabel multiplierLabel=new JLabel("Zlife Number");
+		 JLabel multiplierLabel=new JLabel(resource.getString( "jfnc_zlifeNumber" ));
 		 
 		 multiplierSlider = new JSlider(JSlider.HORIZONTAL,
                  MIN, MAX, INIT);
@@ -690,8 +693,8 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		 multiplierSlider.setMinorTickSpacing(1);
 		 multiplierSlider.setPaintTicks(true);
 		 multiplierSlider.setPaintLabels(true);
-		 multiplierSlider.setToolTipText("How many ZLife you want to add to Game?");
-		 multiplierLabel.setToolTipText("How many ZLife you want to add to Game?");
+		 multiplierSlider.setToolTipText(resource.getString( "jfnc_zlifeNumberDesc" ));
+		 multiplierLabel.setToolTipText(resource.getString( "jfnc_zlifeNumberDesc" ));
 		 
 		 dnaPanel.add(multiplierLabel);
 		 dnaPanel.add(multiplierSlider);
@@ -929,7 +932,9 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		{
 			xField.setForeground(Color.red);
 			JOptionPane.showMessageDialog(null, 
-					"The insert value is wrong", "Input Error", JOptionPane.ERROR_MESSAGE);
+					resource.getString( "jfnc_inputErrorDesc" ), 
+					resource.getString( "jfnc_inputError" ), 
+					JOptionPane.ERROR_MESSAGE);
 		}
 		
 		try
@@ -940,7 +945,9 @@ public class JFrameNewCell extends JFrame implements ActionListener {
 		{
 			yField.setForeground(Color.red);
 			JOptionPane.showMessageDialog(null, 
-					"The insert value is wrong", "Input Error", JOptionPane.ERROR_MESSAGE);
+					resource.getString( "jfnc_inputErrorDesc" ), 
+					resource.getString( "jfnc_inputError" ), 
+					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

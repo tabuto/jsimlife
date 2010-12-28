@@ -71,10 +71,12 @@ public class JLifeShowZlife extends JFrame implements Observer {
 	private JLabel nameLabel, positionLabel, directionLabel;
 	private JLabel stateLabel, speedLabel, lifeCycleLabel;
 	private JLabel energyLabel, radiusLabel, colorLabel;
+	private JLabel generationLabel;
 	
 	private JTextField nameField, positionField, directionField;
 	private JTextField stateField, speedField, lifeCycleField;
 	private JTextField energyField, radiusField;
+	private JTextField generationField;
 
 	private JButton colorButton;
 	
@@ -128,7 +130,7 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		energyLabel = new JLabel("Energy");
 		radiusLabel = new JLabel("Radius");
 		colorLabel = new JLabel("Color");
-		
+		generationLabel= new JLabel("Generation");
 		
 		
 		
@@ -148,6 +150,8 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		energyField.setEditable(false);
 		radiusField  = new JTextField(4);
 		radiusField.setEditable(false);
+		generationField= new JTextField(4);
+		generationField.setEditable(false);
 		
 		colorButton = new JButton("");
 		
@@ -177,6 +181,9 @@ public class JLifeShowZlife extends JFrame implements Observer {
 		
 		north.add(radiusLabel);
 		north.add(radiusField);
+		
+		north.add(generationLabel);
+		north.add(generationField);
 	
 		north.add(colorLabel);
 		north.add(colorButton);
@@ -240,6 +247,7 @@ public void refresh()
 	speedField.setText(""+Game.getSelectedCell().getSpeed());
 	energyField.setText(""+Math.rint(Game.getSelectedCell().getEnergy()*100)/100+"/"+Math.rint(Game.getSelectedCell().getMaxEnergy()*100/100) );
 	radiusField.setText( ""+Math.rint(Game.getSelectedCell().getRadius()*100)/100);
+	generationField.setText(""+Game.getSelectedCell().getGenerationNumber());
 	
 	colorButton.setBackground(new Color(Game.getSelectedCell().getR(),
 										Game.getSelectedCell().getG(),

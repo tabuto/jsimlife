@@ -37,6 +37,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 import javax.swing.JFileChooser;
@@ -48,6 +50,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
+
+import org.neuroph.easyneurons.EasyNeuronsApplication;
 
 import com.tabuto.jlife.JLife;
 import com.tabuto.xmlMVC.XMLModel;
@@ -72,6 +76,8 @@ public class JLifeMainWindow extends JFrame {
     private static final String version =" v.0.1.13.1";
     private static final String title="JSimLife";
     
+    private ResourceBundle resource;
+    
     //GAME STATUS VARIABLES
     boolean PLAY = true;
     boolean STOP = false;
@@ -93,6 +99,9 @@ public class JLifeMainWindow extends JFrame {
     	//Init JSimLife parameters
     	Preferences = conf;
     	d = Preferences.getPlayfieldDimension();
+    	
+    	//Load the resource Locale file
+    	resource = ResourceBundle.getBundle("StringAndLabels", Preferences.getLocale());
     	this.setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);
 
     	
@@ -142,7 +151,7 @@ public class JLifeMainWindow extends JFrame {
         filemenu.setMnemonic('J');
         		//ITEMS
         				//New ***********************************
-    	JMenuItem newSim = new JMenuItem("New");
+    	JMenuItem newSim = new JMenuItem(  resource.getString( "newLabel" ));
 		newSim.setMnemonic('N');
 		newSim.addActionListener(new ActionListener()
 		{
@@ -153,13 +162,13 @@ public class JLifeMainWindow extends JFrame {
 		});
 		filemenu.add( newSim );
         				//Open ***********************************
-		JMenuItem open = new JMenuItem("Open");
+		JMenuItem open = new JMenuItem( resource.getString( "openLabel" ));
 		open.setMnemonic('O');
 		open.addActionListener(new OpenSimChooser());
 		filemenu.add( open);
 		
         				//Save ***********************************
-		JMenuItem save = new JMenuItem("Save");
+		JMenuItem save = new JMenuItem( resource.getString( "saveLabel" ));
 		save.setMnemonic('S');
 		save.addActionListener(new ActionListener()
 		{
@@ -174,13 +183,13 @@ public class JLifeMainWindow extends JFrame {
 		filemenu.add( save );
 		
         				//Save as ***********************************
-		JMenuItem saveAs = new JMenuItem("Save As");
+		JMenuItem saveAs = new JMenuItem( resource.getString( "saveAsLabel" ));
 		saveAs.setMnemonic('N');
 		saveAs.addActionListener(new SaveSimChooser());
 		filemenu.add( saveAs );
 
 						//PREFERENCES ***********************************
-		JMenuItem preferences = new JMenuItem("Preferences");
+		JMenuItem preferences = new JMenuItem( resource.getString( "preferencesLabel" ));
 		preferences.setMnemonic('P');
 		preferences.addActionListener(new ActionListener()
 						{
@@ -193,7 +202,7 @@ public class JLifeMainWindow extends JFrame {
 		filemenu.getPopupMenu().setLightWeightPopupEnabled(false);
 		
         				//EXIT ***********************************
-		JMenuItem exit = new JMenuItem("Exit");
+		JMenuItem exit = new JMenuItem( resource.getString( "exitLabel" ));
 		exit.setMnemonic('Q');
 		exit.addActionListener(new ActionListener()
 				{
@@ -206,11 +215,11 @@ public class JLifeMainWindow extends JFrame {
 
         	
         // ACTION MENU
-        JMenu actionmenu = new JMenu("Action");
+        JMenu actionmenu = new JMenu( resource.getString( "actionLabel" ));
         actionmenu.setMnemonic('A');
         		//ITEMS
         				//START ***********************************
-        	JMenuItem start = new JMenuItem("Start");
+        	JMenuItem start = new JMenuItem( resource.getString( "startLabel" ));
         	start.setMnemonic('S');
         	start.setAccelerator(KeyStroke.getKeyStroke(
       		         KeyEvent.VK_S, ActionEvent.CTRL_MASK));
@@ -222,7 +231,7 @@ public class JLifeMainWindow extends JFrame {
         	actionmenu.add(start);
         		
         				//STEP ***********************************
-        	JMenuItem step = new JMenuItem("Step");
+        	JMenuItem step = new JMenuItem( resource.getString( "stepLabel" ));
         	step.setMnemonic('E');
         	step.setAccelerator(KeyStroke.getKeyStroke(
       		         KeyEvent.VK_E, ActionEvent.CTRL_MASK));
@@ -239,7 +248,7 @@ public class JLifeMainWindow extends JFrame {
         	actionmenu.add(step);
         	
         				//STOP ***********************************
-        	JMenuItem stop = new JMenuItem("Stop");
+        	JMenuItem stop = new JMenuItem( resource.getString( "stopLabel" ));
         	stop.setMnemonic('T');
         	stop.setAccelerator(KeyStroke.getKeyStroke(
    		         KeyEvent.VK_T, ActionEvent.CTRL_MASK));
@@ -253,7 +262,7 @@ public class JLifeMainWindow extends JFrame {
         	actionmenu.add(stop);
         	
         				//RESET ***********************************
-        	JMenuItem reset = new JMenuItem("Reset");
+        	JMenuItem reset = new JMenuItem( resource.getString( "resetLabel" ));
         	reset.setMnemonic(KeyEvent.VK_R);
         	reset.setAccelerator(KeyStroke.getKeyStroke(
         		         KeyEvent.VK_R, ActionEvent.CTRL_MASK));
@@ -270,7 +279,7 @@ public class JLifeMainWindow extends JFrame {
         actionmenu.getPopupMenu().setLightWeightPopupEnabled(false);
         
      // ACTION MENU
-        JMenu toolsmenu = new JMenu("Tools");
+        JMenu toolsmenu = new JMenu( resource.getString( "toolLabel" ));
         toolsmenu.setMnemonic('T');
         //ITEMS
         	//XML VIEWER
@@ -285,14 +294,26 @@ public class JLifeMainWindow extends JFrame {
   									});
         	toolsmenu.add(xmleditor);
 	
+        	//EASY NEURONS
+        	JMenuItem easyneurons = new JMenuItem("Easy Neurons");
+        	easyneurons.addActionListener(new ActionListener()
+        	{
+        		public void actionPerformed( ActionEvent action )
+					{
+        			 //TODO: launch easy neurons
+					}
+				});
+        	toolsmenu.add(easyneurons);
+        	
+        	
         	toolsmenu.getPopupMenu().setLightWeightPopupEnabled(false);
         
         
         // ABOUT MENU
-        JMenu aboutmenu = new JMenu("About");
+        JMenu aboutmenu = new JMenu( resource.getString( "aboutLabel" ));
         	//ITEMS
         				//INFO ***********************************
-    		JMenuItem about = new JMenuItem("Info");
+    		JMenuItem about = new JMenuItem( resource.getString( "infoLabel" ));
     		about.addActionListener(new ActionListener()
 			{
     			
@@ -323,6 +344,7 @@ public class JLifeMainWindow extends JFrame {
     	PLAY=true;
     	Game = new JLife(this.d);
     	Game.setPath(Preferences.getPath());
+    	Game.setConfiguration(Preferences);
     	panel = new Simulation(d,Game); //Declare the DrawingPanel
     	panel.setBackgroundColor(Preferences.getBackgroundColor());
     	toolbar = new JLifeToolbar(this);
@@ -360,8 +382,8 @@ public class JLifeMainWindow extends JFrame {
     public void resetSimulation()
     {
     	if (JOptionPane.showConfirmDialog(this,
-				"The actual Simulation is going to be lost, are you sure?",
-				"Confirm new Simulation",
+    			 resource.getString( "resetMsg" ),
+    			 resource.getString( "resetTitle" ),
 				 JOptionPane.YES_NO_CANCEL_OPTION,
 				 JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
 	{
@@ -377,8 +399,8 @@ public class JLifeMainWindow extends JFrame {
     public void exitSimulation()
     {
     	if (JOptionPane.showConfirmDialog(this,
-				"The actual Simulation is going to be closed, are you sure?",
-				"Confirm Close Simulation",
+    			resource.getString( "resetMsg" ),
+   			 resource.getString( "resetTitle" ),
 				 JOptionPane.YES_NO_CANCEL_OPTION,
 				 JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
     			{

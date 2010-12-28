@@ -109,7 +109,14 @@ public class Zlife extends Sprite implements Serializable{
 	protected boolean SELECTED = false;
 	protected Color zlifeColor;
 	protected int actualLifeCycle=0; //the actual age of Zlife
+	/**
+	 * Store position of last seed meet by Zlife
+	 */
 	protected Point seedPosition = new Point();
+	/**
+	 * generationNumber is incremented to every reproduction
+	 */
+	protected int generationNumber = 0;
 	
 	//private boolean attacked=false;
 	
@@ -265,6 +272,15 @@ public class Zlife extends Sprite implements Serializable{
 	 */
 	public int getG() {
 	return G;
+	}
+	
+	/**
+	 * @return The generation Number
+	 * @see generationNumber
+	 */
+	public int getGenerationNumber()
+	{
+		return generationNumber;
 	}
 		
 	/**
@@ -691,6 +707,16 @@ public class Zlife extends Sprite implements Serializable{
 			G=0;
 		if(g>255)
 			G = 255;
+	}
+	
+	/**
+	 * @param g The Generation Number to set
+	 * @see generationNumber
+	 */
+	public void setGenerationNumber(int g)
+	{
+		if (g>=0)
+			generationNumber = g;
 	}
 	
 	/**

@@ -1,8 +1,8 @@
 /**
 * @author Francesco di Dio
-* Date: 27/dic/2010 17.33.29
+* Date: 28/dic/2010 17.33.29
 * Titolo: JFramePreferences.java
-* Versione: 0.1.13.1 Rev.a:
+* Versione: 0.1.13.2 Rev.a:
 */
 
 
@@ -40,9 +40,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -71,11 +74,16 @@ public class JFramePreferences extends JFrame{
 	
 	private JLabel MaxZlifesLabel,MaxZetatronLabel, MaxZretadorsLabel, MaxSeedsLabel;
 	private JLabel pathLabel;
+	private JLabel localeLabel;
+	
 	private JTextField MaxZlifesField,MaxZetatronField ,MaxZretadorsField, MaxSeedsField;
 	private JTextField pathField;
+	private JComboBox localeComboBox;
 	private JButton colorButton, okButton, cancelButton;
 	
 	private Configuration config;
+	
+	private ResourceBundle resource;
 	
 	/*
 	 * The constructor take as argument the JSimLife configuration,
@@ -83,9 +91,11 @@ public class JFramePreferences extends JFrame{
 	 */
 	public JFramePreferences(Configuration c)
 	{
-		super("Preferences");
+		super();
 		config = c;
-		setPreferredSize(new Dimension(450,250));
+		resource = ResourceBundle.getBundle("StringAndLabels", config.getLocale() );
+		this.setTitle(resource.getString( "prf_title" ));
+		setPreferredSize(new Dimension(450,320));
 		setLayout( new BorderLayout());
 		
 		/*
@@ -104,10 +114,11 @@ public class JFramePreferences extends JFrame{
 		addColorButton();
 		addMaxSpritesComponent();
 		addPathDirectory();
+		addLanguageChooser();
 		
 		//ADD COMPONENTS TO THE SOUTH PANEL
-		JButton okButton = new JButton("Save");
-		JButton cancelButton = new JButton("Cancel");
+		JButton okButton = new JButton(resource.getString( "prf_save" ));
+		JButton cancelButton = new JButton(resource.getString( "prf_cancel" ));
 		
 		//Save the current configuration into an XML file
 		okButton.addActionListener(new ActionListener()
@@ -117,8 +128,8 @@ public class JFramePreferences extends JFrame{
 					
 					setConfigValues();
 					config.save();
-					JOptionPane.showMessageDialog(null, "Restart JSimLife to apply change",
-													"Apply Changes",
+					JOptionPane.showMessageDialog(JFramePreferences.this, resource.getString( "prf_restartMsg") ,
+								resource.getString( "prf_applyChanges"),
 													JOptionPane.PLAIN_MESSAGE);
 					dispose();
 					
@@ -172,13 +183,15 @@ public class JFramePreferences extends JFrame{
 		config.setMaxSeeds(Integer.parseInt(MaxSeedsField.getText()));
 		
 		config.setPath( pathField.getText());
+		
+		config.setLocale( config.LocaleParseString(localeComboBox.getSelectedItem().toString() ));
 	}
 
 	private void addPanelSizeComponents()
 	{
 		JPanel subGroup = new JPanel();
 		subGroup.setLayout(new FlowLayout(FlowLayout.LEFT));
-		SimSizeLabel = new JLabel(" Simulation Panel Size");
+		SimSizeLabel = new JLabel(" "+resource.getString( "prf_simPanelSize"));
 		widthField = new JTextField(5);
 		heightField= new JTextField(5);
 		widthField.setText( String.valueOf( (int)config.getPlayfieldDimension().getWidth() ) );
@@ -194,7 +207,7 @@ public class JFramePreferences extends JFrame{
 	{
 		JPanel subGroup = new JPanel();
 		subGroup.setLayout(new FlowLayout(FlowLayout.LEFT));
-		backgroundcolorLabel = new JLabel(" Simulation Background Color");
+		backgroundcolorLabel = new JLabel(" "+resource.getString( "prf_simBGColor"));
 		final Color panelColor = config.getBackgroundColor();
 		colorButton = new JButton("");
 		colorButton.setBackground(panelColor);
@@ -204,7 +217,7 @@ public class JFramePreferences extends JFrame{
 			public void actionPerformed(ActionEvent actionEvent)
 			{
 				 Color color = JColorChooser.showDialog(
-				 rootPane, "Select Color",panelColor
+				 rootPane, resource.getString( "prf_selectColor"),panelColor
 				  );
 				 if (color!= null)
 				 {
@@ -214,11 +227,28 @@ public class JFramePreferences extends JFrame{
 			}
 		
 		});
-		colorButton.setToolTipText(" Select Background Color");
+		colorButton.setToolTipText(" "+resource.getString("prf_selectBGColor"));
 		north.add(backgroundcolorLabel);
 		subGroup.add(colorButton);
 		north.add(subGroup);
 		
+	}
+	
+	private void addLanguageChooser()
+	{
+		JPanel subGroup = new JPanel();
+		subGroup.setLayout(new FlowLayout(FlowLayout.LEFT));
+		localeLabel = new JLabel(" "+ resource.getString( "prf_chooseLanguage"));
+		
+		localeComboBox = new JComboBox();
+		localeComboBox.addItem(Locale.US);
+		localeComboBox.addItem(Locale.ITALY);
+		
+		localeComboBox.setSelectedItem( config.getLocale());
+		
+		north.add(localeLabel);
+		subGroup.add(localeComboBox);
+		north.add(subGroup);
 	}
 	
 	private void addMaxSpritesComponent()
@@ -236,16 +266,16 @@ public class JFramePreferences extends JFrame{
 		JPanel group4 = new JPanel();
 		group4.setLayout(new FlowLayout(FlowLayout.LEFT));
 		
-		MaxZlifesLabel = new JLabel(" Max Zlifes Number");
+		MaxZlifesLabel = new JLabel(" "+ resource.getString( "prf_maxZlifeNumber"));
 	    MaxZlifesField = new JTextField(5);
 	    
-	    MaxZetatronLabel = new JLabel(" Max Zetatron Number");
+	    MaxZetatronLabel = new JLabel(" "+ resource.getString( "prf_maxZretadorNumber"));
 	    MaxZetatronField = new JTextField(5);
 	    
-	    MaxZretadorsLabel = new JLabel(" Max Zretadors Number");
+	    MaxZretadorsLabel = new JLabel(" "+ resource.getString( "prf_maxZetatronNumber"));
 	    MaxZretadorsField = new JTextField(5);
 	    
-	    MaxSeedsLabel = new JLabel(" Max Seeds Number");
+	    MaxSeedsLabel = new JLabel(" "+ resource.getString( "prf_maxSeedNumber"));
 	    MaxSeedsField = new JTextField(5);
 	    
 	    
@@ -278,7 +308,7 @@ public class JFramePreferences extends JFrame{
 		JPanel field = new JPanel();
 		field.setLayout(new FlowLayout(FlowLayout.LEFT));
 		
-		pathLabel = new JLabel(" Zlife's Current Directory");
+		pathLabel = new JLabel(" "+ resource.getString( "prf_jsimlifeCurrentDir"));
 	    pathField = new JTextField(15);
 	    pathField.setAutoscrolls(true);
 	    pathField.setText( config.getPath()); 
@@ -290,15 +320,17 @@ public class JFramePreferences extends JFrame{
 				
 				 try{
 					  
-			            JFileChooser fileChooser = new JFileChooser("Select Workspace");
+			            JFileChooser fileChooser = new JFileChooser(" "+ resource.getString( "prf_selectWorkspace"));
 			   
+			            
 			            File f = new File(pathField.getText()+"/.");
 			            fileChooser.setCurrentDirectory(f);
 			            fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			            fileChooser.setAcceptAllFileFilterUsed(false);
 
 			            
-			            int n = fileChooser.showOpenDialog(null);
+			            int n = fileChooser.showOpenDialog(JFramePreferences.this);
+			            fileChooser.setLocation(100, 100);
 			            if (n == JFileChooser.APPROVE_OPTION) 
 			            	{	
 			      					  pathField.setText(
@@ -315,25 +347,25 @@ public class JFramePreferences extends JFrame{
 
 			@Override
 			public void mouseEntered(MouseEvent arg0) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 
 			@Override
 			public void mouseExited(MouseEvent arg0) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 
 			@Override
 			public void mousePressed(MouseEvent arg0) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
-				// TODO Auto-generated method stub
+				
 				
 			}
 		   });

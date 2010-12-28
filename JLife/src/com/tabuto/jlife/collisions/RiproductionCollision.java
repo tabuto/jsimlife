@@ -98,6 +98,7 @@ public class RiproductionCollision extends CollisionDetector{
 				jlc.addCell(newCell);
 				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());
 				cell2.setEnergy(cell2.getEnergy() - cell2.getRiproductionEnergy());
+				newCell.setGenerationNumber( Math.max(cell1.getGenerationNumber(), cell2.getGenerationNumber())+1);
 				newCell.live();
 				cell1.live();
 				cell2.live();
