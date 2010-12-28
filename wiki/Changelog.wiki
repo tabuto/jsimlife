@@ -3,6 +3,22 @@
 
 = Changelog =
 
+== JLife v.1.13.2 ==
+ * add Internationalization Routines (it_IT and US-EN)
+ * add Language Selection routine into JFramePreferences.java
+ * add Language Selection Routine into Main.java
+ * add set and get Configuration methods to JLife.java
+ * add isPresent() method in Configuration.java
+ * add LocaleParseString(String) method in Configuration.java
+ * translate: JLifeMainWindow
+ * translate: JFramePreferences
+ * translate: JFrameNewCell
+ * translate: JLifeToolbar
+ * fix Icon into Save and Open dialog;
+ * fix Icon into addSeed dialog;
+ * fix save and load simulation bug: now Configuration implements serializable
+ * fix XMLEditor error: freeze when export the project in a Jar file.
+
 == JLife v.1.13.1 ==
  * add JEX as a Java easy XML editor in tools menu
  * change charts background and foreground color;
