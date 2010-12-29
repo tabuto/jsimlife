@@ -51,7 +51,6 @@ import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 
-import org.neuroph.easyneurons.EasyNeuronsApplication;
 
 import com.tabuto.jlife.JLife;
 import com.tabuto.xmlMVC.XMLModel;
@@ -319,7 +318,7 @@ public class JLifeMainWindow extends JFrame {
     			
       	      public void actionPerformed( ActionEvent action )
       	      								{
-      	    	  new JFrameAbout(version);
+      	    	  new JFrameAbout(version, Preferences.getLocale() );
       	      								}
       									});
     	aboutmenu.add(about);

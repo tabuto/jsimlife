@@ -1,6 +1,10 @@
 TODO next release
-Add XML editor
-ADD easyneuroph to do your own neural network on zetatron
+Implements MVC pattern using Action class for the controller
+
+TODO on version 0.1.13.2
+Add XML editor DONE
+ADD easyneuroph to do your own neural network on zetatron DONE
+ADD translation DONE
 
 TODO on version 0.1.13
 Add save dialog into addNewCell form to save or load a xml dna file; DONE
@@ -21,7 +25,7 @@ Fix the load game bug when after click new game!
 TODO on version 1.0
 Add a small JCavansPanel to isolate cells using drag&dorp
 Add a TestTube panel to isolate Zlifes and controlling they reproduction;
-Add a internalization routines;
+Add a internalization routines; DONE
 ADD a routine on Zlife cell to keep track of the current number generation.DONE
 ADD an HTML onLine HELP
 Write the Developers Guide to JLife 

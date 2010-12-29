@@ -40,6 +40,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -89,11 +90,14 @@ public class JLifeShowZlife extends JFrame implements Observer {
 	private DnaPanel dnaTreePanel;
 	JScrollPane ZlifeDnaScroll; 
 	
+	private ResourceBundle resource;
+	
 	public JLifeShowZlife(Game2D game)
 	{
-		super("Zlife's View");
+		super();
 		Game = (JLife)game;
-		
+		resource = ResourceBundle.getBundle("StringAndLabels", Game.getConfiguration().getLocale());
+		this.setTitle(resource.getString( "jlsz_title"));
 		north = new JPanel();
 		dnaPanel = new JPanel();
 		south = new JPanel();
@@ -121,16 +125,16 @@ public class JLifeShowZlife extends JFrame implements Observer {
 	{
 		north.setLayout( new GridLayout(0,2,5,5));
 		
-		nameLabel = new JLabel("Name");
-		positionLabel = new JLabel("Position");
-		directionLabel = new JLabel("Direction °");
-		stateLabel = new JLabel("State");
-		speedLabel = new JLabel("Speed");
-		lifeCycleLabel = new JLabel("Life Cycle");
-		energyLabel = new JLabel("Energy");
-		radiusLabel = new JLabel("Radius");
-		colorLabel = new JLabel("Color");
-		generationLabel= new JLabel("Generation");
+		nameLabel = new JLabel(resource.getString( "jlsz_name"));
+		positionLabel = new JLabel(resource.getString( "jlsz_position"));
+		directionLabel = new JLabel(resource.getString( "jlsz_direction"));
+		stateLabel = new JLabel(resource.getString( "jlsz_state"));
+		speedLabel = new JLabel(resource.getString( "jlsz_speed"));
+		lifeCycleLabel = new JLabel(resource.getString( "jlsz_lifeCycle"));
+		energyLabel = new JLabel(resource.getString( "jlsz_energy"));
+		radiusLabel = new JLabel(resource.getString( "jlsz_radius"));
+		colorLabel = new JLabel(resource.getString( "jlsz_color"));
+		generationLabel= new JLabel(resource.getString( "jlsz_generation"));
 		
 		
 		

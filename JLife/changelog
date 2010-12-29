@@ -1,3 +1,9 @@
+JLife v.1.13.3
+Delete not yet used library easyneurons;
+translate: JFrameAbout
+translate: JLifeShowZlife
+translate: Statistic
+
 JLife v.1.13.2
 add Internationalization Routines (it_IT and US-EN)
 add Language Selection routine into JFramePreferences.java
