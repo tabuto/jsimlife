@@ -37,6 +37,8 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -55,6 +57,8 @@ public class JFrameAbout extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	private ResourceBundle resource;
+	
 	
 	String Version="";
 	JPanel viewer,south;
@@ -65,10 +69,12 @@ public class JFrameAbout extends JFrame {
 	 * Constructor parameters is the actual JSimLife version
 	 * @param version String
 	 */
-	public JFrameAbout(String version)
+	public JFrameAbout(String version,Locale locale)
 	{
-		super("About JSimLife");
+		super();
+		resource = ResourceBundle.getBundle("StringAndLabels", locale );
 		Version = version;
+		this.setTitle(resource.getString( "jfa_title" ));
 		setSize(new Dimension(500,200));
 		//this.setLocation( (this.getRootPane().getWidth()/2),(this.getRootPane().getHeight()*2) );
 		setLocation(200,200);
@@ -118,14 +124,16 @@ public class JFrameAbout extends JFrame {
 	 */
 	private void aboutText()
 	{
+		String Version = resource.getString( "jfa_version" );
+		String License = resource.getString( "jfa_license" );
+		
 		this.aboutInfo.setText(
 		"<span style=\"font-family: Arial; font-weight: bold;\">JSimLife</span><br>"+
-	    "<span style=\"font-family: Arial;\">Version:&nbsp;" + this.Version +"&nbsp; </span><br>"+
+	    "<span style=\"font-family: Arial;\">"+Version+":&nbsp;" + this.Version +"&nbsp; </span><br>"+
 		"<br style=\"font-family: Arial;\">"+
 		"<span style=\"font-family: Arial;\">Copyright&nbsp; © 2010 Francesco di Dio </span><br style=\"font-family: Arial;\">"+
 		"<br style=\"font-family: Arial;\">"+
-		"<span style=\"font-family: Arial;\">This Software is released under the "+
-		"MIT license.</span><br><br>"+
+		"<span style=\"font-family: Arial;\">"+License +"</span><br><br>"+
 		"<a style=\"font-family: Arial;\" href=\"http://www.jsimlife.netsons.org/\">http://www.jsimlife.netsons.org/</a><br>"
 		);
 				

@@ -32,6 +32,7 @@ package com.tabuto.jlife.statistic;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 import java.util.TimerTask;
 import java.util.Vector;
 
@@ -70,12 +71,14 @@ public class Statistic extends TimerTask implements Observer {
 	double TotalSpeed=0;
 	double TotalRadius=0;
 	
+	private ResourceBundle resource;
+	
 	
 	public Statistic(JLife game)
 	{
 		Game = game;
 		List= Game.groupList;
-		
+		resource = ResourceBundle.getBundle("StringAndLabels", Game.getConfiguration().getLocale() );
 	}
 	
 	/**
@@ -192,42 +195,42 @@ public class Statistic extends TimerTask implements Observer {
 	public String toString()
 	{
 		//SHOW RESULT
-		String result="\n STATISTICAL DATA \n";
-		result+="\n Total elements: "+ Game.getActualCellCount()+"\n\n\t" ;
+		String result="\n"+ resource.getString( "stat_title" )+"\n";
+		result+="\n"+ resource.getString( "stat_total" )+": "+ Game.getActualCellCount()+"\n\n\t" ;
 		
 		for(int i=0;i<GroupNumber;i++)
 			result+= groupNames[i]+"\t";
 		
-		result+="\n Subtotal: \t";
+		result+="\n"+ resource.getString( "stat_sub" )+"\t";
 		for(int i=0;i<GroupNumber;i++)
 			result+= groupSize[i] +"\t";
 		
-		result+="\n Horny: \t";
+		result+="\n"+ resource.getString( "stat_horny" )  +":  \t";
 		for(int i=0;i<GroupNumber;i++)
 			result+= hornyZlifes[i] +"\t";
 		
-		result+="\n Hungry: \t";
+		result+="\n"+ resource.getString( "stat_hungry" )  +": \t";
 		for(int i=0;i<GroupNumber;i++)
 			result+= hungryZlifes[i] +"\t";
 		
-		result+="\n Scary: \t";
+		result+="\n"+ resource.getString( "stat_scary" )  +":  \t";
 		for(int i=0;i<GroupNumber;i++)
 			result+= scaryZlifes[i] +"\t";
 		
-		result+="\n Bored: \t";
+		result+="\n"+ resource.getString( "stat_bored" )  +":  \t";
 		for(int i=0;i<GroupNumber;i++)
 			result+= boredZlifes[i] +"\t";
 	
-		result+="\n Enthropy: \t";
+		result+="\n"+ resource.getString( "stat_enthropy" )  +": \t";
 		for(int i=0;i<GroupNumber;i++)
 			result+= Math.rint(enthropy[i]*100)/100 +"\t";
 		 
 		
-		result+="\n Speed: \t";
+		result+="\n"+ resource.getString( "stat_speed" )  +":  \t";
 		for(int i=0;i<GroupNumber;i++)
 			result+= Math.rint(averageSpeed[i]*100)/100 +"\t";
 		
-		result+="\n Radius: \t";
+		result+="\n"+ resource.getString( "stat_radius" )  +": \t";
 		for(int i=0;i<GroupNumber;i++)
 			result+= Math.rint(averageRadius[i]*100)/100 +"\t";
 		

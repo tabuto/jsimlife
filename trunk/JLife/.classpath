@@ -6,6 +6,5 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/J2DGF"/>
 	<classpathentry kind="lib" path="/media/DATA/Home/project/Java/eclipse/workspace/lib/jchart2d-3.2.0.jar"/>
 	<classpathentry kind="lib" path="/media/DATA/Home/project/Java/eclipse/workspace/lib/neuroph.jar"/>
-	<classpathentry kind="lib" path="/media/DATA/Home/project/Java/eclipse/workspace/lib/easyNeurons.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
