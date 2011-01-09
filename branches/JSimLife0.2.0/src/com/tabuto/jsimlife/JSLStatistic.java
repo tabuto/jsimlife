@@ -7,26 +7,30 @@
 
 
 /*
- * Copyright (c) 2010 Francesco di Dio.
+ * Copyright (c) 2011 Francesco di Dio.
  * tabuto83@gmail.com 
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
  */
-
- /*
-  * Inserisci qui breve descrizione in italiano della classe
-  */
 
 package com.tabuto.jsimlife;
 
@@ -44,8 +48,11 @@ import com.tabuto.j2dgf.Group;
 
 
 /**
- * This Class encapsulate JSimLife model class to set some game statistic
+ * This Class encapsulate JSimLife model class to set some game statistic into
+ * some array and JTable
  * @author tabuto83
+ * @see TimerTask
+ * @see JTable
  *
  */
 public class JSLStatistic extends TimerTask implements Observer {
@@ -80,8 +87,9 @@ public class JSLStatistic extends TimerTask implements Observer {
 	private ResourceBundle resource;
 	
 	/**
-	 * Constructor
-	 * @param game
+	 * Constructor init the class variables and uses the 
+	 * {@link JSLStatistic#initArray()} and {@link JSLStatistic#initTable()}
+	 * @param game JSimLife game
 	 */
 	public JSLStatistic(JSimLife game)
 	{
@@ -189,7 +197,9 @@ public class JSLStatistic extends TimerTask implements Observer {
 		
 	}
  }
-	
+	/**
+	 * Init the JSLStatistic arrays
+	 */
 	protected void initArray()
 	{
 		
@@ -208,6 +218,9 @@ public class JSLStatistic extends TimerTask implements Observer {
 		averageRadius= new  double[GroupNumber];
 	}
 	
+	/**
+	 * Create JTable columns
+	 */
 	protected void initTable()
 	{
 			StatisticData.addColumn("Name");
@@ -242,7 +255,7 @@ public class JSLStatistic extends TimerTask implements Observer {
 
 	/**
 	 * Set the JLife Game2D component
-	 * @param game
+	 * @param game JSimLife game
 	 */
 	public void setGame(JSimLife game)
 	{
@@ -317,6 +330,10 @@ public class JSLStatistic extends TimerTask implements Observer {
 		
 	}
 	
+	/**
+	 * Set the gamae statistic data into JTable
+	 * @param groupID int the Group ID of which  we want calculate statistics
+	 */
 	protected void setGroupData(int groupID)
 	{	
 		//StatisticData.setValueAt(aValue, row, column)
@@ -331,12 +348,18 @@ public class JSLStatistic extends TimerTask implements Observer {
 		StatisticData.setValueAt(enthropy[groupID], groupID, 8);		
 	}
 	
+	/**
+	 * Clear all the data in JTable
+	 */
 	protected void clearTableData()
 	{
 		for(int i=0;i<StatisticData.getRowCount();i++)
 			StatisticData.removeRow(i);
 	}
 	
+	/**
+	 * @return the number of groups actually present into game
+	 */
 	public int getGroupNumber()
 	{
 		return GroupNumber;

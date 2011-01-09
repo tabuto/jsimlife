@@ -7,28 +7,36 @@
 
 
 /*
- * Copyright (c) 2010 Francesco di Dio.
+ * Copyright (c) 2011 Francesco di Dio.
  * tabuto83@gmail.com 
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without
+ * restriction, including without limitation the rights to use,
+ * copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following
+ * conditions:
+ * 
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+ * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+ * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+ * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+ * OTHER DEALINGS IN THE SOFTWARE.
  */
 
  /*
   * Questa classe si occupa di gestire il controllo tra il 
   * MODEL: Cell, Group,CollisionMAnager, ecc...
   * e il 
-  * VIEW: com.tabuto.jlife.gui.*
+  * VIEW: com.tabuto.jsimlife.views.*
   * QUindi contiene tutti gli oggetti appartenente al gioco, e tutti i metodi necessari
   * al VIEW per controllare il MODEL.
   * Questa classe implementa Serializable, in quanto può essere salvata e caricata!
@@ -42,12 +50,10 @@ import java.io.Serializable;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Vector;
-
 import com.tabuto.j2dgf.Game2D;
 import com.tabuto.j2dgf.Group;
 import com.tabuto.j2dgf.collision.CollisionBoundDetector;
 import com.tabuto.j2dgf.collision.CollisionManager;
-
 import com.tabuto.jenetic.Dna;
 import com.tabuto.jenetic.Gene;
 import com.tabuto.jsimlife.collisions.ZetatronEatingSeed;
@@ -65,8 +71,9 @@ import com.tabuto.jsimlife.Configuration;
 
 
 /**
- * Class {@code JLife} represent simple wrapper-class incapsulate object like {@link Cell}
+ * Class {@code JLife} represent simple wrapper-class encapsulate objects like {@link Cell}
  *  {@link Seed} and Collision.
+ *  
  * <p>
  * Use J2DGF v.0.7.3
  * 
@@ -76,6 +83,9 @@ import com.tabuto.jsimlife.Configuration;
  * 
  * @see Gene
  * @see Dna
+ * @see Group
+ * @see CollisionAction
+ * @see CollisionManager
  */
 public class JSimLife extends Game2D implements Serializable,Observer {
 
@@ -105,15 +115,24 @@ public class JSimLife extends Game2D implements Serializable,Observer {
 	private Seed selectedSeed;
 	
 	/**
-	 * Group contanis Zlifes and Seeds
+	 * Group contanis Zlifes
 	 */
 	public  Group<Zlife> cellsGroup = new Group<Zlife>("Zlifes");
+	/**
+	 * Group contanis Seed
+	 */
 	public Group<Seed> seedsGroup = new Group<Seed>("SeedsSprite");
+	/**
+	 * Group contanis Zretador
+	 */
 	public Group<Zretador> zretadorGroup = new Group<Zretador>("Zretadors");
+	/**
+	 * Group contanis Zetatrons
+	 */
 	public Group<Zetatron> zetatronGroup = new Group<Zetatron>("Zetatrons");
 	/**
 	 * Vector Group List, it used by JLifeStatistic to calculate statistical data
-	 * from Sprite's Group
+	 * from Sprite's Group. It contains all Zlife's group
 	 */
 	public Vector<Group<? extends Zlife>> groupList = new Vector<Group<? extends Zlife>>();
 	
@@ -139,25 +158,49 @@ public class JSimLife extends Game2D implements Serializable,Observer {
 	 */
 	private final int MAX_SEEDS=30;
 	
-	//COLLISIONS
-		//ZLIFE
+	/**
+	 * Collision between Zlifes and seed
+	 */
 	ZlifeEatingSeed zlifeEating; //Collision beetween seed and Zlifes
+	
+	/**
+	 * Collision between Zlifes when they hornies
+	 */
 	ZlifeReproduction reproductionZlife; //Collision between Zlifes
-		//ZREDATOR
+	
+	/**
+	 * Collision between Zretadors and Zlifes when Zretadors hungries
+	 */
 	ZretadorEatingZlife zretadorEating; //Collision Between Zlifes and predator
+	/**
+	 * Collision between Zretador when they hornies
+	 */
 	ZretadorReproduction reproductionZretador; //COllision between Zredators
 	
 		//ZETATRON
+	/**
+	 * Collision between Zetatron and seed
+	 */
 	ZetatronEatingSeed zetatronSeedEating;
-	ZetatronEatingZretador zetatronEating; 
+	/**
+	 * Collision between Zetatron and Zretadors when Zetatron hungries
+	 */
+	ZetatronEatingZretador zetatronEating;
+	
+	/**
+	 * Collision between Zlifes when they hornies
+	 */
 	ZetatronReproduction reproductionZetatron;
 	
-	
+	/**
+	 * Collision between all Zlifes and Simulation Panel boundary
+	 */
 	CollisionBoundDetector cbdZretador,cbdZlife, cbdZetatron; //Collision boundDetector
 
 	/**
-	 * Jlife Constructor 
+	 * Build a new JSimLife instance 
 	 * @param dim Dimension of the playfield canvas
+	 * @see Game2D
 	 */
 	public JSimLife(Dimension dim)
 	{
@@ -347,12 +390,14 @@ public class JSimLife extends Game2D implements Serializable,Observer {
 	public Dimension getDimension(){return this.DIM;}
 	
 	/**
-	 * Init the Game's components
+	 * Init the Game's components:
+	 * 
 	 */
 	public void initGame() 
 	{
 		//Create collision manager
-		cm = new CollisionManager();
+		//cm = new CollisionManager();
+		//Collision Manager is already created by the Game2D class
 		
 		//Add Group at GroupList
 		groupList.add(cellsGroup);
@@ -524,7 +569,7 @@ public class JSimLife extends Game2D implements Serializable,Observer {
 	public int getMaxCellsNumber(){return MAX_CELL_NUMBER + MAX_ZRETADOR_NUMBER+MAX_ZETATRON_NUMBER;}
 
 	/**
-	 * Move and drow all the sprite
+	 * Moves and draws all sprites
 	 */
 	@Override
 	public void drawStuff(Graphics g) {

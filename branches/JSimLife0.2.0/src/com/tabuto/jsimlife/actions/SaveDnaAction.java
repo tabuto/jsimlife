@@ -63,7 +63,7 @@ public class SaveDnaAction extends AbstractAction{
 	private Configuration preferences;
 	
 	/**
-	 * Instantiate new SaveSelectedZLifeAction
+	 * Instantiate new SaveDnaAction
 	 * 
 	 * @param conf Configuration
 	 * @param dnatosave Dna
