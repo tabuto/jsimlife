@@ -35,11 +35,9 @@
 package com.tabuto.jsimlife.actions;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
-
+import com.tabuto.jsimlife.JSimLife;
 import com.tabuto.jsimlife.views.JSLMainView;
-import com.tabuto.jsimlife.views.JSLNewCellView;
 
 /**
  * Class extends AbstractAction to perform the following Action:
@@ -48,7 +46,7 @@ import com.tabuto.jsimlife.views.JSLNewCellView;
  * @author tabuto83
  *
  * @see AbstractAction
- * @see JSLNewCellView
+ * @see JSLMainView
  */
 public class StepSimulationAction extends AbstractAction {
 
@@ -58,7 +56,13 @@ public class StepSimulationAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 	JSLMainView root;
 	
-	
+	/**
+	 * Instantiate new StepSimulationAction
+	 * 
+	 * @param title String Action title
+	 * @param mainview JSLMainView
+	 * @see JSimLife
+	 */
 	public StepSimulationAction(String title,JSLMainView mainview)
 	{
 		super(title);

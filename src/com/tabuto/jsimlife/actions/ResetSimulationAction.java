@@ -35,13 +35,21 @@
 package com.tabuto.jsimlife.actions;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
-
+import com.tabuto.jsimlife.JSimLife;
 import com.tabuto.jsimlife.views.JSLMainView;
 
 
+/**
+ * Class extends AbstractAction to perform the following Action:
+ * Clear all sprite group and reset game
+ * 
+ * @author tabuto83
+ *
+ * @see AbstractAction
+ * @see JSimLife
+ */
 public class ResetSimulationAction extends AbstractAction {
 
 	/**
@@ -50,6 +58,13 @@ public class ResetSimulationAction extends AbstractAction {
 	private static final long serialVersionUID = 1L;
 	JSLMainView root;
 	
+	/**
+	 * Instantiate new ResetSimulationAction
+	 * 
+	 * @param title String Action title
+	 * @param mainview JSLMainView
+	 * @see JSimLife
+	 */
 	public ResetSimulationAction(String title,JSLMainView mainview)
 	{
 		super(title);

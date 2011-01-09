@@ -79,6 +79,11 @@ public class JSLChartsView  extends JFrame implements ActionListener{
 
 	 Container c;
 	
+	/**
+	 * Build a new JFrame contains a JComboBox in order to choose the right
+	 * charts using the JSLStatistic object
+	 * @param s JSLStatistic
+	 */
 	public JSLChartsView(JSLStatistic s)
 	{
 		super("Statistics");

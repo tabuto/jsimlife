@@ -57,7 +57,7 @@ public class SavePreferencesAction extends AbstractAction {
 	Configuration preferences;
 	
 	/**
-	 * Instantiate new SaveSelectedZLifeAction
+	 * Instantiate new SavePreferencesAction
 	 * 
 	 * @param preferencesview JSLPreferencesView 
 	 */
