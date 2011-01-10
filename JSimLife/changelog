@@ -1,3 +1,9 @@
+JLife v.0.2.0.b2
+add icons for Easy XML editor into icons package
+remove unused tools item from menu: Easy Neurons
+remove old TODO tag on source
+set JTable not editable
+
 
 JLife v.0.2.0.b1
 Add SplashScreen using JSLSplashScreenView class

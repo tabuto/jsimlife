@@ -211,7 +211,7 @@ public class JSLMenu extends JMenuBar {
 				        			 //TODO: launch easy neurons
 									}
 								});
-				        	toolsmenu.add(easyneurons);
+				        	//toolsmenu.add(easyneurons);
 	        	
 	        toolsmenu.getPopupMenu().setLightWeightPopupEnabled(false);
 	        

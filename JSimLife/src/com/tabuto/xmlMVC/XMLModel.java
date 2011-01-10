@@ -71,7 +71,7 @@ public class XMLModel implements XMLUpdateObserver, SelectionObserver{
 	private ArrayList<XMLUpdateObserver> xmlObservers;
 	private ArrayList<SelectionObserver> selectionObservers = new ArrayList<SelectionObserver>();;
 	
-	//TODO:delete this main and add JEX to a tool menu in JSimLifeMainWindows
+	
 	/*
 	public static void main(String args[]) {
 		new XMLModel("newfile");
