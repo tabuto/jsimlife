@@ -309,7 +309,7 @@ public class Configuration implements Serializable{
 	/**
 	 * @return {@code true} if JSimLifeConf.xml file is present and {@code false} if not
 	 */
-	public static boolean isPresent()
+	public static boolean exist()
 	{
 		 SAXBuilder builder = new SAXBuilder();
 	      @SuppressWarnings("unused")

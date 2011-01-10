@@ -60,7 +60,7 @@ public class ExitSimulationAction extends AbstractAction {
 	/**
 	 * Instantiate new ExitSimulationAction
 	 * @param title String for Action's title
-	 * @param mainvew JSLMainView class
+	 * @param mainview JSLMainView class
 	 * @see JSLMainView
 	 */
 	public ExitSimulationAction(String title, JSLMainView mainview)
@@ -78,7 +78,8 @@ public class ExitSimulationAction extends AbstractAction {
 				 JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
     			{
 					root.stopSimulation();
-    				root.setGame(null);
+					root.getGame().shutdown();
+    				//root.setGame(null);
     				root.dispose();
     				System.exit(0);  
     			}

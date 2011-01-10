@@ -112,7 +112,7 @@ public class ZetatronReproduction  extends CollisionDetector {
 	  * Combine two name and return a String composed through the two name
 	  * @param name1 String name of the first Sprite
 	  * @param name2 String name of the second Sprite
-	  * @return
+	  * @return combined names
 	  */
 	 private String combineName(String name1, String name2)
 	 {

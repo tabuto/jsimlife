@@ -105,7 +105,7 @@ public class JSLChartsView  extends JFrame implements ActionListener{
 		this.setSize( 400, 300 );
 	    //Set the JFrame Icon
 		this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-	        		(this.getClass().getResource("../icons/icon_alpha_48x48.gif")));
+	        		(this.getClass().getResource("/com/tabuto/jsimlife/icons/icon_alpha_48x48.gif")));
 		
 		this.setVisible( true );
 

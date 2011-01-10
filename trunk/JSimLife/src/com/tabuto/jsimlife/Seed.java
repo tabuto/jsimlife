@@ -130,7 +130,7 @@ public class Seed extends Sprite{
 	
 	/**
 	 * Set the Density parametes
-	 * @param r, int new Seed's Density
+	 * @param d int new Seed's Density
 	 */
 	public void setDensity(double d)
 	{
@@ -157,7 +157,7 @@ public class Seed extends Sprite{
 	
 	/**
 	 * Set the Radius parametes
-	 * @param r, int new Seed's Radius
+	 * @param r int new Seed's Radius
 	 */
 	public void setRadius(int r)
 	{

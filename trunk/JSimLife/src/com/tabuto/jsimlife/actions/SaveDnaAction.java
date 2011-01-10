@@ -34,6 +34,7 @@
 
 package com.tabuto.jsimlife.actions;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
@@ -61,6 +62,7 @@ public class SaveDnaAction extends AbstractAction{
 
 	private Dna dnaToSave;
 	private Configuration preferences;
+	Component root;
 	
 	/**
 	 * Instantiate new SaveDnaAction
@@ -68,10 +70,11 @@ public class SaveDnaAction extends AbstractAction{
 	 * @param conf Configuration
 	 * @param dnatosave Dna
 	 */
-	public SaveDnaAction(Configuration conf, Dna dnatosave)
+	public SaveDnaAction(Configuration conf, Dna dnatosave, Component parent)
 	{
 		dnaToSave=dnatosave;
 		preferences=conf;
+		root = parent;
 	}
 	
 	@Override
@@ -83,7 +86,7 @@ public class SaveDnaAction extends AbstractAction{
 	         File f = new File(preferences.getPath()+"/"+ dnaToSave.getName());
 		     fileChooser.setCurrentDirectory(f);
 	         fileChooser.setSelectedFile(f);
-	         int n = fileChooser.showSaveDialog(null);
+	         int n = fileChooser.showSaveDialog(root);
 	         if (n == JFileChooser.APPROVE_OPTION) 
 	         {        	
 	         	

@@ -61,7 +61,7 @@ public class RefreshStatisticAction extends AbstractAction {
 	 * Instantiate new RefreshStatisticAction
 	 * 
 	 * @param title String Action title
-	 * @param mainview JSLStatistic
+	 * @param s JSLStatistic
 	 * @see JSLStatistic
 	 */
 	public RefreshStatisticAction(String title, JSLStatistic s)

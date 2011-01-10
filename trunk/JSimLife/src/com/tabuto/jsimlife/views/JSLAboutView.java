@@ -92,6 +92,8 @@ public class JSLAboutView extends JFrame {
 		setSize(new Dimension(500,200));
 		//this.setLocation( (this.getRootPane().getWidth()/2),(this.getRootPane().getHeight()*2) );
 		setLocation(200,200);
+		setUndecorated(true);
+		setResizable(false);
 		setLayout( new BorderLayout());
 		JButton okButton = new JButton("OK");
 		okButton.addActionListener(new ActionListener()
@@ -126,7 +128,7 @@ public class JSLAboutView extends JFrame {
 		
 		//ADD ICON TITLE
         this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-        		(this.getClass().getResource("../icons/icon_alpha_48x48.gif")));
+        		(this.getClass().getResource("/com/tabuto/jsimlife/icons/icon_alpha_48x48.gif")));
 		
 		this.pack();
 		this.setVisible(true);
@@ -134,7 +136,7 @@ public class JSLAboutView extends JFrame {
 	}
 	
 	/**
-	 * @return Info about this Game
+	 * Info about this Game
 	 */
 	private void aboutText()
 	{
@@ -170,7 +172,10 @@ public class JSLAboutView extends JFrame {
 		  
 	    try
 	    {
-	      image = javax.imageio.ImageIO.read(new java.net.URL(getClass().getResource("../icons/JSimLife-Logo-200x200.png"), "JSimLife-Logo-200x200.png"));
+	      image = javax.imageio.ImageIO.read(
+	    		  new java.net.URL(
+	    				  getClass().getResource("/com/tabuto/jsimlife/icons/JSimLife-Logo-200x200.png"), 
+	    				  "JSimLife-Logo-200x200.png"));
 	    }
 	    catch (Exception e) { e.getStackTrace();}
 	    

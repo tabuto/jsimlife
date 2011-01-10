@@ -59,7 +59,7 @@ public class SetPreferencesAction extends AbstractAction {
 	/**
 	 * Instantiate new SetPreferencesAction
 	 * 
-	 * @param mainview JSLMainView the root frame using to perform the action
+	 * @param game JSimLife game using to perform the action
 	 */
 	public SetPreferencesAction(JSimLife game)
 	{
