@@ -1,0 +1,39 @@
+TODO:
+ADD an HTML onLine HELP
+Write the Developers Guide to JLife 
+Add a splash screen loading image!
+Add a small JCavansPanel to isolate cells using drag&drop
+Add a TestTube panel to isolate Zlifes and controlling they reproduction;
+FIX the JTable views on the JSLControlPanelView
+
+
+OLD-TODO
+
+Implements MVC pattern using Action class for the controller DONE
+Add a defaultTable in JStatistic and use JTable to display statistical data in the east control pane DONE
+Add XML editor DONE
+ADD easyneuroph to do your own neural network on zetatron DONE
+ADD translation DONE
+Add save dialog into addNewCell form to save or load a xml dna file; DONE
+Add preferences to set Zetatron max number and other Game collision parameter; DONE
+Add save dialag into showCell form to save xml dna file of selected cell! DONE
+Add Zetatron with Neural Network brain IA DONE
+Insert a ToolBar with icon buttons: new,save,exit, addCell,addSeed, chart DONE
+Delete leftControlPanel DONE
+In the right controlPanel only a statistical view DONE
+In the bottom panel only a cell count with tooltip DONE
+Add a user friendly Description on a ZLife's class DONE
+Show a description into JFRame new cell for each Zlifes type DONE
+Fix the load game bug when after click new game! DONE
+Add a internalization routines; DONE
+ADD a routine on Zlife cell to keep track of the current number generation.DONE
+Add a Game Statistical GUI; DONE 
+Add a Panel to load, save, create and edit Zlife DNA; DONE
+Add DNA editor (edit, save, load)DONE
+Add a DNA loader for Cell DONE
+Add Values Input Control in the GUI for newCell and newSeed DONE
+When cell die it change in seed! DONE
+ADD parameter input control in the GUI dialog; DONE
+Add a Game Statistical model; DONE
+Add a control to Create Zlife using a DNA Control: Panel DONE
+

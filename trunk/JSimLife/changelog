@@ -1,0 +1,171 @@
+JLife v.2.0
+Re write class to implements the MVC pattern
+Renamed all classes and package directories
+fix license notice in all files
+fix null pointer exception when Simulation exit
+using AbstractAction class to perform every game action
+add a JTable to display statistical information into the control panel
+
+JLife v.1.13.3
+Delete not yet used library easyneurons;
+translate: JFrameAbout
+translate: JLifeShowZlife
+translate: Statistic
+
+JLife v.1.13.2
+add Internationalization Routines (it_IT and US-EN)
+add Language Selection routine into JFramePreferences.java
+add Language Selection Routine into Main.java
+add set and get Configuration methods to JLife.java
+add isPresent() method in Configuration.java
+add LocaleParseString(String) method in Configuration.java
+translate: JLifeMainWindow
+translate: JFramePreferences
+translate: JFrameNewCell
+translate: JLifeToolbar
+fix Icon into Save and Open dialog;
+fix Icon into addSeed dialog;
+fix save and load simulation bug: now Configuration implements serializable
+fix XMLEditor error: freeze when export the project in a Jar file.
+
+JLife v.1.13.1
+add JEX as a Java easy XML editor in tools menu
+Change charts background and foreground color;
+fix Step Action in Menu
+add status field onto statusBar
+add coordinates check value in JFrameNewCell
+fix age effect: Zlifes spend too much lifeCycle
+fix Jenetic.DNa.CombineGene() method: now the combinated values are under or bottom average value!
+fix life control in JsimLife; now ZLife die if energy == 0!
+fix riproductionCollision: now new Zlifes born hungry!
+add Path preference to select the JSimLife workingspace directory
+fix DNaPanel gene display, now every gene display its name!
+add Generation Number to keep track of current Zlife's generation
+
+JLife v.1.13
+fix the Seed's quantity message dialog in the JLifeShowZlife
+fix the save dialog into JFrameNewCell
+add automatic name choose in JFrameNewCell
+add randomColor in JFrameNewCell
+
+JLife v.1.12.2 
+
+Add new Zlife type Zetatron uses a Neural Network to change state;
+Add Zetatron max number in preferences
+add save and load dialog into AddNewCell frame to save or load dna;
+add save dialog into showZlife frame to save Zlife's Dna
+add AlwaysOnTop on to Charts dialog
+fix LoadXML bug into Dna.java class
+fix zetatron weights
+fix zetatron think state
+fix reproduction: now the energy is subtract after the new cell is created!
+fix showZlife frame too slow, now refresh only if zlife's state change
+fix loadXML into Dna.java class, can't load DnaParam in root element
+Change icons and statisic panel layout
+Add DnaPanel to show Zlife's Dna in a JTree XML;
+Add message on click on seed showing the actual seed's quantity!
+Reorder and Comment Code
+
+JLife v.1.12 MILESTONE
+Add JLifeToolbar as a iconed JToolbar;
+Remove JLifeLeftControlPanel;
+BottomPanel show now only the cell count number;
+Zlife and Zretador class has now a short friendly description;
+JFrameNewCell show a short summary of the selected Zlife's type;
+Add a preferences Frame to save and set some JSimLife's parameter;
+Add the Step feature;
+Fix a lot of small bug.
+
+
+JLife v.1.11.1
+Bufix JLife setEnergy
+
+JLife v.1.11 MILESTONE
+Reorder Code
+Zlifes changes direction when collide if scary
+Fix Bug: Statistic show now right values of a Loaded Game
+Change initial Zlifes param into add New Cell dialog to improve user's experience
+
+
+JLife v.1.10.3
+Add JFrame icon to JFrameStatistic and JFrameNewCell
+The JFrameStatistic now show several chart choosed using a JComboBox
+Using JCharts2D library;
+Now Statistic auto update info into JRightControlPanel using a Timer; 
+Add a JFrameStatistic class to draw chart; 
+Add a statistic package;
+
+
+JLife v.1.10.2
+Zlife spend more energy if faster!
+Zredator eating now not necessary killing zlife!!
+
+JLife v.0.1.10.1
+JLifeStatistic add Subtotal
+JLifeStatistic fix bug
+
+JLife v.0.1.10
+JLife class has now a Vector Group List to unify all the sprite and all the group in one object;
+JLife getActualCellCount use the new VectorGroup to calculate the Sprites number;
+JLifeStatistic is now able to manage a calculate statistic using the Vector Group List
+JLifeRightControlPanel is updated to manage the updated JLifeStatistic class
+Fix some IndexOutOfBoundsException and a lot of minor bug
+
+JLife v.0.1.9.1
+Add Zredator type of ZLife
+Update AddCell Panel
+Fix Bug that set zero the Zlife's speed 
+Zlife transform to seed after die
+Fix a lot of small bug
+
+
+
+JLife v.0.1.9			
+Auto Update position in JLifeShowZlife
+ADD Statistical Data View
+ADD a Floating ShowZlifePanel Information
+
+JLife v. 0.1.8
+Fix cellCount in JLife to notify observers when a cell die too!
+Fix a bug that doesn't show the Game update on the leftPanel when a Game loaded;
+ADD a ZlifeDialog to create new Zlife with fine tuning DNA parameter
+ADD Frame icon;
+Add limit of cellsGroup in JLife class to MAX_CELLS_NUMBER (125)
+Zlife color go to white while aging
+ADD multiple ZLife
+ADD tooltip in the Add-ZLife-panel
+FIX improve the seeds density and radius limit
+ADD to JLifeLeftPAnel a random coordinates when add a new seed
+FIX JLifeMainWindow exit window message
+
+JLife v. 0.1.7 BETA (MILESTONE)
+JLife and Control panel now using Observer Design Pattern
+RiproductionCollision: Add the CombineName Method
+Simulation,JLifeMainWIndow, JLife now let the user select the Sprite on canvas
+JLifeLeftControlPanel now show information about the actual selected Sprite
+Simulation addCell dialog let the user select the color of new Cell using a JColorChooser 
+
+JLife v. 0.1.5 BETA
+ADD and using Class Zlife as a sprite simulate an elementary life form
+JLifeRightControlPanel: Sprite counter in the RightControlPanel
+
+JLife v. 0.1.2 BETA
+ADD Class JLife as wrapper class of the MODEL layer (Cell,Seed,Collision,ecc..)
+ADD feature: Saving/Loading simulation is now avaible
+ALL Class use J2DGF v.0.6.2
+
+JLife v. 0.1.1 BETA
+ALL: class now uses jenetic2.0
+ALL: Class use J2DGF v0.6
+
+
+Jenetic Package v. 0.2.0
+com.tabuto.jenetic.Gene: Gene is now a Generics Type, containing every kind of object;
+com.tabuto.jenetic.Gene: Autodetect type;
+com.tabuto.jenetic.Gene: can return every object
+com.tabuto.jenetic.Gene: improve jdoc comments
+com.tabuto.jenetic.Dna: Manages Gene2.0
+com.tabuto.jenetic.Dna: Add static method to import/load any kind of gene;
+com.tabuto.jenetic.Dna: Improve toXml method;
+
+JLife v. 0.1.0
