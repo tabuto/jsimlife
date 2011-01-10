@@ -73,7 +73,7 @@ public class JSLMainView extends JFrame{
 	BufferStrategy bs;      //BufferStrategy
     //int W=1024,H=768;       //Window Frame Size
     Dimension d;            //Dimension of window size
-    private static final String version =" v.0.2.0.b1";
+    private static final String version =" v.0.2.0.b2";
     private static final String title="JSimLife";
     
     public ResourceBundle resource;

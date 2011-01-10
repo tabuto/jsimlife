@@ -107,6 +107,7 @@ public class JSLControlPanelView extends J2DControlPanel implements Observer {
 		
 		StatisticTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		StatisticTable.setSize(1000, 150);
+		StatisticTable.setEnabled(false);
 		//StatisticScroll = new JScrollPane(StatisticTable);
 		
 		//StatisticScroll.setAutoscrolls(true);

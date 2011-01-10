@@ -333,7 +333,7 @@ public class XMLView implements XMLUpdateObserver, SelectionObserver {
 		
 		// an intro splash-screen to get users started
 //		Custom button text
-		//TODO: delete unused Option
+		
 		Icon bigStartIcon = ImageFactory.getInstance().getIcon(ImageFactory.BIG_SOURCE_ICON);
 		Object[] options = {
 		                    "Open existing file",
