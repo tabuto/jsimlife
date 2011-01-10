@@ -77,6 +77,7 @@ public class ExitSimulationAction extends AbstractAction {
 				 JOptionPane.YES_NO_CANCEL_OPTION,
 				 JOptionPane.QUESTION_MESSAGE)==JOptionPane.YES_OPTION)
     			{
+					root.stopSimulation();
     				root.setGame(null);
     				root.dispose();
     				System.exit(0);  
