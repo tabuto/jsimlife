@@ -34,6 +34,7 @@
 
 package com.tabuto.jsimlife.views;
 
+
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.SplashScreen;
@@ -42,18 +43,29 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Locale;
-
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import com.tabuto.jsimlife.Configuration;
 import com.tabuto.util.MyUtils;
 
 //GAME ENTRY POINT
+/**
+ * Launcher represent the entry point of JSimLife. Before starting the game it check if the current JVM is higher than version 6.0.
+ * If Launcher is first time running, it display a locale language selection; if not, loading JSimLife using the configuration file
+ * JSimLifeConf.xml. Before launching JSimLife main window it runs a splash screen.
+ * 
+ * @author tabuto83
+ * 
+ * @see Configuration
+ * @see JSLSplashScreenView
+ * @see JSLMainView
+ */
 public class Launcher {
+	
+	static JSLSplashScreenView splash;
 	
 	static Locale locale;
 	static JComboBox localeComboBox;
@@ -130,11 +142,13 @@ public class Launcher {
 	
 	/**
 	 * Launch the Game using the actual Configuration
-	 * @param conf
+	 * @param conf Configuration
 	 */
 	public static void launchGame(Configuration conf)
 	{
-		main = new JSLMainView(conf);
+		//showSplashScreen();
+		splash = new JSLSplashScreenView();
+		main = new JSLMainView(conf,splash);
 		while(true){main.run();}
 	}
 	
@@ -144,13 +158,14 @@ public class Launcher {
 	 */
 	public static void main(String[] args) 
 	{
+		
 				/*
 				 * Check Version routine
 				 */
 			if ( MyUtils.isVersionHigherThan(1.6) )
 			 {
 					//IF is first time running JSimLife
-					if (!Configuration.isPresent())
+					if (!Configuration.exist())
 					{
 						selectLocale();
 					}
@@ -165,9 +180,7 @@ public class Launcher {
 		 				"Version Control", 
 		 				JOptionPane.WARNING_MESSAGE);
 
-	}
+	} 
 	
-
-
 
 }

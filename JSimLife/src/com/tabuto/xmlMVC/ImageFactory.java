@@ -44,7 +44,7 @@ public class ImageFactory {
 		return uniqueInstance;
 	}
 	
-	public static final String ICONS_FILE = "16x16/";
+	public static final String ICONS_FILE = "/com/tabuto/jsimlife/icons/16x16/";
 	public static final String ACTION_ICONS_FILE = ICONS_FILE + "actions/";
 	
 	public static final String OPEN_FILE_ICON = ICONS_FILE + "filesystems/folder_open.png";

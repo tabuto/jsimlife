@@ -73,7 +73,7 @@ public class JSLMainView extends JFrame{
 	BufferStrategy bs;      //BufferStrategy
     //int W=1024,H=768;       //Window Frame Size
     Dimension d;            //Dimension of window size
-    private static final String version =" v.0.2.0";
+    private static final String version =" v.0.2.0.b1";
     private static final String title="JSimLife";
     
     public ResourceBundle resource;
@@ -88,24 +88,27 @@ public class JSLMainView extends JFrame{
     private JSLControlPanelView cp_east;
     private JSLSelectedZlifeView zlifeView;
     private JSLStatusBar bottom;
-    
+    private JSLSplashScreenView Splash;
     
     //SIMULATION STATUS VARIABLES
     boolean PLAY = true;
     boolean STOP = false;
     
-    
+    int loading = 0;
     /**
      * Create a new MainView frame using 'conf' Configuration 
      * @param conf Configuration
      */
-    public JSLMainView(Configuration conf) 
+    public JSLMainView(Configuration conf, JSLSplashScreenView splash) 
     {
+    	Splash = splash;
+    	Splash.setElementMaxNumber(8);
+    	
     	preferences = conf;
     	resource = ResourceBundle.getBundle("StringAndLabels", preferences.getLocale());
     	d = preferences.getPlayfieldDimension();
     	
-    	setTitle(title + version);
+    	setTitle(title);
     	setExtendedState(this.getExtendedState()|JFrame.MAXIMIZED_BOTH);
     	setSize(d.width,d.height);
         setResizable(true);  
@@ -117,15 +120,21 @@ public class JSLMainView extends JFrame{
     	initSimulation();
     	
     	//Add MENU BAR
+    	Splash.renderSplashFrame("Loading menu",loading++);
     	menu = new JSLMenu(this);
     	setJMenuBar(menu);
     	
     	//ADD ICON TITLE
         this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-        		(this.getClass().getResource("../icons/icon_alpha_48x48.gif")));
+        		(this.getClass().getResource("/com/tabuto/jsimlife/icons/icon_alpha_48x48.gif")));
     	
+        Splash.renderSplashFrame("Pack JSLMainView",loading++);
     	pack();        
+    	
+    	Splash.close();
+    	//loading(false);
         this.setVisible(true);
+        
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);       
     }
     
@@ -157,30 +166,38 @@ public class JSLMainView extends JFrame{
      */
     public void initSimulation()
     {
+    	Splash.renderSplashFrame("Loading JSimLife Game2D",loading++);
     	PLAY=true;
     	
     	Game = new JSimLife(this.d);
     	Game.setPath(preferences.getPath());
     	Game.setConfiguration(preferences);
     	
+    	Splash.renderSplashFrame("Loading SimulationPanel",loading++);
     	SimulationPanel = new JSLSimulationView(d,Game); //Declare the DrawingPanel
     	SimulationPanel.setBackgroundColor(preferences.getBackgroundColor());
     	SimulationPanel.setFocusable(true);
     	scroller = new JScrollPane(SimulationPanel);
     	scroller.setPreferredSize(new Dimension(600,600));
     	
+    	Splash.renderSplashFrame("Loading toolbar",loading++);
     	toolbar = new JSLToolbar(this);
     	
     	  //INIT GAME
+    	Splash.renderSplashFrame("Init Game",loading++);
         Game.initGame();
     	
+        Splash.renderSplashFrame("Loading ControlPanel",loading++);
     	cp_east = new JSLControlPanelView(Game);
     	cp_east.setVisible(true);
     	
+    	Splash.renderSplashFrame("Loading ZlifeView",loading++);
     	zlifeView= new JSLSelectedZlifeView(Game);
     	
+    	Splash.renderSplashFrame("Loading StatusBar",loading++);
     	bottom = new JSLStatusBar(Game);
     	bottom.setVisible(true); 
+    	
     	
     	//ADD PANELS TO THE FRAME
         
@@ -193,6 +210,7 @@ public class JSLMainView extends JFrame{
          Game.addObserver(cp_east);
          Game.addObserver(zlifeView);
          Game.addObserver(bottom);
+         
     }
     
     /**
@@ -209,7 +227,20 @@ public class JSLMainView extends JFrame{
      */
     public void setGame(JSimLife g)
     {
+    	Game.deactivate();
+    	Game.shutdown();
     	Game = g;
+    	SimulationPanel.Game = getGame();
+    	cp_east.setGame(getGame());
+    	zlifeView.setGame(getGame());
+    	bottom.setGame(getGame());
+    	
+    	Game.addObserver(cp_east);
+        Game.addObserver(zlifeView);
+        Game.addObserver(bottom);
+        
+        //Game.notifyObservers("CountChange");
+    	
     }
     
     /**
@@ -245,4 +276,15 @@ public class JSLMainView extends JFrame{
      * @return the current JSimLife version number
      */
     public String getVersion(){return version;}
+    
+    /**
+     * Set the status bar as WAIT
+     */
+    public void loading()
+    {
+    	
+    	bottom.setGameStatus("WAIT");
+    	
+    }
+    
 }

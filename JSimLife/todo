@@ -1,14 +1,13 @@
 TODO:
 ADD an HTML onLine HELP
 Write the Developers Guide to JLife 
-Add a splash screen loading image!
 Add a small JCavansPanel to isolate cells using drag&drop
 Add a TestTube panel to isolate Zlifes and controlling they reproduction;
 FIX the JTable views on the JSLControlPanelView
 
 
 OLD-TODO
-
+Add a splash screen loading image! DONE
 Implements MVC pattern using Action class for the controller DONE
 Add a defaultTable in JStatistic and use JTable to display statistical data in the east control pane DONE
 Add XML editor DONE

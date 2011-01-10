@@ -38,6 +38,7 @@ import java.awt.ComponentOrientation;
 import java.awt.FlowLayout;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
@@ -71,6 +72,8 @@ public class JSLStatusBar extends J2DBottomPanel implements Observer {
 	 private JTextField CountLabel, statusLabel;
 	 private Border border;
 	
+	 public ResourceBundle resource;
+	 
 	 /**
 	  * Build a new instance of this class
 	  * @param game JSimLife
@@ -78,6 +81,7 @@ public class JSLStatusBar extends J2DBottomPanel implements Observer {
 	public JSLStatusBar(JSimLife game) {
 		super(game.getDimension());
 		Game = game;
+		resource = ResourceBundle.getBundle("StringAndLabels", Game.getConfiguration().getLocale());
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		addCountLabel();
 		addStatusLabel();
@@ -98,7 +102,7 @@ public class JSLStatusBar extends J2DBottomPanel implements Observer {
 	private void addCountLabel()
 	{
 		CountLabel = new JTextField(5);
-		CountLabel.setToolTipText("Actual Cells Number");
+		CountLabel.setToolTipText(resource.getString( "sb_cellNumber" ));
 		CountLabel.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		CountLabel.setEditable(false);
 		border = BorderFactory.createBevelBorder(BevelBorder.LOWERED ); 
@@ -114,7 +118,7 @@ public class JSLStatusBar extends J2DBottomPanel implements Observer {
 	private void addStatusLabel()
 	{
 		statusLabel = new JTextField(4);
-		statusLabel.setToolTipText("Actual Simulation State");
+		statusLabel.setToolTipText(resource.getString( "sb_simState" ));
 		statusLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		statusLabel.setEditable(false);
 		border = BorderFactory.createBevelBorder(BevelBorder.LOWERED ); 
@@ -139,14 +143,16 @@ public class JSLStatusBar extends J2DBottomPanel implements Observer {
 	 */
 	public void setGame(JSimLife game)
 	{
+		Game.deleteObserver(this);
 		Game = game;
+		Game.addObserver(this);
 	}
 	
 	/**
 	 * Set the Game status into GameStatus Field
 	 * @param status
 	 */
-	private void setGameStatus(String status)
+	public void setGameStatus(String status)
 	{
 		statusLabel.setText(status);
 	}

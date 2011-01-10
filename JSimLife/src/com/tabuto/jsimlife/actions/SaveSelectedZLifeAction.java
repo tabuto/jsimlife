@@ -33,6 +33,7 @@
 
 package com.tabuto.jsimlife.actions;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
@@ -60,15 +61,16 @@ public class SaveSelectedZLifeAction extends AbstractAction{
 	private static final long serialVersionUID = 1L;
 
 	private JSimLife Game;
-	
+	private Component root;
 	/**
 	 * Instantiate new SaveSelectedZLifeAction
 	 * 
 	 * @param game JSimLife 
 	 */
-	public SaveSelectedZLifeAction(JSimLife game)
+	public SaveSelectedZLifeAction(JSimLife game, Component parent)
 	{
 		Game=game;
+		root = parent;
 	}
 	
 	@Override
@@ -80,7 +82,7 @@ public class SaveSelectedZLifeAction extends AbstractAction{
 	         File f = new File(Game.getPath()+"/"+ Game.getSelectedCell().getName());
 		     fileChooser.setCurrentDirectory(f);
 	         fileChooser.setSelectedFile(f);
-	         int n = fileChooser.showSaveDialog(null);
+	         int n = fileChooser.showSaveDialog(root);
 	         if (n == JFileChooser.APPROVE_OPTION) 
 	         {        	
 	         	

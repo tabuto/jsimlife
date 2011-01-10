@@ -96,6 +96,8 @@ public class JSLPreferencesView extends JFrame{
 	@SuppressWarnings("unused")
 	private JButton  okButton, cancelButton;
 	
+	private int width = 450;
+	private int height = 320;
 	
 	/**
 	 * Creates a new JSLPreferencesView using 'conf' Configuration
@@ -108,9 +110,10 @@ public class JSLPreferencesView extends JFrame{
 		preferences = conf;
 		resource = ResourceBundle.getBundle("StringAndLabels", preferences.getLocale() );
 		this.setTitle(resource.getString( "prf_title" ));
-		setPreferredSize(new Dimension(450,320));
+		setPreferredSize(new Dimension(width,height));
 		setLayout( new BorderLayout());
-		
+		setLocation((int)(preferences.getPlayfieldDimension().getWidth()/2-(width/2)),
+					(int)(preferences.getPlayfieldDimension().getHeight()/2 -(height/2)) );
 		/*
 		 * NORTH PANEL has a GridLayout to divide panel into two row.
 		 * If Parameter has more than one field or label, you must wrap they
@@ -143,16 +146,16 @@ public class JSLPreferencesView extends JFrame{
 		   });
 		
 		//ADD ICON
-		/*
 		this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-        		(this.getClass().getResource("icon/icon_alpha_48x48.gif")));
-		*/
+        		(this.getClass().getResource("/com/tabuto/jsimlife/icons/icon_alpha_48x48.gif")));
+		
 		
 		south.add(okButton);
 		south.add(cancelButton);
 		
 		add(north, BorderLayout.CENTER);
 		add(south, BorderLayout.PAGE_END);
+		
 		pack();
 		setVisible(true);
 		

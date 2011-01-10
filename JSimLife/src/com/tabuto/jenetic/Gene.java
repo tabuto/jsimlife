@@ -106,7 +106,7 @@ public class Gene<E> extends Vector<E> {
 	
 	/**
 	 * Constructs a new {@code Gene} instance containing the Object {@code <E>}
-	 * @param o Any Object we want wrap in a Gene
+	 * @param object Any Object we want wrap in a Gene
 	 */
 	public Gene(E object)
 	{
@@ -117,7 +117,7 @@ public class Gene<E> extends Vector<E> {
 	/**
 	 * Constructs a new {@code Gene} instance containing the Object {@code <E>}
 	 * and the Gene's name 
-	 * @param o Any Object we want wrap in a Gene
+	 * @param object Any Object we want wrap in a Gene
 	 * @param name the Gene's Name
 	 */
 	public Gene(E object, String name)
@@ -129,7 +129,7 @@ public class Gene<E> extends Vector<E> {
 	/**
 	 * Constructs a new {@code Gene} instance containing the Object {@code <E>},
 	 * Gene's name and Gene's Description
-	 * @param o Any Object we want wrap in a Gene
+	 * @param object Any Object we want wrap in a Gene
 	 * @param name the Gene's Name
 	 */
 	public Gene(E object, String name, String description)

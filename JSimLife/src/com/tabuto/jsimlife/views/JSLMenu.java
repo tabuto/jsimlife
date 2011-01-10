@@ -45,7 +45,10 @@ import javax.swing.KeyStroke;
 import com.tabuto.jsimlife.Configuration;
 import com.tabuto.jsimlife.actions.ExitSimulationAction;
 import com.tabuto.jsimlife.actions.LaunchXMLEasyEditorAction;
+import com.tabuto.jsimlife.actions.LoadSimulationAction;
 import com.tabuto.jsimlife.actions.ResetSimulationAction;
+import com.tabuto.jsimlife.actions.SaveAsSimulationAction;
+import com.tabuto.jsimlife.actions.SaveSimulationAction;
 import com.tabuto.jsimlife.actions.SetPreferencesAction;
 import com.tabuto.jsimlife.actions.ShowAboutInfoAction;
 import com.tabuto.jsimlife.views.JSLMainView;
@@ -101,27 +104,20 @@ public class JSLMenu extends JMenuBar {
 							
 							JMenuItem open = new JMenuItem( resource.getString( "openLabel" ));
 							open.setMnemonic('O');
-							//TODO: Add OpenSimulation Action
-							//open.addActionListener(new OpenSimChooser());
+							open.addActionListener(new LoadSimulationAction(mainView));
 							filemenu.add( open);
 			
 	        				//Save ***********************************
 							JMenuItem save = new JMenuItem( resource.getString( "saveLabel" ));
 							save.setMnemonic('S');
-							save.addActionListener(new ActionListener()
-							{
-								public void actionPerformed( ActionEvent action )
-									{
-										//TODO: add save Simulation action
-									}
-							});
+							save.addActionListener(new SaveSimulationAction(mainView));
 							filemenu.add( save );
 			
 	        				//Save as ***********************************
 							JMenuItem saveAs = new JMenuItem( resource.getString( "saveAsLabel" ));
 							saveAs.setMnemonic('N');
-							//TODO: add saveAsSimulation action
-							//saveAs.addActionListener(new SaveSimChooser());
+					
+							saveAs.addActionListener(new SaveAsSimulationAction(mainView));
 							filemenu.add( saveAs );
 
 							//PREFERENCES ***********************************

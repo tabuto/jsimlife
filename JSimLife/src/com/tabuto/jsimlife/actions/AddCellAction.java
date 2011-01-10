@@ -36,7 +36,7 @@ package com.tabuto.jsimlife.actions;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
-import com.tabuto.jsimlife.JSimLife;
+import com.tabuto.jsimlife.views.JSLMainView;
 import com.tabuto.jsimlife.views.JSLNewCellView;
 
 /**
@@ -54,24 +54,24 @@ public class AddCellAction extends AbstractAction {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JSimLife Game;
+	JSLMainView mainView;
 	
 	/**
 	 * Instantiate new AddCellAction
-	 * @param game JSimLife game class
+	 * @param mainView JSLMainView 
 	 * @see JSimLife
 	 */
-	public AddCellAction(JSimLife game)
+	public AddCellAction(JSLMainView mainview)
 	{
 		super();
-		Game = game;
+		mainView = mainview;
 	}
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		JSLNewCellView newCellFrame = new JSLNewCellView(Game);
+		JSLNewCellView newCellFrame = new JSLNewCellView(mainView.getGame());
 		newCellFrame.pack();
 		newCellFrame.setVisible(true);
 		

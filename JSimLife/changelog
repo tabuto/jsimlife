@@ -1,10 +1,22 @@
-JLife v.2.0
+
+JLife v.0.2.0.b1
+Add SplashScreen using JSLSplashScreenView class
+add JSLNewSeedView, AddSeedAction and CreateNewSeedAction classes
+add a check values control in add seed dialog
+add shutdown method into JSimLife
+add Load, Save and SaveAs action linked with JSLMenu
+add wait state in the status bar when save or load simulation
+add Icon to the SaveDna dialog;
+fix JSLPreferencesView location
+
+JLife v.0.2.0.b0
 Re write class to implements the MVC pattern
 Renamed all classes and package directories
 fix license notice in all files
 fix null pointer exception when Simulation exit
 using AbstractAction class to perform every game action
 add a JTable to display statistical information into the control panel
+
 
 JLife v.1.13.3
 Delete not yet used library easyneurons;

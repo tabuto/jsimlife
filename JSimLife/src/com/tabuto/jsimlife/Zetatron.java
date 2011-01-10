@@ -67,7 +67,7 @@ public class Zetatron extends Zlife {
 	
 	/**
 	 * The Zetatron brain
-	 * @see Brain
+	 * @see ZetatronBrain
 	 */
 	protected ZetatronBrain ZBrain = new ZetatronBrain();
 	
@@ -506,8 +506,8 @@ public class Zetatron extends Zlife {
 	//calculate the current state with brain
 	/**
 	 * Calculate the current state as the result of Brain's think method
-	 * @see Brain
-	 * @see Brain#think(double, double)
+	 * @see ZetatronBrain
+	 * @see ZetatronBrain#think(double, double)
 	 */
 	private void thinkState()
 	{

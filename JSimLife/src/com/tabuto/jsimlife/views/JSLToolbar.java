@@ -138,13 +138,13 @@ public class JSLToolbar extends JToolBar{
         add(button);
         
         //AddCell button
-        button = makeNavigationButton(ADDCELL, (new AddCellAction( root.getGame()) ),
+        button = makeNavigationButton(ADDCELL, (new AddCellAction( root) ),
         		resource.getString( "jltb_addCellTip" ), //TIP
         		resource.getString( "jltb_addCell" )); //NAME
         add(button);
         
         //Addseed button
-        button = makeNavigationButton(ADDSEED, (new AddSeedAction( resource.getString("jltb_reset"),root.getGame() )),
+        button = makeNavigationButton(ADDSEED, (new AddSeedAction( resource.getString("jltb_reset"),root )),
         		resource.getString( "jltb_addSeedTip" ), //TIP
         		resource.getString( "jltb_addSeed" )); //NAME
         add(button);
@@ -174,7 +174,7 @@ public class JSLToolbar extends JToolBar{
 	
 	{
 			//Look for the image.
-			String imgLocation = "../icons/"
+			String imgLocation = "/com/tabuto/jsimlife/icons/"
 			+ imageName
 			+ ".png";
 			URL imageURL = JSLToolbar.class.getResource(imgLocation);

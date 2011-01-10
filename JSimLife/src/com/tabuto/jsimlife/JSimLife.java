@@ -71,7 +71,7 @@ import com.tabuto.jsimlife.Configuration;
 
 
 /**
- * Class {@code JLife} represent simple wrapper-class encapsulate objects like {@link Cell}
+ * Class {@code JLife} represent simple wrapper-class encapsulate objects like {@link Zlife}
  *  {@link Seed} and Collision.
  *  
  * <p>
@@ -220,7 +220,7 @@ public class JSimLife extends Game2D implements Serializable,Observer {
 	
 	/**
 	 * Add a Zlife in ZlifeGroup
-	 * @param c Zlife
+	 * @param z Zlife
 	 */
 	public void addCell(Zlife z)
 	{
@@ -236,7 +236,7 @@ public class JSimLife extends Game2D implements Serializable,Observer {
 
 	/**
 	 * Add a Zetatron in ZetatronGroup
-	 * @param c Zetatron
+	 * @param z Zetatron
 	 */
 	public void addZetatron(Zetatron z)
 	{
@@ -252,7 +252,7 @@ public class JSimLife extends Game2D implements Serializable,Observer {
 	
 	/**
 	 * Add a Zretador in ZretadorGroup
-	 * @param c Zretador
+	 * @param z Zretador
 	 */
 	public void addZretador(Zretador z)
 	{
@@ -561,6 +561,18 @@ public class JSimLife extends Game2D implements Serializable,Observer {
 		setChanged();
 		notifyObservers("SelectionChange");
 		}
+	
+	/**
+	 * Clear all the sprite group, stop the CollisionManager and all the 
+	 * collisionDetector thread
+	 */
+	public void shutdown()
+	{
+		deactivate();
+		for(int i=0;i<groupList.size();i++)
+		groupList.get(i).clear();
+		cm.shutdown();
+	}
 	
 	
 	/**

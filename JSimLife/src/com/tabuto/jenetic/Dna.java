@@ -119,7 +119,7 @@ public class Dna implements Serializable{
 	/**
 	 * This method instance a new empty <code>Dna</code> Object with a parameter for Genetic Recombination.
 	 * 
-	 * @param <code>double</code> Dna Parameter {@link Dna#param}
+	 * @param p <code>double</code> Dna Parameter {@link Dna#param}
 	 */
 	public Dna(double p)
 	{
@@ -129,7 +129,7 @@ public class Dna implements Serializable{
 	
 	/**
 	 * This method instance a new  <code>Dna</code> Object using a specified name
-	 * @param <code>String</code> the Dna name
+	 * @param Name <code>String</code> the Dna name
 	 */
 	public Dna(String Name)
 	{
@@ -141,8 +141,8 @@ public class Dna implements Serializable{
 	 * This method instance a new  <code>Dna</code> Object using a specified name
 	 * and {@link Dna#param}
 	 * 
-	 * @param <code>String</code> the Dna name
-	 * @param <code>double</code> Dna {@link Dna#param}
+	 * @param Name <code>String</code> the Dna Name
+	 * @param p <code>double</code> Dna {@link Dna#param}
 	 */
 	public Dna(String Name, double p)
 	{
@@ -333,7 +333,6 @@ public class Dna implements Serializable{
 	
 	/**
 	 * Return the {@link Gene} double's value at specific index.
-	 * @param index <code>int</code> Dna's Vecotor Index
 	 * @return d <code>double</code>
 	 */
 	public int getSize(){return this.DNA.size();}
@@ -386,7 +385,7 @@ public class Dna implements Serializable{
 	/**
 	 * Load a list of Genes from an XML file previously saved using {@link Dna#save(String)}
 	 * Can't load Gene containing not primitive objects!!
-	 * @param <code>String</code> fileName
+	 * @param fileName <code>String</code> 
 	 * @deprecated Use static method {@link Dna#load(String)}
 	 * 
 	 */
@@ -554,7 +553,6 @@ public class Dna implements Serializable{
 
 	/**
 	 * Return a XML document represent this DNA with description List of ist genes
-	 * @param <code>String</code> fileName
 	 * @see Dna#load(String)
 	 */
 	public Document toXML()
@@ -592,7 +590,7 @@ public class Dna implements Serializable{
 	
 	/**
 	 * Write a XML file represent this DNA with description List of ist genes
-	 * @param <code>String</code> fileName
+	 * @param fileName <code>String</code> 
 	 * @see Dna#load(String)
 	 */
 	public void toXML(String fileName)

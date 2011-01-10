@@ -198,7 +198,7 @@ public class JSLNewCellView extends JFrame implements ActionListener{
 				dispose();
 				} 
 			});
-		saveButton.addActionListener(new SaveDnaAction(Game.getConfiguration(),ZlifeDna));
+		saveButton.addActionListener(new SaveDnaAction(Game.getConfiguration(),ZlifeDna,this));
 		loadButton.addActionListener(new LoadDnaAction(this));
 		
 		
@@ -210,7 +210,7 @@ public class JSLNewCellView extends JFrame implements ActionListener{
 		
 		//ADD ICON
 		 this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
-	        		(this.getClass().getResource("../icons/icon_alpha_48x48.gif")));
+	        		(this.getClass().getResource("/com/tabuto/jsimlife/icons/icon_alpha_48x48.gif")));
 		
 		//FIRST ZLIFE DESCRIPTION
 		 updateDescriptionPanel("Zlife");

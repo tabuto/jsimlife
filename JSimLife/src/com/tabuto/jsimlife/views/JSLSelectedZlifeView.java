@@ -135,6 +135,10 @@ public class JSLSelectedZlifeView extends JFrame implements Observer {
 		initComponent();
 		
 		setAlwaysOnTop(true);
+		
+		//ADD ICON
+		this.setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage
+        		(this.getClass().getResource("/com/tabuto/jsimlife/icons/icon_alpha_48x48.gif")));
 	}
 	
 	
@@ -213,7 +217,7 @@ public class JSLSelectedZlifeView extends JFrame implements Observer {
 		north.add(colorButton);
 	
 		saveButton = new JButton("Save");
-		saveButton.addActionListener(new SaveSelectedZLifeAction(Game));
+		saveButton.addActionListener(new SaveSelectedZLifeAction(Game,this));
 		south.add(saveButton);
 		
 		this.add(north,BorderLayout.NORTH);

@@ -49,8 +49,8 @@ import com.tabuto.util.Point;
  * Class {@code Zlife} represent an elementary life's form able to reproduce itself
  * using a {@link Dna} to transmit its Genetic Code!
  * Cell life is very simple, it move in search of food, because moving equals spend energy
- * When its energy is less than a {@link Cell#activityRatio} parameter, it can eat.
- * When its energy is more than a {@link Cell#activityRatio}, it's able to reproduce 
+ * When its energy is less than a hungryEnergy parameter, it can eat.
+ * When its energy is more than a hornyEnergy, it's able to reproduce 
  * itself if it collides by another Cell.
  * <p>
  * Use Jenetic2.1
@@ -240,7 +240,7 @@ public class Zlife extends Sprite implements Serializable{
 	
 	/**
 	 * @return The generation Number
-	 * @see generationNumber
+	 * @see Zlife#generationNumber
 	 */
 	public int getGenerationNumber()
 	{
@@ -614,7 +614,7 @@ public class Zlife extends Sprite implements Serializable{
 	}
 	
 	/**
-	 * @param Set the new Color of the sprite as a RGB values
+	 * @param c Color; Set the new Color of the sprite as a RGB values
 	 */
 	public void setColor(Color c)
 	{
@@ -675,7 +675,7 @@ public class Zlife extends Sprite implements Serializable{
 	
 	/**
 	 * @param g The Generation Number to set
-	 * @see generationNumber
+	 * @see Zlife#generationNumber
 	 */
 	public void setGenerationNumber(int g)
 	{
@@ -863,7 +863,9 @@ public class Zlife extends Sprite implements Serializable{
 	
 
 	/**
-	 * @param zlifeColor the zlifeColor to set
+	 * @param r the zlifeColor red component to set
+	 *  @param g the zlifeColor green component to set
+	 *   @param b the zlifeColor blue component to set
 	 */
 	public void setZlifeColor(int r, int g, int b) {
 		setR(r);
