@@ -1,4 +1,5 @@
 TODO:
+ADD new Zlife's do by a vector of Zlife controlled by NN (min 4) linked with lines.
 ADD an HTML onLine HELP
 Write the Developers Guide to JLife 
 Add a small JCavansPanel to isolate cells using drag&drop

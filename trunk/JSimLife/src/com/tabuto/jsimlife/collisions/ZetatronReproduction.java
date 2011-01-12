@@ -77,31 +77,17 @@ public class ZetatronReproduction  extends CollisionDetector {
 		Zetatron cell1, cell2, newCell;
 		cell1 = (Zetatron) group1.get(s1);
 		cell2 = (Zetatron) group1.get(s2);
-		Dna newBornDna;
+
 		//TO-DO
 		
 		if (cell1.isHorny() && cell2.isHorny() && (jlc.getActualCellCount()<jlc.getMaxCellsNumber()))
 				{
-				newBornDna= Dna.merge(cell1.getZlifeDna(), cell2.getZlifeDna());
-				
-			
-				double tempAngle = cell2.getAngle();
-				cell2.setAngleRadians(cell1.getAngle());
-				cell1.setAngleRadians(tempAngle);
-				newCell = new Zetatron(cell1.getDimension(), cell1.getX(),cell1.getY(),newBornDna);
-				//newCell.setBored();
-				newCell.setAngleRadians( Math.random() * 2 * Math.PI );
-				newCell.setName( combineName(cell1.getName(),cell2.getName()));
-				newCell.setEnergy( newCell.getHungryEnergy()*(0.9)); 
-				jlc.addZetatron(newCell);
-				newCell.setGenerationNumber( Math.max(cell1.getGenerationNumber(), cell2.getGenerationNumber())+1);
-				newCell.live();
-				
-				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());
-				cell2.setEnergy(cell2.getEnergy() - cell2.getRiproductionEnergy());
-				
-				cell1.live();
-				cell2.live();
+			newCell = cell1.reproduction(cell2);
+			newCell.setName( combineName(cell1.getName(),cell2.getName()));
+			jlc.addZetatron(newCell);
+			newCell.live();
+			cell1.live();
+			cell2.live();
 				
 				}
 		

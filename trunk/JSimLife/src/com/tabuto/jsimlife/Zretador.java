@@ -70,8 +70,10 @@ public class Zretador extends Zlife implements Serializable{
 
 
 	public boolean attack = false;
-	public Zlife preda;
+	public Zlife prey;
+	public double distance = 200;
 
+	public Color sight = Color.DARK_GRAY;
 
 	/**
 	 * Make a new Zlife using the {@link Dna} passed him as parameter.
@@ -139,13 +141,37 @@ public class Zretador extends Zlife implements Serializable{
 					this.setSpeed((int)hungrySpeed + 4);
 					
 					if (energy < hungryEnergy)
-						{
+					{
+							if(prey instanceof Zlife )
+							{	
+								if ( distance < prey.getPosition().getDistance(this.getPosition()) )
+										{
+									distance = prey.getPosition().getDistance(this.getPosition());
+									moveTo(prey);
+									
+										}
+								distance = prey.getPosition().getDistance(this.getPosition());
+								attack=true;
+								
+								if (!prey.isAlive() || distance>200)
+								{
+									setPrey(null);
+								}
+								
 								break;
-						}
+							}
+							
+								
+						
+							
+							
+						break;
+					}	
 					
 					if (energy > hungryEnergy)
 					  {
-						  this.age();
+						  setPrey(null);
+						  //this.age();
 						  this.setSpeed((int)getBoredSpeed()+5);
 						  setState(CellState.BORED);
 						  this.setAngleRadians(Math.random()*Math.PI*2);
@@ -170,7 +196,7 @@ public class Zretador extends Zlife implements Serializable{
 					}
 					if(energy<hungryEnergy)
 					{
-						age();
+						//age();
 						 this.setSpeed((int)getHungrySpeed()+6);
 						setState(CellState.HUNGRY);
 						this.setAngleRadians(Math.random()*Math.PI*2);
@@ -209,18 +235,151 @@ public class Zretador extends Zlife implements Serializable{
 	}
 	
 	@Override
+	public void move()
+	{
+		if ( ACTIVE && this.getSpeed()> 0 )
+  	  {  
+  	      
+  		  double nx = (this.vector.origin.x + this.getMySpeed() * Math.cos(this.vector.getDirectionRadians() ) );
+  		  double ny = (this.vector.origin.y + this.getMySpeed() * Math.sin(this.vector.getDirectionRadians()));
+  		  this.vector.setNewOrigin(nx,ny);
+  		  
+  		setChanged();
+		notifyObservers("ZLife:Move");
+  		  
+		if(prey==null)
+  		  energy = (energy - realMetabolism - (getSpeed()/100));
+		if(prey!=null)
+			 energy = (energy + realMetabolism + (getSpeed()/100));
+		if(isScary())
+			energy = (energy - realMetabolism*2 - (getSpeed()/50));
+		
+  		  if(energy<=0 || actualLifeCycle>lifeCycle)
+  			 {setAlive(false);Deactivate();}
+  		  else
+  			  this.live();
+  		
+  	  }
+	}
+	
+	/**
+	 * Return a new Zretador with merged DNA
+	 * @param z Other Zretador
+	 * @return new Zretador
+	 */
+	public Zretador reproduction(Zretador z)
+	{
+		Dna newBornDna= Dna.merge(z.getZlifeDna(), this.getZlifeDna());
+		
+		double tempAngle = this.getAngle();
+		this.setAngleRadians(z.getAngle());
+		z.setAngleRadians(tempAngle);
+		Zretador newCell = new Zretador(z.getDimension(), z.getX(),z.getY(),newBornDna);
+		newCell.setAngleRadians( Math.random() * 2 * Math.PI );
+		newCell.setEnergy( newCell.getHungryEnergy()*0.9); 
+		z.setEnergy( z.getEnergy() - z.getRiproductionEnergy());
+		this.setEnergy(this.getEnergy() - this.getRiproductionEnergy());
+		newCell.setGenerationNumber( Math.max(z.getGenerationNumber(), this.getGenerationNumber())+1);
+		
+		return newCell;
+	}
+	
+	/**
+	 * Set the current prey for this Zretador
+	 * @param z
+	 */
+	public void setPrey(Zlife z)
+	{
+		//If prey is not null update distance and set attack true
+		if(z instanceof Zlife)
+		{
+			prey = z;
+			distance = prey.getPosition().getDistance(this.getPosition());
+			attack=true;
+		}
+		else 
+			//IF not set prey null and attack false
+		{
+			prey = null;
+			distance = 200;
+			attack = false;
+		}
+	}
+	
+	@Override
 	public void ThisIsMe(Graphics g2d) 
 	{
 		g2d.setColor( getZlifeColor() );
 		g2d.fillRect((int)this.getX() - this.radius , (int)this.getY() - this.radius, this.radius, this.radius);
 		
 		if(SELECTED)
+			//DRAW A RED CIRCLE
 		{
 			g2d.setColor(Color.RED);
 			g2d.drawOval((int)this.getX() - this.radius -5 , (int)this.getY() - this.radius - 5,this.radius + 10, this.radius + 10);
 			
 		}
 		
+		if (attack)
+		{  
+			//DRAW A LINE from thiz zretador to zlife prey
+			g2d.setColor(getZlifeColor());
+			g2d.drawLine((int)getX(), (int)getY(), (int)prey.getX(), (int)prey.getY());
+		}
+		
+		if(marked)
+		{
+			// DRAW a colored rectangle with choosed color
+			g2d.setColor(markedColor);
+			g2d.drawRect((int)this.getX() - this.radius -7 , (int)this.getY() - this.radius - 7,this.radius + 14, this.radius + 14);
+			
+		}
+		
+	}
+	
+	/**
+	 * Collision Action performed when a Zlife is nearby Zretador
+	 * @param z Zretador
+	 * @param c Zlife
+	 */
+	public void ZretadorEatingZlife(Zretador z, Zlife c)
+	{
+
+		if(z.isHungry())
+		{
+			
+			if (z.prey == null)
+			{
+				z.setPrey(c);
+				if(c.getEnergy()>c.getMaxEnergy()*0.10)
+					c.setScary();
+				z.moveTo(c);
+			}
+			
+
+		
+			if( z.getPosition().getDistance( c.getPosition())< 20 )
+			{
+				z.setPrey(c);
+				if(c.getEnergy()>c.getMaxEnergy()*0.10)
+					c.setScary();
+				z.moveTo(c);
+				
+			}
+			
+				if( z.getPosition().getDistance( c.getPosition())< (z.getRadius()+c.getRadius()) )
+				{
+					//z.setPrey(c);
+					z.setEnergy( z.getMaxEnergy() );
+					z.setAngleRadians(Math.random()*2*Math.PI);
+					//Zlife hit but not necessary die
+					c.setEnergy( c.getEnergy()-( (z.getRadius()+1)*10) );
+					z.setPrey(null);
+				}
+				
+				z.live();
+				c.live();
+		}
 	}
 
 }

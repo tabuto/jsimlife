@@ -74,8 +74,10 @@ public class Zetatron extends Zlife {
 	/**
 	 * Zetatron's actual aim. If hungry it follows the Zredator "preda"
 	 */
-	public Zretador preda;
+	public Zretador prey;
 
+	double distance;
+	boolean attack;
 	
 	/*
 	 * WEIGHTS
@@ -184,6 +186,32 @@ public class Zetatron extends Zlife {
 			case HUNGRY:
 				{
 					this.setSpeed((int)hungrySpeed + 4);
+					
+					/*
+					 * ADD for improving eating performance
+					 * 
+					 */
+					
+					if(prey instanceof Zlife )
+					{	
+						if ( distance < prey.getPosition().getDistance(this.getPosition()) )
+								{
+							distance = prey.getPosition().getDistance(this.getPosition());
+							moveTo(prey);
+							
+								}
+						distance = prey.getPosition().getDistance(this.getPosition());
+						attack=true;
+						
+						if (!prey.isAlive())
+						{
+							setPrey(null);
+						}
+						
+						break;
+					}
+					//END ADD
+					
 					break;
 				}
 			case HORNY:
@@ -449,6 +477,28 @@ public class Zetatron extends Zlife {
 	}
 	
 	/**
+	 * Return a new Zetatron with merged DNA
+	 * @param z Other Zetatron
+	 * @return new Zetatron
+	 */
+	public Zetatron reproduction(Zetatron z)
+	{
+		Dna newBornDna= Dna.merge(z.getZlifeDna(), this.getZlifeDna());
+		
+		double tempAngle = this.getAngle();
+		this.setAngleRadians(z.getAngle());
+		z.setAngleRadians(tempAngle);
+		Zetatron newCell = new Zetatron(z.getDimension(), z.getX(),z.getY(),newBornDna);
+		newCell.setAngleRadians( Math.random() * 2 * Math.PI );
+		newCell.setEnergy( newCell.getHungryEnergy()*0.9); 
+		z.setEnergy( z.getEnergy() - z.getRiproductionEnergy());
+		this.setEnergy(this.getEnergy() - this.getRiproductionEnergy());
+		newCell.setGenerationNumber( Math.max(z.getGenerationNumber(), this.getGenerationNumber())+1);
+		
+		return newCell;
+	}
+	
+	/**
 	 * @param alive the alive to set
 	 */
 	@Override
@@ -461,6 +511,26 @@ public class Zetatron extends Zlife {
 			notifyObservers(this);
 		}
 		
+	}
+	
+	/**
+	 * Set current prey for this Zetatron
+	 * @param z Zetatron prey
+	 */
+	public void setPrey(Zretador z)
+	{
+		if(z instanceof Zlife)
+		{
+			prey = z;
+			distance = prey.getPosition().getDistance(this.getPosition());
+			attack=true;
+		}
+		else
+		{
+			prey = null;
+			distance = 200;
+			attack = false;
+		}
 	}
 	
 	/**
@@ -524,11 +594,20 @@ public class Zetatron extends Zlife {
 		}
 		
 		
+		if(state==CellState.HUNGRY && futureState != CellState.HUNGRY)
+		{
+			 setPrey(null);
+			  this.age();
+		}
+		
 		if(futureState != state)
 		{
 		age();
-		setState(futureState);
+		setState(futureState);	
 		}
+		
+		if (prey instanceof Zretador && prey.getPosition().getDistance(getPosition())>200)
+			setPrey(null);
 		
 	}
 	
@@ -546,6 +625,88 @@ public class Zetatron extends Zlife {
 			
 		}
 		
+		if (attack)
+		{
+			g2d.setColor(getZlifeColor());
+			g2d.drawLine((int)getX(), (int)getY(), (int)prey.getX(), (int)prey.getY());
+			
+		}
+		
+		if(marked)
+		{
+			g2d.setColor(markedColor);
+			g2d.drawRect((int)this.getX() - this.radius -7 , (int)this.getY() - this.radius - 7,this.radius + 14, this.radius + 14);
+			
+		}
+	}
+	
+	
+	/**
+	 * COllision action performed when a Zetatron is nearby Seed
+	 * @param z Zetatron
+	 * @param s Seed
+	 */
+	
+	public void ZetatronEatingSeed(Zetatron z, Seed s)
+	{
+		if (z.isBored())
+		{
+			z.setSeedPosition( s.getPosition() ) ;
+		}
+	
+		if (z.isHungry())
+		{
+			s.eatMe();
+			z.setEnergy(z.getMaxEnergy());
+			z.setAngleRadians(Math.random()*2*Math.PI);
+			//cell1.setHorny();
+			z.live();
+		}
+	}
+	
+	/**
+	 * Collision Action performed when a Zretador is nearby Zetatron
+	 * @param z Zetatron
+	 * @param c Zretador
+	 */
+	public void ZetatronEatingZretador(Zetatron z, Zretador c)
+	{
+
+		if(z.isHungry())
+		{
+			
+			if (z.prey == null)
+			{
+				z.setPrey(c);
+				if(c.getEnergy()>c.getMaxEnergy()*0.10)
+					c.setScary();
+				z.moveTo(c);
+			}
+			
+
+		
+			if( z.getPosition().getDistance( c.getPosition())< 20 )
+			{
+				z.setPrey(c);
+				if(c.getEnergy()>c.getMaxEnergy()*0.10)
+					c.setScary();
+				z.moveTo(c);
+				
+			}
+			
+				if( z.getPosition().getDistance( c.getPosition())< (z.getRadius()+c.getRadius()) )
+				{
+					//z.setPrey(c);
+					z.setEnergy( z.getMaxEnergy() );
+					z.setAngleRadians(Math.random()*2*Math.PI);
+					//Zlife hit but not necessary die
+					c.setEnergy( c.getEnergy()-( (z.getRadius()+1)*10) );
+					z.setPrey(null);
+				}
+				
+				z.live();
+				c.live();
+		}
 	}
 	
 	

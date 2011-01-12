@@ -48,6 +48,7 @@ import com.tabuto.jsimlife.actions.ExitSimulationAction;
 import com.tabuto.jsimlife.actions.PauseSimulationAction;
 import com.tabuto.jsimlife.actions.ResetSimulationAction;
 import com.tabuto.jsimlife.actions.ShowChartViewAction;
+import com.tabuto.jsimlife.actions.ShowTestTubeAction;
 import com.tabuto.jsimlife.actions.StartSimulationAction;
 import com.tabuto.jsimlife.actions.StepSimulationAction;
 
@@ -83,6 +84,8 @@ public class JSLToolbar extends JToolBar{
 	    static final private String ADDCELL = "addCell";
 	    static final private String ADDSEED = "addSeed";
 	    static final private String CHART = "chart";
+	    static final private String TUBE = "tube";
+	    
 	
 	public JSLToolbar(JSLMainView mainView)
 	{
@@ -154,6 +157,14 @@ public class JSLToolbar extends JToolBar{
         button = makeNavigationButton(CHART, (new ShowChartViewAction( root )),
         		resource.getString( "jltb_chartTip" ), //TIP
         		resource.getString( "jltb_chart" )); //NAME
+                                     
+        add(button);
+        
+      //Tube button
+        
+        button = makeNavigationButton(TUBE, (new ShowTestTubeAction()),
+        		resource.getString( "jltb_tubeTip" ), //TIP
+        		resource.getString( "jltb_tube" )); //NAME
                                      
         add(button);
         

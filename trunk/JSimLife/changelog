@@ -1,3 +1,15 @@
+JLife v.0.2.0.b3
+add a color marker to all Zlifes you want;
+add a Sight Line to hungry Zredator and Zetatron
+improve Zredator eating: now follow its prey
+improve Zetatron eating: now follow its prey
+now Scaries Zlifes and scary Zredator lost more energy
+now Zretador and Zetatron with a prey stored improve they energy
+add CollisionMethods in Zlife, Zretador and Zetatron class: now all the simulation logic is in the Zlifes classes
+add a color chooser action
+add a mark zlife action
+
+
 JLife v.0.2.0.b2
 add icons for Easy XML editor into icons package
 remove unused tools item from menu: Easy Neurons
