@@ -44,7 +44,6 @@ import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -60,6 +59,7 @@ import com.tabuto.jsimlife.JSimLife;
 import com.tabuto.jsimlife.Zetatron;
 import com.tabuto.jsimlife.Zlife;
 import com.tabuto.jsimlife.Zretador;
+import com.tabuto.jsimlife.actions.ChangeColorButtonAction;
 import com.tabuto.jsimlife.actions.CreateNewZlifeAction;
 import com.tabuto.jsimlife.actions.LoadDnaAction;
 import com.tabuto.jsimlife.actions.SaveDnaAction;
@@ -247,10 +247,14 @@ public class JSLNewCellView extends JFrame implements ActionListener{
 		int green= (int)(Math.random()*254);
 		int blue= (int)(Math.random()*254);
 		Color CellColor = new Color(red,green,blue);
-		final Color startColor = new Color(red,green,blue);
+		
 		colorButton = new JButton("");
 		colorButton.setBackground(CellColor);
 		
+		colorButton.addActionListener(new ChangeColorButtonAction(this,
+				resource.getString( "jfnc_selectColor" ),colorButton));
+		
+		/*
 		colorButton.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent actionEvent)
@@ -263,6 +267,7 @@ public class JSLNewCellView extends JFrame implements ActionListener{
 			}
 		
 		});
+		*/
 		colorButton.setToolTipText(resource.getString( "jfnc_selectColor" ));
 		north.add(colorButton);
 		

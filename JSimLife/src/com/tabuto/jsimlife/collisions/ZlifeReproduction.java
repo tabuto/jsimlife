@@ -82,32 +82,18 @@ public class ZlifeReproduction extends CollisionDetector{
 		Zlife cell1, cell2, newCell;
 		cell1 = (Zlife) group1.get(s1);
 		cell2 = (Zlife) group1.get(s2);
-		Dna newBornDna;
 		//TO-DO
 		
 		if (cell1.isHorny() && cell2.isHorny() && (jlc.getActualCellCount()<jlc.getMaxCellsNumber()))
 				{
-				newBornDna= Dna.merge(cell1.getZlifeDna(), cell2.getZlifeDna());
-				
-		
-				//cell1.setBored();
-				//cell2.setBored();
-				double tempAngle = cell2.getAngle();
-				cell2.setAngleRadians(cell1.getAngle());
-				cell1.setAngleRadians(tempAngle);
-				newCell = new Zlife(cell1.getDimension(), cell1.getX(),cell1.getY(),newBornDna);
-				//newCell.setBored();
-				newCell.setAngleRadians( Math.random() * 2 * Math.PI );
-				newCell.setName( combineName(cell1.getName(),cell2.getName()));
-				newCell.setEnergy( newCell.getHungryEnergy()*0.9); 
-				jlc.addCell(newCell);
-				cell1.setEnergy( cell1.getEnergy() - cell1.getRiproductionEnergy());
-				cell2.setEnergy(cell2.getEnergy() - cell2.getRiproductionEnergy());
-				newCell.setGenerationNumber( Math.max(cell1.getGenerationNumber(), cell2.getGenerationNumber())+1);
-				newCell.live();
-				cell1.live();
-				cell2.live();
-				
+			
+			newCell = cell1.reproduction(cell2);
+			newCell.setName( combineName(cell1.getName(),cell2.getName()));
+			jlc.addCell(newCell);
+			newCell.live();
+			cell1.live();
+			cell2.live();
+			
 				}
 		
 		else

@@ -50,6 +50,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import com.tabuto.jsimlife.JSimLife;
+import com.tabuto.jsimlife.actions.ChangeColorButtonAction;
+import com.tabuto.jsimlife.actions.MarkZlifeAction;
 import com.tabuto.jsimlife.actions.SaveSelectedZLifeAction;
 
 /**
@@ -79,12 +81,15 @@ public class JSLSelectedZlifeView extends JFrame implements Observer {
 	private JLabel energyLabel, radiusLabel, colorLabel;
 	private JLabel generationLabel;
 	
+	
 	private JTextField nameField, positionField, directionField;
 	private JTextField stateField, speedField, lifeCycleField;
 	private JTextField energyField, radiusField;
 	private JTextField generationField;
 
 	private JButton colorButton;
+	private JButton markedColorButton;
+	private JButton markedButton;
 	private JButton saveButton;
 	
 	private JPanel north,dnaPanel,south;
@@ -216,9 +221,21 @@ public class JSLSelectedZlifeView extends JFrame implements Observer {
 		north.add(colorLabel);
 		north.add(colorButton);
 	
+		
+		markedColorButton=new JButton("");
+		markedColorButton.setBackground(Color.green);
+		markedColorButton.addActionListener(new ChangeColorButtonAction(this,resource.getString( "jfnc_selectColor" ),markedColorButton));
+		south.add(markedColorButton);
+		
+		markedButton = new JButton("Mark");
+		markedButton.addActionListener(new MarkZlifeAction(Game,markedColorButton));
+		south.add(markedButton);
+		
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(new SaveSelectedZLifeAction(Game,this));
 		south.add(saveButton);
+		
+		
 		
 		this.add(north,BorderLayout.NORTH);
 		this.add(ZlifeDnaScroll,BorderLayout.CENTER);

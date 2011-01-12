@@ -113,6 +113,10 @@ public class Zlife extends Sprite implements Serializable{
 	protected boolean SELECTED = false;
 	protected Color zlifeColor;
 	protected int actualLifeCycle=0; //the actual age of Zlife
+	
+
+	boolean marked = false;
+	Color markedColor = Color.GREEN;
 	/**
 	 * Store position of last seed meet by Zlife
 	 */
@@ -395,6 +399,14 @@ public class Zlife extends Sprite implements Serializable{
 			 else
 				 return false;
 	}
+	
+	/**
+	 * @return true if ZLife is marked, false if not
+	 */
+	public boolean isMarked()
+	{
+		return marked;
+	}
 
 	/**
 	 * @return true if Zlife state is set SCARY
@@ -442,30 +454,30 @@ public class Zlife extends Sprite implements Serializable{
 				}
 			case HUNGRY:
 				{
-					if (energy < hungryEnergy)
-					  {
-						if(seedPosition.getX()==0 && seedPosition.getY()==0)
-							{
-								this.setSpeed(  (int) ((BoredSpeed + hungrySpeed)/2 ));
-								break;
-							}
-						else
-							{
-								this.setSpeed((int)getHungrySpeed());
-								this.moveTo(getSeedPosition());
-								seedPosition.setX(0);
-							    seedPosition.setY(0);
-								break;
-							}
-					  }
-					if (energy > hungryEnergy)
-					  {
-						  //this.age();
-						  this.setSpeed((int)getBoredSpeed());
-						  setState(CellState.BORED);
-						  this.setAngleRadians(Math.random()*Math.PI*2);
-						  break;
-					  }  
+					 if (energy < hungryEnergy)
+                     {
+                           if(seedPosition.getX()==0 && seedPosition.getY()==0)
+                                   {
+                                           this.setSpeed(  (int) ((BoredSpeed + hungrySpeed)/2 ));
+                                           break;
+                                   }
+                           else
+                                   {
+                                           this.setSpeed((int)getHungrySpeed());
+                                           this.moveTo(getSeedPosition());
+                                           seedPosition.setX(0);
+                                       seedPosition.setY(0);
+                                           break;
+                                   }
+                     }
+                   if (energy > hungryEnergy)
+                     {
+                             //this.age();
+                             this.setSpeed((int)getBoredSpeed());
+                             setState(CellState.BORED);
+                             this.setAngleRadians(Math.random()*Math.PI*2);
+                             break;
+                     }  
 					
 				}
 			case HORNY:
@@ -498,10 +510,10 @@ public class Zlife extends Sprite implements Serializable{
 					
 					this.setSpeed((int)scarySpeed);
 					
-					if ((int)energy == (int)((hungryEnergy)*1.5))
-						this.setAngleRadians(Math.random()*Math.PI*2);
+					//if ((int)energy == (int)((hungryEnergy)*1.5))
+						//this.setAngleRadians(Math.random()*Math.PI*2);
 					
-					if(energy< (hungryEnergy))
+					if(energy< (maxEnergy*0.10))
 					{
 						age();
 						 this.setSpeed((int)getHungrySpeed());
@@ -527,6 +539,25 @@ public class Zlife extends Sprite implements Serializable{
 			}
 	}
 	
+	/**
+	 * Mark this ZLife with a green boundary rectangle.
+	 * Useful to recognize a special ZLife
+	 */
+	public void marked()
+	{
+		marked = true;
+	}
+	
+	/**
+	 * Mark this ZLife woth a 'c' Colored rectangle
+	 * @param c
+	 */
+	public void marked(Color c)
+	{
+		this.markedColor = c;
+		marked();
+	}
+	
 	@Override
 	public void move()
 	{
@@ -540,13 +571,39 @@ public class Zlife extends Sprite implements Serializable{
   		setChanged();
 		notifyObservers("ZLife:Move");
   		  
-  		  energy = (energy - realMetabolism - (getSpeed()/100));
-  		  if(energy<=0)
+		if(isScary())
+			energy = (energy - realMetabolism*2 - (getSpeed()/50));
+		else
+  		  	energy = (energy - realMetabolism - (getSpeed()/100));
+  		  
+  		  if(energy<=0 || actualLifeCycle>lifeCycle)
   			 {setAlive(false);Deactivate();}
   		  else
   			  this.live();
   		
   	  }
+	}
+	
+	/**
+	 * Return a new Zlife with merged DNA
+	 * @param z Other Zlife
+	 * @return new Zlife
+	 */
+	public Zlife reproduction(Zlife z)
+	{
+		Dna newBornDna= Dna.merge(z.getZlifeDna(), this.getZlifeDna());
+		
+		double tempAngle = this.getAngle();
+		this.setAngleRadians(z.getAngle());
+		z.setAngleRadians(tempAngle);
+		Zlife newCell = new Zlife(z.getDimension(), z.getX(),z.getY(),newBornDna);
+		newCell.setAngleRadians( Math.random() * 2 * Math.PI );
+		newCell.setEnergy( newCell.getHungryEnergy()*0.9); 
+		z.setEnergy( z.getEnergy() - z.getRiproductionEnergy());
+		this.setEnergy(this.getEnergy() - this.getRiproductionEnergy());
+		newCell.setGenerationNumber( Math.max(z.getGenerationNumber(), this.getGenerationNumber())+1);
+		
+		return newCell;
 	}
 	
 	/**
@@ -893,6 +950,15 @@ public class Zlife extends Sprite implements Serializable{
 			g2d.drawOval((int)this.getX() - this.radius -5 , (int)this.getY() - this.radius - 5,this.radius + 10, this.radius + 10);
 			
 		}
+		
+		if(marked)
+		{
+			g2d.setColor(markedColor);
+			g2d.drawRect((int)this.getX() - this.radius -7 , (int)this.getY() - this.radius - 7,this.radius + 14, this.radius + 14);
+			
+		}
+		
+		
 	}
 	
 	@Override
@@ -909,6 +975,36 @@ public class Zlife extends Sprite implements Serializable{
 		"\nColor: \t["+this.R+" " + this.G +" "+this.B+"]" +
 		"\n " + this.ZlifeDna.toString();
 		
+	}
+	
+	/**
+	 * Set marked to false;
+	 */
+	public void unmarked()
+	{
+		marked = false;
+	}
+	
+	/**
+	 * COllision action performed when a Zlife is nearby Seed
+	 * @param z Zetatron
+	 * @param s Seed
+	 */
+	public void ZlifeEatingSeed(Zlife z, Seed s)
+	{
+		if (z.isBored())
+		{
+			z.setSeedPosition( s.getPosition() ) ;
+		}
+	
+		if (z.isHungry())
+		{
+			s.eatMe();
+			z.setEnergy(z.getMaxEnergy());
+			z.setAngleRadians(Math.random()*2*Math.PI);
+			//cell1.setHorny();
+			z.live();
+		}
 	}
 
 //PRIVATE AND PROTECTED METHODS *********************************************

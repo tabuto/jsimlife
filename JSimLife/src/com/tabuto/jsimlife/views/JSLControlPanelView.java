@@ -120,6 +120,8 @@ public class JSLControlPanelView extends J2DControlPanel implements Observer {
 		StatisticTextArea.setForeground(Color.GREEN);
 		StatisticTextArea.setFont(new Font("Courier", Font.BOLD, 10));
 		
+	
+		
 		timer = new Timer();
 		statTask = new StatisticTask();
 		timer.schedule( statTask, 500,1500 );
@@ -140,7 +142,11 @@ public class JSLControlPanelView extends J2DControlPanel implements Observer {
 		 StatisticPanel.add(StatisticScroll);
 		 add(StatisticInfoLabel, BorderLayout.NORTH);
 		 
-		 add(new JScrollPane(StatisticPanel),BorderLayout.CENTER);
+		add(new JScrollPane(StatisticPanel),BorderLayout.CENTER);
+		 
+		
+		 
+		
 		 
 	}
 
@@ -168,6 +174,7 @@ public class JSLControlPanelView extends J2DControlPanel implements Observer {
 		
 		
 	}
+	
 	
 	/**
 	 * Implements a timer task to calculate statistic every Timer check

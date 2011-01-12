@@ -80,20 +80,7 @@ public class ZlifeEatingSeed extends CollisionDetector{
 		//if (cell1.isAlive() && cell1.isHungry())
 		//if (cell1.isAlive() )
 				
-					if (cell1.isBored())
-					{
-						cell1.setSeedPosition( seed2.getPosition() ) ;
-					}
-				
-					if (cell1.isHungry())
-					{
-						seed2.eatMe();
-					
-						cell1.setEnergy(cell1.getMaxEnergy());
-						cell1.setAngleRadians(Math.random()*2*Math.PI);
-						cell1.live();
-					}
-				
+		cell1.ZlifeEatingSeed(cell1, seed2);
 				
 		
 	  }

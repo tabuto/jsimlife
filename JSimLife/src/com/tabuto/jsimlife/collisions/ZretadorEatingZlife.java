@@ -73,34 +73,8 @@ public class ZretadorEatingZlife extends CollisionDetector {
 	
 		z = (Zretador) group1.get(s1);	
 		c = (Zlife) group2.get(s2);		
-		
-		if(z.isHungry())
-		{
-			if( z.getPosition().getDistance( c.getPosition())<20)
-			{
-				//Zretador eat ZLife
-				z.setEnergy( z.getMaxEnergy() );
-				z.setAngleRadians(Math.random()*2*Math.PI);
-				z.preda=null;
-				if(z.getEnergy()>z.getHungryEnergy())
-					z.setBored();
-				z.live();
-				
-				//Zlife hit but not necessary die
-				c.setEnergy( c.getEnergy()-( (z.getRadius()+1)*4) );
-				return;
-			}
 			
-			if(z.preda==null)
-			{
-				c.setScary();
-				z.preda=c;
-				z.moveTo(z.preda);
-				z.live();
-			}
-		}
-		
-		
+		z.ZretadorEatingZlife(z, c);
 	  }
 	
 }
