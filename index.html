@@ -1,37 +1,37 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Jsimlife by tabuto</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <title>Jsimlife by tabuto</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
+    <header>
+      <div class="inner">
         <h1>Jsimlife</h1>
-        <p>Automatically exported from code.google.com/p/jsimlife</p>
+        <h2>Automatically exported from code.google.com/p/jsimlife</h2>
+        <a href="https://github.com/tabuto/jsimlife" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-        <p class="view"><a href="https://github.com/tabuto/jsimlife">View the Project on GitHub <small>tabuto/jsimlife</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/tabuto/jsimlife/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/tabuto/jsimlife/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/tabuto/jsimlife">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <p><strong>JSimLife</strong> is an advanced Biological Life simulation, written in Java. In JSimLife every life form is a cell. Every cell is a Sprite and it has a Brain Object (not yet implemented) and a Dna object.
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p><strong>JSimLife</strong> is an advanced Biological Life simulation, written in Java. In JSimLife every life form is a cell. Every cell is a Sprite and it has a Brain Object (not yet implemented) and a Dna object.
 Every Cell's aspect are stored in a Dna (Dna is a Vector of parameters). Cells are able to riproduce itself using the methods provides by Dna class.
 I want to create several type of cells in order to riproduce a simple food chain.
-The simulation use the [<a href="http://freshmeat.net/projects/j2dgf">http://freshmeat.net/projects/j2dgf</a> J2DGF package ] to show sprites on a JPanel in a Window Form.
+The simulation use the <a href="J2DGF%20framework">https://github.com/tabuto/j2dgf</a> to show sprites on a JPanel in a Window Form.
 The user can change the Simulation Parameter, create new DNA, create new type of cells and save or load simulation.
 See ToDo wiki for future feature.</p>
 
@@ -48,10 +48,14 @@ You can now save and load your simulation!</p>
 <p>JSimLife is quite simple. Each Zlife (this is generic name of JSimLife life's form) pass through four state:</p>
 
 <ul>
-<li>Bored: in this State, Zlife's energy isn't enough to reproduce itself but it is enough not to be hungry!</li>
-<li>Horny: when zlife is horny, it is able to reproduce itself if it hits another horny zlife!</li>
-<li>Hungry: when zlife's energy is too low, it is hungry and it moves searching for food;</li>
-<li>Scared: when scared, Zlife simply changes its direction to avoid dangers;</li>
+<li>
+<strong>Bored</strong>: in this State, Zlife's energy isn't enough to reproduce itself but it is enough not to be hungry!</li>
+<li>
+<strong>Horny</strong>: when zlife is horny, it is able to reproduce itself if it hits another horny zlife!</li>
+<li>
+<strong>Hungry</strong>: when zlife's energy is too low, it is hungry and it moves searching for food;</li>
+<li>
+<strong>Scared</strong>: when scared, Zlife simply changes its direction to avoid dangers;</li>
 </ul>
 
 <p>Those four states are selected by zlifes in function of its own life's parameter which are stored in a data structure simulating DNA mechanism. When reproduction occour, parameters are infact merged with second Zlife's DNA's parameters. Altough, parameter values are edited by a random value to a quantity defined in the DNAParam.</p>
@@ -127,19 +131,31 @@ Into Neural Net all of this is avaible using a certain neurons connection weight
 <p>Project's Home page [<a href="http://freshmeat.net/projects/jsimlife">http://freshmeat.net/projects/jsimlife</a> JLife]</p>
 
 <h1>
-<a id="screenshot" class="anchor" href="#screenshot" aria-hidden="true"><span class="octicon octicon-link"></span></a>Screenshot</h1>
+<a id="screenshots" class="anchor" href="#screenshots" aria-hidden="true"><span class="octicon octicon-link"></span></a>Screenshots</h1>
 
 <p><img src="http://s14.postimage.org/yga7rkw81/Start_splash.png" alt="splash">
 <img src="http://s17.postimage.org/gcqg54dhb/Screenshot_v_2_0_b2.png" alt="screenshot">
 <img src="http://s18.postimage.org/t4jbjlpah/watchzlifes.png" alt="inAction"></p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/tabuto">tabuto</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/tabuto/jsimlife/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/tabuto/jsimlife/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/tabuto/jsimlife"></a> is maintained by <a href="https://github.com/tabuto">tabuto</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-              <script type="text/javascript">
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
