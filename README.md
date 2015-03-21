@@ -61,10 +61,9 @@ You can edit some Game parameters as the background color of playfield, or the p
 The new Zlife's type Zetatron is a Zretador's predator. It uses a neural network with 8 neurons to select its own current state.
 Zetatron's dna is greater than zlife's one because I've adding the neuron's weights as a genes in order to allows the Zetatron brain's evolution!
 
-#3 Developers
-An help should be great!!! So, read the ToDo wiki at http://code.google.com/p/jsimlife/wiki/ToDo for the future feature I want to implements!
+#3 Developments
+An help should be great!!! 
 If you want to join the project contact me at (tabuto83[at]gmail[dot]com]
-If you want you can download the source code at 
 N.B. This game use a JDOM library: youu need to import it in your project if you want recompile it!
 
 #4 About
