@@ -1,15 +1,11 @@
 README
 
 JSimLife v.0.2.0.b1
-Homepage: http://www.jsimlife.netsons.org/
-Site-project and sources: http://code.google.com/p/jsimlife/
-Freshmeat: http://freshmeat.net/projects/jsimlife
-project eMail: webmaster@jsimlife.netsons.org
 
-#1 Install
-#2 User Guide
-#3 For Developers
-#4 About
+Homepage: http://tabuto.github.io/jsimlife
+
+Freshmeat: http://freshmeat.net/projects/jsimlife
+
 
 #1 Install
 To run this application you need the Java Runtime Enviroment (JRE) v.6. 
@@ -48,7 +44,6 @@ The Zlife and Zretador's Dna contains infact 17 genes controlling several life p
 Each Zlife's (but also Zretador) live its life using 4 life state:
     * BORED: when bored the cell moving random until his energy is below the HungryEnergy?. If cell meet some seed, store its position for future meal!! 
     * HUNGRY: when hungry the cell move to seed position (if exist) or moving randomly in search of it! After meal the cell's energy are max and it is ready to riproduce itself; 
-
     * HORNY: when cell is horny, it moves fast in search of onether Horny-Cell. If they collide another life is born! 
 
 Every change state mean a lifeCycle spends! When cells finished his lifeCycle or if his energy is below zero, cell die. 
@@ -66,10 +61,10 @@ Zetatron's dna is greater than zlife's one because I've adding the neuron's weig
 
 #3 Developers
 An help should be great!!! So, read the ToDo wiki at http://code.google.com/p/jsimlife/wiki/ToDo for the future feature I want to implements!
-If you want to join the project contact me at (tabuto83@gmail.com]
-If you want you can download the source code at http://code.google.com/p/jsimlife/source/browse/#svn/trunk/JLife/src/com/tabuto/jlife. 
+If you want to join the project contact me at (tabuto83[at]gmail[dot]com]
+If you want you can download the source code at 
 N.B. This game use a JDOM library: youu need to import it in your project if you want recompile it!
 
 #4 About
 JSimLife is currently at version 0.2.0, is developed by tabuto83 under MIT license. 
-Visit JSimLife's Home Page at: http://www.jsimlife.netsons.org/
+Visit JSimLife's Home Page at: http://tabuto.github.io/jsimlife
