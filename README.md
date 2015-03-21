@@ -6,17 +6,19 @@ Homepage: http://tabuto.github.io/jsimlife
 
 Freshmeat: http://freshmeat.net/projects/jsimlife
 
+Download Latest Release: https://github.com/tabuto/jsimlife/releases/download/v.2.0.2/JSimLife.jar
+
 
 #1 Install
 To run this application you need the Java Runtime Enviroment (JRE) v.6. 
 You can download it at http://www.java.com/it/download/index.jsp.
 Java is a cross platform language, so you can run this software in every system with JRE.
 
-	Microsoft Windows
- If you are on Windows, just extract in a directory of your choose the JSimLife.jar file and JSimLife_WindowsLauncher.bat file. 
- If double-click on the jar file doesn't work, click on to .bat file. 
-	Linux/MacOs
-If  Java Runtime Enviroment (JRE) is already installed on your machine simply extract JSimLife.jar file in a directory and double clicking on the jar file.
+If  Java Runtime Enviroment (JRE) is already installed on your machine simply extract JSimLife.jar file in a directory and double clicking on the jar file, altough you can execute:
+
+java -jar JSimLife.jar
+
+
 #2 USER GUIDE
 JSimLife it's a simple life simulation, that implemented a jenetics reproduction of a simple life form called Zlife, Zretador and Zetatron.
 You can add they by clicing the "Add A Cell" button on the toolbar. 
